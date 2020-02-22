@@ -4,7 +4,7 @@ import history from '../api/history'
 import Navbar from './Layout/Navbar'
 import ChallengePage from './Challenge/ChallengePage'
 import CreateChallenge from './Challenge/CreateChallenge'
-import Header from './Layout/Header'
+import ManagePage from './Manage/ManagePage'
 
 class App extends React.Component {
 
@@ -12,12 +12,12 @@ class App extends React.Component {
         return (
             <div>
                 <Router history={history}>
-                    {/* <Header /> */}
                     <Navbar />
                     <div>
                         <Switch>
                             <Route path="/challenges" exact component={ChallengePage} />
                             <Route path="/challenges/new" exact component={CreateChallenge} />
+                            <Route path="/manage/challenges" exact component={ManagePage} />
                         </Switch>
                     </div>
                 </Router>

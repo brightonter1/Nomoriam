@@ -3,6 +3,8 @@ import { Header, Segment, Step, Grid, Label } from 'semantic-ui-react'
 import ChallengeFormStepOne from './ChallengeFormStepOne'
 import ChallengeFormStepTwo from './ChallengeFormStepTwo'
 import ChallengeFormStepThree from './ChallengeFormStepThree'
+import { createChallenge } from '../../store/actions/challengeAction'
+import { connect } from 'react-redux'
 
 class CreateChallenge extends React.Component {
 
@@ -14,6 +16,7 @@ class CreateChallenge extends React.Component {
         this.nextPage = this.nextPage.bind(this)
         this.previousPage = this.previousPage.bind(this)
         this.renderField = this.renderField.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
     }
 
     nextPage() {
@@ -79,11 +82,15 @@ class CreateChallenge extends React.Component {
         )
     }
 
+    onSubmit = (challenge, activities) => {
+        this.props.createChallenge(challenge, activities, this.props.userId)
+    }
+
     render() {
         const { page } = this.state
         return (
             <div className="ui container" style={{ paddingTop: 60 }}>
-                <Header as="h2" style={{ paddingBottom: 30, paddingTop:30 }}>สร้างภารกิจ</Header>
+                <Header as="h2" style={{ paddingBottom: 30, paddingTop: 30 }}>สร้างภารกิจ</Header>
                 {this.renderStepBar()}
                 {page === 1 && <ChallengeFormStepOne
                     onSubmit={this.nextPage}
@@ -95,12 +102,26 @@ class CreateChallenge extends React.Component {
                     renderField={this.renderField}
                 />}
                 {page === 3 && <ChallengeFormStepThree
-                    onSubmit={this.nextPage}
+                    onSubmit={this.onSubmit}
                     previousPage={this.previousPage}
+                    isSuccess={this.props.isSuccess}
                 />}
             </div>
         )
     }
 }
 
-export default CreateChallenge
+const mapStateToProps = state => {
+    var loading;
+    if (state.challenge.isSuccess){
+        loading = false
+    }else{
+        loading = true
+    }
+    return {
+        userId: state.auth.userId,
+        isSuccess: loading
+    }
+}
+
+export default connect(mapStateToProps, { createChallenge })(CreateChallenge)

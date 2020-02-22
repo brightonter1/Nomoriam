@@ -24,7 +24,7 @@ class ChallengePage extends React.Component {
     render() {
         return (
             <div className="ui container" style={{ paddingTop: 60 }}>
-                <Header as="h2" style={{paddingTop:30}}>ชาเล้นจ์</Header>
+                <Header as="h2" style={{ paddingTop: 30 }}>ชาเล้นจ์</Header>
                 <Link to="/challenges/new" className="ui right floated button primary">สร้างภารกิจ</Link>
                 <div className="ui">
                     {this.renderList()}
@@ -33,5 +33,6 @@ class ChallengePage extends React.Component {
         )
     }
 }
+
 
 export default ChallengePage

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Grid, Segment, Form, Button, Icon, Image, Header, Dropdown } from 'semantic-ui-react'
 import { Field, reduxForm } from 'redux-form'
 import validate from './Validate'
-import image from '../../asset/challenge/image'
+import {image} from '../../asset/challenge/image'
 
 const ChallengeFormStepOne = (props) => {
 

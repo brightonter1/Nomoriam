@@ -1,43 +1,47 @@
-import React from 'react'
-import { Grid, Segment, Form, Button, Dropdown, Image, Header, Popup, Icon } from 'semantic-ui-react'
+import React, { useState } from 'react'
+import { Grid, Segment, Form, Button, Dropdown, Image, Header, Icon } from 'semantic-ui-react'
 import { Field, reduxForm, FieldArray } from 'redux-form'
 import Post from '../../asset/blog.png'
 import Question from '../../asset/discuss-issue.png'
 import Qrcode from '../../asset/qr-code.png'
-
+import { imageAct } from '../../asset/challenge/image'
 
 const ChallengeFormStepTwo = (props) => {
+
+    const [type, setType] = useState('')
+
     const category = [
         {
             key: "โพสต์",
             text: "โพสต์",
-            value: "โพสต์"
+            value: "post"
         },
         {
             key: "ตอบคำถาม",
             text: "ตอบคำถาม",
-            value: "ตอบคำถาม"
+            value: "question"
         },
         {
             key: "คิวอาโค้ด",
             text: "คิวอาโค้ด",
-            value: "คิวอาโค้ด"
+            value: "qrcode"
         }
     ]
     const { handleSubmit, previousPage, renderField } = props
+    const [photo, setPhoto] = useState('https://react.semantic-ui.com/images/wireframe/square-image.png')
+
 
     const handleCategory = (name, value) => {
         const image = document.getElementsByName(name)[0]
-        if (value === 'โพสต์') {
+        if (value === 'post') {
             image.src = Post
-        } else if (value === 'ตอบคำถาม') {
+        } else if (value === 'question') {
             image.src = Question
-        } else if (value === 'คิวอาโค้ด') {
+        } else if (value === 'qrcode') {
             image.src = Qrcode
         }
         return value
     }
-
     const renderTypeSelector = ({ input, meta: { touched, error } }) => {
         return (
             <Dropdown
@@ -49,6 +53,24 @@ const ChallengeFormStepTwo = (props) => {
             />
         )
     }
+
+    const handlePicker = (data) => {
+        setPhoto(`https://ipfs.infura.io/ipfs/${data.value}`)
+        return data.value
+    }
+
+    const renderImageSelector = ({ input, meta: { touched, error } }) => {
+        return (
+            <Dropdown
+                selection {...input}
+                value={input.value}
+                onChange={(param, data) => input.onChange(() => handlePicker(data))}
+                options={imageAct}
+                placeholder="เลือกรูปภาพประกอบ"
+            />
+        )
+    }
+
 
     const renderActivity = ({ fields, meta: { error, submitFailed } }) => {
         return (
@@ -62,7 +84,9 @@ const ChallengeFormStepTwo = (props) => {
                                 <Header># ภารกิจที่ {index + 1}</Header>
                                 <Grid stackable>
                                     <Grid.Column width={4}>
-                                        <Image name={`${activity}.type`} src="https://react.semantic-ui.com/images/wireframe/image.png" size='medium' rounded />
+                                        <Image name={`${activity}.type`} src={photo} size='medium' rounded />
+                                        <Field name={`${activity}.image`} component={renderImageSelector} />
+
                                     </Grid.Column>
                                     <Grid.Column width={12}>
                                         <Form>
@@ -77,23 +101,27 @@ const ChallengeFormStepTwo = (props) => {
                                                 </Form.Field>
                                                 <Form.Field>
                                                     <label>จำนวนครั้งเล่น</label>
-                                                    <Field name={`${activity}.times`} component={renderField} type="number" />
+                                                    <Field name={`${activity}.times`} component="input" type="number" />
                                                 </Form.Field>
                                                 <Form.Field>
                                                     <label>สถานที่</label>
                                                     <Field name={`${activity}.location`} component={renderField} />
                                                 </Form.Field>
                                             </Form.Group>
-                                            <Form.Group widths='equal'>
-                                                <Form.Field>
-                                                    <label>คำถาม</label>
-                                                    <Field name={`${activity}.question`} component={renderField} />
-                                                </Form.Field>
-                                                <Form.Field>
-                                                    <label>คำตอบ</label>
-                                                    <Field name={`${activity}.answer`} component={renderField} />
-                                                </Form.Field>
-                                            </Form.Group>
+                                            {
+                                                type === 'question' ?
+                                                    <Form.Group widths='equal'>
+                                                        <Form.Field>
+                                                            <label>รูปภาพคำถาม</label>
+                                                            <Field name={`${activity}.question`} component='input' />
+                                                        </Form.Field>
+                                                        <Form.Field>
+                                                            <label>คำตอบ</label>
+                                                            <Field name={`${activity}.answer`} component={renderField} />
+                                                        </Form.Field>
+                                                    </Form.Group>
+                                                    : null
+                                            }
                                         </Form>
 
                                     </Grid.Column>
@@ -115,7 +143,7 @@ const ChallengeFormStepTwo = (props) => {
 
             </Segment>
 
-            <div style={{paddingBottom:50}}>
+            <div style={{ paddingBottom: 50 }}>
                 <Button primary floated="right" type="button" onClick={handleSubmit}>
                     ถัดไป
                     <Icon name="arrow right" />

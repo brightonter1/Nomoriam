@@ -1,4 +1,4 @@
-const image = [
+export const image = [
     {
         key: '0',
         text: 'ก้อนหิน',
@@ -31,4 +31,24 @@ const image = [
     }
 ]
 
-export default image
+export const imageAct = [
+    {
+        key: '0',
+        text: 'โพสต์รูปพร้อมแคปชัน',
+        value: 'Qmb5dijLC5KZHqkeeDuBswD3r325fG1bxAkkiTHiMRfL3A',
+        image: { avatar: true, src: 'https://ipfs.infura.io/ipfs/Qmb5dijLC5KZHqkeeDuBswD3r325fG1bxAkkiTHiMRfL3A' }
+    },
+    {
+        key: '1',
+        text: 'ตอบคำถาม',
+        value: 'QmP7B9ETssp1PpyVWEADibv7q1k7wzUQ1gA5yMqmXKi1ZH',
+        image: { avatar: true, src: 'https://ipfs.infura.io/ipfs/QmP7B9ETssp1PpyVWEADibv7q1k7wzUQ1gA5yMqmXKi1ZH' }
+    },
+    {
+        key: '2',
+        text: 'สแกนคิวอาโค้ด',
+        value: 'QmUmbQRtnYqi156qK1Qf1maH6oivq72exzNfwuGVCK8ose',
+        image: { avatar: true, src: 'https://ipfs.infura.io/ipfs/QmUmbQRtnYqi156qK1Qf1maH6oivq72exzNfwuGVCK8ose' }
+    }
+]
+

@@ -19,7 +19,7 @@ class Navbar extends React.Component {
 
     renderMenu() {
         return (
-            <Menu fixed='top' color="green" inverted secondary >
+            <Menu fixed='top' secondary >
 
                 <Link to="/" className="item"><img src={mariamPhoto} alt="" /></Link>
 
@@ -35,7 +35,7 @@ class Navbar extends React.Component {
                             <Dropdown text="Admin" simple item>
                                 <Dropdown.Menu>
                                     <Dropdown.Item>
-                                        ดูคำร้องขอ
+                                        <Link to="/manage/challenges">จัดการชาเล้นจ์ </Link>
                                     </Dropdown.Item>
                                     <Dropdown.Item
                                         onClick={(e) => this.handleSignOut()}
@@ -137,7 +137,8 @@ const mapStateToProps = state => {
     return {
         playerName: state.auth.name,
         isSignedIn: state.auth.isSignedIn,
-        isAdmin: state.auth.role
+        isAdmin: state.auth.role,
+        requestAdmin: state.challenge.challengesApprove
     }
 }
 

@@ -43253,18 +43253,13 @@
     "4": {
       "events": {},
       "links": {},
-      "address": "0xB1Bbc754449B4689F99D5828b507c78581299271",
-      "transactionHash": "0x740215554f3a9cce193de64192624d70cffd08d6abe0d9de1bb278fe83222c4a"
-    },
-    "5777": {
-      "events": {},
-      "links": {},
-      "address": "0xD25da358A9B35118E557c4f6a2Ef25D5C8964053",
-      "transactionHash": "0x95e1713d207149120ef0242c27ba60cacb2ec35645f36ac10d287ed81a20eda7"
+      "address": "0xC24D6C12F6eF00CA4C2326501AD40718360f1F0B",
+      "transactionHash": "0x75024bdeec951a4f9ff805cc9361b65f4445388e3d1d384ab1d1a3fd0b5af280"
     }
   },
   "schemaVersion": "3.0.23",
-  "updatedAt": "2020-02-16T17:25:25.533Z",
+  "updatedAt": "2020-02-20T22:15:24.499Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {}
   },
