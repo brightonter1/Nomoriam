@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Grid, Segment, Form, Button, Dropdown, Image, Header, Icon } from 'semantic-ui-react'
 import { Field, reduxForm, FieldArray } from 'redux-form'
 import Post from '../../asset/blog.png'
@@ -8,7 +8,6 @@ import { imageAct } from '../../asset/challenge/image'
 
 const ChallengeFormStepTwo = (props) => {
 
-    const [type, setType] = useState('')
 
     const category = [
         {
@@ -28,18 +27,16 @@ const ChallengeFormStepTwo = (props) => {
         }
     ]
     const { handleSubmit, previousPage, renderField } = props
-    const [photo, setPhoto] = useState('https://react.semantic-ui.com/images/wireframe/square-image.png')
-
 
     const handleCategory = (name, value) => {
-        const image = document.getElementsByName(name)[0]
-        if (value === 'post') {
-            image.src = Post
-        } else if (value === 'question') {
-            image.src = Question
-        } else if (value === 'qrcode') {
-            image.src = Qrcode
-        }
+        // const image = document.getElementsByName(name)[0]
+        // if (value === 'post') {
+        //     image.src = Post
+        // } else if (value === 'question') {
+        //     image.src = Question
+        // } else if (value === 'qrcode') {
+        //     image.src = Qrcode
+        // }
         return value
     }
     const renderTypeSelector = ({ input, meta: { touched, error } }) => {
@@ -54,8 +51,19 @@ const ChallengeFormStepTwo = (props) => {
         )
     }
 
-    const handlePicker = (data) => {
-        setPhoto(`https://ipfs.infura.io/ipfs/${data.value}`)
+    const handlePicker = (name, data) => {
+        const image = document.getElementsByName(name)[0]
+        for (var i = 0; i < data.options.length; i++) {
+            if (data.options[i].value === data.value) {
+                if (data.options[i].text === 'โพสต์รูปภาพ') {
+                    image.src = Post
+                } else if (data.options[i].text === 'ตอบคำถาม') {
+                    image.src = Question
+                } else {
+                    image.src = Qrcode
+                }
+            }
+        }
         return data.value
     }
 
@@ -64,7 +72,7 @@ const ChallengeFormStepTwo = (props) => {
             <Dropdown
                 selection {...input}
                 value={input.value}
-                onChange={(param, data) => input.onChange(() => handlePicker(data))}
+                onChange={(param, data) => input.onChange(() => handlePicker(input.name, data))}
                 options={imageAct}
                 placeholder="เลือกรูปภาพประกอบ"
             />
@@ -84,7 +92,7 @@ const ChallengeFormStepTwo = (props) => {
                                 <Header># ภารกิจที่ {index + 1}</Header>
                                 <Grid stackable>
                                     <Grid.Column width={4}>
-                                        <Image name={`${activity}.type`} src={photo} size='medium' rounded />
+                                        <Image name={`${activity}.image`} src='https://react.semantic-ui.com/images/wireframe/square-image.png' size='medium' rounded />
                                         <Field name={`${activity}.image`} component={renderImageSelector} />
 
                                     </Grid.Column>
@@ -108,7 +116,7 @@ const ChallengeFormStepTwo = (props) => {
                                                     <Field name={`${activity}.location`} component={renderField} />
                                                 </Form.Field>
                                             </Form.Group>
-                                            {
+                                            {/* {
                                                 type === 'question' ?
                                                     <Form.Group widths='equal'>
                                                         <Form.Field>
@@ -121,7 +129,7 @@ const ChallengeFormStepTwo = (props) => {
                                                         </Form.Field>
                                                     </Form.Group>
                                                     : null
-                                            }
+                                            } */}
                                         </Form>
 
                                     </Grid.Column>

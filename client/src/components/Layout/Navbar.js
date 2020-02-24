@@ -44,14 +44,14 @@ class Navbar extends React.Component {
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
-                            : this.props.isSignedIn && !this.props.isAdmin ?
+                            : this.props.isSignedIn && !this.props.isAdmin && this.props.userId ?
                                 <Dropdown text={this.props.playerName} simple item>
                                     <Dropdown.Menu>
                                         <Dropdown.Item>
                                             โปรไฟล์
                                         </Dropdown.Item>
                                         <Dropdown.Item>
-                                            สถานะชาเล้นจ์
+                                            <Link to={`/status/${this.props.userId}`} >สถานะชาเล้นจ์</Link>
                                         </Dropdown.Item>
                                         <Dropdown.Item>
                                             การแจ้งเตือน
@@ -135,6 +135,7 @@ class Navbar extends React.Component {
 
 const mapStateToProps = state => {
     return {
+        userId: state.auth.userId,
         playerName: state.auth.name,
         isSignedIn: state.auth.isSignedIn,
         isAdmin: state.auth.role,

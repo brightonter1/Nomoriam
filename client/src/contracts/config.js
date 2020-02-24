@@ -11,7 +11,7 @@ const Nomoriam = require('./Nomoriam.json')
 export const web3 = new Web3(provider)
 
 
-export const contractAddr = '0xC24D6C12F6eF00CA4C2326501AD40718360f1F0B'
+export const contractAddr = '0x4E0241023501aD8bBc7edED6EAB5f58506B6db99'
 export const account = '0x51FF6Ea18b2895aaE622A59713fe179aB305d0d6'
 export const privateKey = Buffer.from('3407760727BCCAE592B094CDB1F1302E4FB8CBBD4B897DB169001A9E7CD13F41', 'hex')
 export const contract = new web3.eth.Contract(Nomoriam.abi, contractAddr)

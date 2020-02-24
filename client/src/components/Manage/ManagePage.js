@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Modal, Button, Progress } from 'semantic-ui-react'
+import { Header } from 'semantic-ui-react'
 import ChallengeList from './ChallengeList'
 import { connect } from 'react-redux'
 import { fetchChallengesByApprove, approveChallenge } from '../../store/actions/challengeAction'
@@ -39,11 +39,18 @@ class ManagePage extends React.Component {
 
 
 const mapStateToProps = state => {
+    var isApprove = state.challenge.isCompleted
+    if (isApprove){
+        isApprove = false
+    }else{
+        isApprove = true
+    }
+
     return {
         challengesApprove: state.challenge.challengesApprove,
-        isFetch: state.challenge.isFetch,
+        isFetch: state.challenge.isFetchApprove,
         txHash: state.challenge.txHash,
-        isApprove: state.challenge.isCompleted || false
+        isApprove: isApprove
     }
 }
 

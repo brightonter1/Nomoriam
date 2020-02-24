@@ -2,19 +2,28 @@ import {
     CREATE_CHALLENGE,
     FETCH_CHALLENGES_APPROVE,
     FETCH_CHALLENGES_NOTFOUND,
-    APPROVE_CHALLENGES
+    APPROVE_CHALLENGES,
+    FETCH_CHALLENGES,
+    FETCH_CHALLENGE,
+    JOIN_CHALLENGE
 } from '../actions/type'
 
 export default (state = {}, action) => {
     switch (action.type) {
         case CREATE_CHALLENGE:
-            return { isSuccess: true }
+            return { ...state, isSuccess: true }
         case FETCH_CHALLENGES_APPROVE:
-            return { challengesApprove: action.payload, isFetch: true }
+            return { ...state, challengesApprove: action.payload, isFetchApprove: true }
         case FETCH_CHALLENGES_NOTFOUND:
-            return { isFetch: action.payload }
+            return { ...state, isFetch: action.payload }
         case APPROVE_CHALLENGES:
-            return { txHash: action.payload, isCompleted: action.isComplete }
+            return { ...state, txHash: action.payload, isCompleted: action.isComplete }
+        case FETCH_CHALLENGES:
+            return { ...state, challenges: action.payload, isFetch: action.isComplete }
+        case FETCH_CHALLENGE:
+            return { ...state, [action.index]: action.payload }
+        case JOIN_CHALLENGE:
+            return { ...state, isJoined: action.isJoined }
         default:
             return state
     }

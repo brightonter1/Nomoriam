@@ -34,7 +34,7 @@ export const image = [
 export const imageAct = [
     {
         key: '0',
-        text: 'โพสต์รูปพร้อมแคปชัน',
+        text: 'โพสต์รูปภาพ',
         value: 'Qmb5dijLC5KZHqkeeDuBswD3r325fG1bxAkkiTHiMRfL3A',
         image: { avatar: true, src: 'https://ipfs.infura.io/ipfs/Qmb5dijLC5KZHqkeeDuBswD3r325fG1bxAkkiTHiMRfL3A' }
     },

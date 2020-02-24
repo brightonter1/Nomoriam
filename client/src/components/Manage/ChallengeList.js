@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Segment, Button, Header, Item, Label, Modal, Progress, Icon, Grid } from 'semantic-ui-react'
+import { Segment, Button, Header, Item, Label, Modal, Icon, Grid } from 'semantic-ui-react'
 import Post from '../../asset/blog.png'
 import Question from '../../asset/discuss-issue.png'
 import Qrcode from '../../asset/qr-code.png'
@@ -11,7 +11,6 @@ const ChallengeList = props => {
         props.onSubmit(challenge, activities)
         setLoading(true)
     }
-
 
 
     const [process, setProcess] = useState(props.isLoading)
@@ -43,7 +42,7 @@ const ChallengeList = props => {
                     </Item.Group>
                     <Modal
                         dimmer='blurring'
-                        open={!process && loading}
+                        open={process && loading}
                         size='mini'
                         style={{ padding: 50 }}
                     >
@@ -51,7 +50,7 @@ const ChallengeList = props => {
                             <div>
                                 <Icon
                                     name="spinner"
-                                    loading={!process && loading}
+                                    loading={process && loading}
                                     size="huge"
                                 >
                                 </Icon>
