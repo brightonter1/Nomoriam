@@ -235,10 +235,6 @@ contract Nomoriam {
         return challenges[_index].activities.length;
     }
     
-    function getPlayerCount() public view returns(uint){
-        return players.length;
-    }
-    
     function getChallengeCountByPlayer(string memory uid) public view returns(uint){
         return player[uid].challenges.length;
     }
@@ -256,7 +252,7 @@ contract Nomoriam {
     function getActivityChallengeByPlayer(uint index, uint count, string memory uid) public view returns(
         string memory, uint){
         return (
-            player[uid].challenge[index].activity[count].title, player[uid].challenge[index].activity[count].times 
+            player[uid].challenge[index].activity[count].title, player[uid].challenge[index].activity[count].times
         );
     }
     
@@ -264,14 +260,19 @@ contract Nomoriam {
         return challenges[index].joined[uid];
     }
     
-    function getStatusChallenge(uint index) public view returns(
-        bool, bool, uint
-    ){
-        return (
-             challenges[index].approved, challenges[index].finished, challenges[index].sum_point    
-        );
+    function getPlayerCountByChallenge(uint index) public view returns(uint) {
+        return challenges[index].players.length;
     }
 
+    function getPlayerUID(uint index, uint count) public view returns(string memory) {
+        return challenges[index].players[count];
+    }
+
+    function getPlayerByChallenge(uint index, string memory uid) public view returns(string memory, uint) {
+        return (
+            challenges[index].player[uid].uid, challenges[index].player[uid].point
+        );
+    }
     
     function getQuestionByChallenge(uint _index, uint _count) public view returns(string memory, string memory){
         return (challenges[_index].activity[_count].question, challenges[_index].activity[_count].answer);

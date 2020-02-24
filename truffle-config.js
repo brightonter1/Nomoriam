@@ -16,5 +16,16 @@ module.exports = {
             network_id: 4,
             gas: 8000000
         }
-    }
+    },
+    compilers: {
+        solc: {
+          settings: {
+            optimizer: {
+              enabled: true, // Default: false
+              runs: 1000     // Default: 200
+            },
+            evmVersion: "homestead"  // Default: "byzantium"
+          }
+        }
+      }
 }
