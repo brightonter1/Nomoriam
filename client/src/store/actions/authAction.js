@@ -2,13 +2,16 @@ import {
     SIGN_IN,
     SIGN_OUT,
     FETCH_CHALLENGE_OWNER,
-    FETCH_ACTIVITY_BYOWNER
+    FETCH_ACTIVITY_BYOWNER,
+    DO_POST
 } from './type'
 
 import firebase from '../../api/firebase'
 import history from '../../api/history'
-import { contract } from '../../contracts/config'
+import { contract, createTransaction } from '../../contracts/config'
+import moment from 'moment'
 const db = firebase.firestore()
+var storageRef = firebase.storage().ref()
 
 export const SignIn = (social) => async dispatch => {
     var currentUser = firebase.auth().currentUser
@@ -129,7 +132,7 @@ export const fetchChallengesByOwner = (userId) => async dispatch => {
 }
 
 export const fetchActivityByOwner = (userId) => async dispatch => {
-    
+
     var challenges = []
     var activities = []
     var playerActs = []
@@ -181,4 +184,38 @@ export const fetchActivityByOwner = (userId) => async dispatch => {
         }
     }
     dispatch({ type: FETCH_ACTIVITY_BYOWNER, payload: challenges })
+}
+
+export const doPost = (index, count, userId, post) => async dispatch => {
+    const { image, caption } = post
+    const { fileName, buffer } = image
+
+    doPost()
+
+    function uploadImage() {
+        var ref = storageRef.child(`images/${fileName}`)
+        ref.put(buffer).then((snapshot) => {
+            console.log('Uploaded an array!')
+            uploadPost()
+        })
+
+    }
+
+    function uploadPost() {
+        db.collection('posts').doc().set({
+            caption,
+            image: `images/${fileName}`,
+            userId,
+            date: moment().format('YYYY-MM-DD, HH:mm:ss ')
+        })
+    }
+
+    async function doPost() {
+        var data = contract.methods.doPost(index, count, userId).encodeABI()
+        const txHash = await createTransaction(data)
+        console.log(txHash)
+        uploadImage()
+        dispatch({ type: DO_POST, payload: true })
+        history.push('/')
+    }
 }

@@ -2,7 +2,8 @@ import {
     SIGN_IN,
     SIGN_OUT,
     FETCH_CHALLENGE_OWNER,
-    FETCH_ACTIVITY_BYOWNER
+    FETCH_ACTIVITY_BYOWNER,
+    DO_POST
 } from '../actions/type'
 
 const INITIAL_STATE = {
@@ -23,6 +24,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, myChallenge: action.payload }
         case FETCH_ACTIVITY_BYOWNER:
             return { ...state, myChallenge: action.payload }
+        case DO_POST:
+            return { ...state, isCompleted: action.payload}
         default:
             return state;
     }
