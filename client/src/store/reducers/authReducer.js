@@ -23,7 +23,7 @@ export default (state = INITIAL_STATE, action) => {
         case FETCH_CHALLENGE_OWNER:
             return { ...state, myChallenge: action.payload }
         case FETCH_ACTIVITY_BYOWNER:
-            return { ...state, myChallenge: action.payload }
+            return { ...state, myChallenge: action.payload, isLoading: true }
         case DO_POST:
             return { ...state, isCompleted: action.payload}
         default:

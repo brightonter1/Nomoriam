@@ -1,10 +1,11 @@
 import React from 'react'
-import { Menu, Button, Header, Modal, Segment, Grid, Divider, Icon, Dropdown } from 'semantic-ui-react'
+import { Menu, Button, Header, Modal, Segment, Grid, Divider, Icon, Dropdown, Image } from 'semantic-ui-react'
 import mariamPhoto from '../../asset/mariam.jpg'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { SignIn, SignOut } from '../../store/actions/authAction'
 import firebase from '../../api/firebase'
+
 
 
 class Navbar extends React.Component {
@@ -29,6 +30,8 @@ class Navbar extends React.Component {
 
                 <Link to="/hallOfframe" className="item">กระดานคะแนน</Link>
 
+                <Link to="/quest" className="item">ภารกิจ</Link>
+
                 <Menu.Menu position="right">
                     {
                         this.props.isSignedIn && this.props.isAdmin ?
@@ -45,7 +48,12 @@ class Navbar extends React.Component {
                                 </Dropdown.Menu>
                             </Dropdown>
                             : this.props.isSignedIn && !this.props.isAdmin && this.props.userId ?
-                                <Dropdown text={this.props.playerName} simple item>
+                                <Dropdown
+                                    icon="user circle outline"
+                                    text={this.props.playerName}
+                                    simple
+                                    item
+                                >
                                     <Dropdown.Menu>
                                         <Dropdown.Item>
                                             โปรไฟล์
@@ -139,6 +147,7 @@ const mapStateToProps = state => {
         playerName: state.auth.name,
         isSignedIn: state.auth.isSignedIn,
         isAdmin: state.auth.role,
+        photo: state.auth.photoUrl,
         requestAdmin: state.challenge.challengesApprove
     }
 }

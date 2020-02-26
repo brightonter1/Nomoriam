@@ -26,8 +26,8 @@ export const SignIn = (social) => async dispatch => {
                 if (data) {
                     user = {
                         userId: result.user.uid,
-                        name: result.user.displayName,
-                        photoURL: result.user.photoURL,
+                        name: data.displayname,
+                        photoURL: data.photo,
                         roleAdmin: data.role === "admin" ? true : false
                     }
                 } else {
@@ -92,8 +92,8 @@ export const SignIn = (social) => async dispatch => {
             if (data) {
                 user = {
                     userId: currentUser.uid,
-                    name: currentUser.displayName,
-                    photoURL: currentUser.photoURL,
+                    name: data.displayname,
+                    photoURL: data.photo,
                     roleAdmin: data.role === "admin" ? true : false
                 }
             } else {
@@ -112,7 +112,6 @@ export const SignIn = (social) => async dispatch => {
 
 export const SignOut = () => dispatch => {
     firebase.auth().signOut().then(function () {
-        history.push('/')
         dispatch({ type: SIGN_OUT })
     })
 }
@@ -132,7 +131,6 @@ export const fetchChallengesByOwner = (userId) => async dispatch => {
 }
 
 export const fetchActivityByOwner = (userId) => async dispatch => {
-
     var challenges = []
     var activities = []
     var playerActs = []
@@ -216,6 +214,5 @@ export const doPost = (index, count, userId, post) => async dispatch => {
         console.log(txHash)
         uploadImage()
         dispatch({ type: DO_POST, payload: true })
-        history.push('/')
     }
 }

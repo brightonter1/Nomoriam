@@ -8,8 +8,7 @@ const storageRef = firebase.storage().ref()
 
 export const fetchFeeds = () => async dispatch => {
     var posts = []
-
-    await getPosts()
+    getPosts()
     
     async function getPosts() {
         db.collection('posts').get().then((snapshot) => {
@@ -20,17 +19,15 @@ export const fetchFeeds = () => async dispatch => {
                     post.displayname = user.displayname
                     post.userPhoto = user.photo
                 })
-
                 storageRef.child(post.image).getDownloadURL().then((url) => {
                     post.image = url
                 })
-
                 posts.push(post)
             })
         })
+        setTimeout(() => {
+            dispatch({ type: FETCH_FFEDS, payload: posts, isFetch: true })
+        }, 3000)
     }
 
-
-
-    dispatch({ type: FETCH_FFEDS, payload: posts })
 }

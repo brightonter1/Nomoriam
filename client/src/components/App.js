@@ -8,6 +8,7 @@ import ManagePage from './Manage/ManagePage'
 import StatusMenu from './UserMenu/StatusMenu'
 import HomePage from './Home/HomePage'
 import ChallengeShow from './Challenge/ChallengeShow'
+import QuestPage from './Quest/QuestPage'
 
 class App extends React.Component {
 
@@ -24,6 +25,7 @@ class App extends React.Component {
                             <Route path="/challenges/new" exact component={CreateChallenge} />
                             <Route path="/manage/challenges" exact component={ManagePage} />
                             <Route path="/status/:userId" exact component={StatusMenu} />
+                            <Route path="/quest" exact component={QuestPage} />
                         </Switch>
                     </div>
                 </Router>
