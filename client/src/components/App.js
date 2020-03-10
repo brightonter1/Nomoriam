@@ -1,37 +1,76 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Router, Route, Switch } from 'react-router-dom'
 import history from '../api/history'
-import Navbar from './Layout/Navbar'
+import { connect } from 'react-redux'
+import HomepageLayout from './Layout/HomepageLayout'
 import ChallengePage from './Challenge/ChallengePage'
-import CreateChallenge from './Challenge/CreateChallenge'
-import ManagePage from './Manage/ManagePage'
-import StatusMenu from './UserMenu/StatusMenu'
 import HomePage from './Home/HomePage'
-import ChallengeShow from './Challenge/ChallengeShow'
-import QuestPage from './Quest/QuestPage'
+import firebase from '../api/firebase'
+import LoginPage from './Layout/LoginPage'
+import SignUpPage from './Layout/SignUpPage'
+import { isSignIn } from '../store/actions/authAction'
+import MariamSpinner from './Layout/MariamSpinner'
+import ChallengeForm from './Challenge/ChallengeForm'
+import ProfilePage from './User/ProfilePage'
+import StatusPage from './User/StatusPage'
+import ManagePage from './Admin/ManagePage'
+import ChallengeShow from './Admin/ChallengeShow'
+import ChallengeDetail from './Challenge/ChallengeDetail'
+import ShowDetail from './User/ShowDetail'
+import Test from '../components/Home/Test'
 
-class App extends React.Component {
+const App = (props) => {
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged(user => {
+            return props.isSignIn()
+        })
+    }, [])
 
-    render() {
+    // return (
+    //     <Test />
+    // )
+
+    if (props.isSignedIn === true) {
         return (
-            <div>
-                <Router history={history}>
-                    <Navbar />
+            <Router history={history}>
+                <HomepageLayout>
                     <div>
                         <Switch>
                             <Route path="/" exact component={HomePage} />
                             <Route path="/challenges" exact component={ChallengePage} />
-                            <Route path="/challenges/:id/show" exact component={ChallengeShow} />                          
-                            <Route path="/challenges/new" exact component={CreateChallenge} />
-                            <Route path="/manage/challenges" exact component={ManagePage} />
-                            <Route path="/status/:userId" exact component={StatusMenu} />
-                            <Route path="/quest" exact component={QuestPage} />
+                            <Route path="/challenges/new" exact component={ChallengeForm} />
+                            <Route path="/challenges/:index" exact component={ChallengeDetail} />
+                            <Route path="/account/profile" exact component={ProfilePage} />
+                            <Route path="/account/status" exact component={StatusPage} />
+                            <Route path="/admin/manage/:index" exact component={ChallengeShow} />
+                            <Route path="/account/status/:index/show" exact component={ShowDetail} />
+                            
+                            {props.userInfo.roleAdmin && <Route path="/admin/manage" exact component={ManagePage} />}
                         </Switch>
                     </div>
-                </Router>
-            </div>
+                </HomepageLayout>
+            </Router>
         )
+    } else if (props.isSignedIn === false) {
+        return (
+            <Router history={history}>
+                <Switch>
+                    <Route path="/" exact component={LoginPage} />
+                    <Route path="/signup" exact component={SignUpPage} />
+                </Switch>
+            </Router>
+        )
+    } else {
+        return <MariamSpinner open={true} />
     }
 }
 
-export default (App);
+const mapStateToProps = state => {
+    console.log(state)
+    return {
+        isSignedIn: state.auth.isSignedIn,
+        userInfo: state.auth.userInfo
+    }
+}
+
+export default connect(mapStateToProps, { isSignIn })(App)

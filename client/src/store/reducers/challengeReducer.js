@@ -1,30 +1,74 @@
 import {
     CREATE_CHALLENGE,
-    FETCH_CHALLENGES_APPROVE,
-    FETCH_CHALLENGES_NOTFOUND,
+    CREATE_CHALLENGE_FAILED,
+    FETCH_CHALLENGE_ON_APPROVE,
+    FETCH_CHALLENGE_BY_INDEX,
+    FETCH_CHALLENGE_BY_INDEX_CLEAN_UP,
     APPROVE_CHALLENGES,
     FETCH_CHALLENGES,
     FETCH_CHALLENGE,
-    JOIN_CHALLENGE
+    FETCH_CHALLENGE_CLEAN_UP,
+    JOIN_CHALLENGE,
+    JOIN_CHALLENGE_CLEAN_UP,
+    FETCH_ACTIVITY,
+    CLEAN_UP,
+    DOPOST,
+    DOPOST_CLEAN,
+    DOQRCODE,
+    DOQRCODE_CLEAN,
+    FETCH_MY_CHALLENGE,
+    FETCH_MY_CHALLENGES
 } from '../actions/type'
 
-export default (state = {}, action) => {
+const INITIAL_STATE = {
+    isCompleted: null,
+    isFetching: null,
+    isFetch: null,
+    isJoined: null,
+    message: null
+}
+
+export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case CREATE_CHALLENGE:
-            return { ...state, isSuccess: true }
-        case FETCH_CHALLENGES_APPROVE:
-            return { ...state, challengesApprove: action.payload, isFetchApprove: true }
-        case FETCH_CHALLENGES_NOTFOUND:
-            return { ...state, isFetch: action.payload }
+            return { ...state, isCompleted: true, message: action.payload }
+        case CREATE_CHALLENGE_FAILED:
+            return { ...state, isCompleted: false, message: action.payload }
+        case FETCH_CHALLENGE_ON_APPROVE:
+            return { ...state, onApprove: action.payload, isFetching: true }
+        case FETCH_CHALLENGE_BY_INDEX:
+            return { ...state, isFetching: true, challenge: action.payload }
+        case FETCH_CHALLENGE_BY_INDEX_CLEAN_UP:
+            return { ...state, isFetching: null, challenge: null }
         case APPROVE_CHALLENGES:
-            return { ...state, txHash: action.payload, isCompleted: action.isComplete }
+            return { ...state, isCompleted: true, txHash: action.payload }
         case FETCH_CHALLENGES:
-            return { ...state, challenges: action.payload, isFetch: action.isComplete }
+            return { ...state, isFetch: true, challenges: action.payload }
         case FETCH_CHALLENGE:
-            return { ...state, [action.index]: action.payload }
+            return { ...state, isFetching: true, challenge: action.payload }
+        case FETCH_CHALLENGE_CLEAN_UP:
+            return { ...state, isFetching: null, challenge: null }
         case JOIN_CHALLENGE:
-            return { ...state, isJoined: action.isJoined }
+            return { ...state, message: action.payload, isJoined: true }
+        case JOIN_CHALLENGE_CLEAN_UP:
+            return { ...state, message: null, isJoined: null }
+        case CLEAN_UP:
+            return { ...state, isCompleted: null, isFetch: null, isFetching: null, isJoined: null, message: null, txHash: null, isAllFetch: null }
+        case FETCH_ACTIVITY:
+            return { ...state, activity: action.payload, isActivity: true }
+        case DOPOST:
+            return { ...state, isPosted: action.isPosted, message: action.payload, medal: action.medal }
+        case DOPOST_CLEAN:
+            return { ...state, isPosted: null, message: null, medal: null }
+        case DOQRCODE:
+            return { ...state, isQRcoded: action.isPosted, messageQR: action.payload, medal: action.medal }
+        case DOQRCODE_CLEAN:
+            return { ...state, isQRcoded: null, messageQR: null, medal: null }
+        case FETCH_MY_CHALLENGE:
+            return { ...state, challengeApproved: action.payload, isAllFetch: true, challengeNotApprove: action.myChallenges }
+        case FETCH_MY_CHALLENGES:
+            return { ...state, getData: action.getData, myChallenge: action.payload }
         default:
-            return state
+            return state;
     }
 }

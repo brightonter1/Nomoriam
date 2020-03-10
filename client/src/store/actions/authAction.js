@@ -1,218 +1,230 @@
 import {
     SIGN_IN,
+    SIGN_IN_FAILED,
     SIGN_OUT,
-    FETCH_CHALLENGE_OWNER,
-    FETCH_ACTIVITY_BYOWNER,
-    DO_POST
+    SIGN_UP,
+    SIGN_UP_FAILED,
+    FETCH_PROFILE,
+    INITIAL_PROFILE,
+    INITIAL_PROFILE_CLEAN,
+    EDITE_PHOTO,
+    EDITE_PROFILE,
+    EDITE_CLEAN
 } from './type'
 
 import firebase from '../../api/firebase'
 import history from '../../api/history'
-import { contract, createTransaction } from '../../contracts/config'
-import moment from 'moment'
+import { contract } from '../../contracts/config'
+import _ from 'lodash'
 const db = firebase.firestore()
-var storageRef = firebase.storage().ref()
+const storageRef = firebase.storage().ref()
 
-export const SignIn = (social) => async dispatch => {
+
+export const isSignIn = () => async dispatch => {
     var currentUser = firebase.auth().currentUser
     var user = {}
-    var provider
-    var db = firebase.firestore()
-    if (social === 'google.com') {
-        provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(provider).then(async function (result) {
-            await db.collection('users').doc(result.user.uid).get().then((res) => {
-                const data = res.data()
-                if (data) {
-                    user = {
-                        userId: result.user.uid,
-                        name: data.displayname,
-                        photoURL: data.photo,
-                        roleAdmin: data.role === "admin" ? true : false
-                    }
-                } else {
-                    user = {
-                        userId: result.user.uid,
-                        name: result.user.displayName,
-                        photoURL: result.user.photoURL
-                    }
-                }
-            })
-
-            if (result.additionalUserInfo.isNewUser) {
-                db.collection('users').doc(result.user.uid).set({
-                    displayname: result.user.displayName,
-                    email: result.user.email,
-                    photo: result.user.photoURL,
-                    role: "player"
-                })
-                dispatch({ type: SIGN_IN, payload: user })
-                history.push("/")
-            } else {
-                dispatch({ type: SIGN_IN, payload: user })
-            }
-        })
-    } else if (social === 'facebook.com') {
-        provider = new firebase.auth.FacebookAuthProvider();
-        firebase.auth().signInWithPopup(provider).then(async function (result) {
-            await db.collection('users').doc(result.user.uid).get().then((res, err) => {
-                const data = res.data()
-                if (data) {
-                    user = {
-                        userId: result.user.uid,
-                        name: result.user.displayName,
-                        photoURL: result.user.photoURL,
-                        roleAdmin: data.role === "admin" ? true : false
-                    }
-                } else {
-                    user = {
-                        userId: result.user.uid,
-                        name: result.user.displayName,
-                        photoURL: result.user.photoURL
-                    }
-                }
-            })
-
-            if (result.additionalUserInfo.isNewUser) {
-                db.collection('users').doc(result.user.uid).set({
-                    displayname: result.user.displayName,
-                    email: result.user.email,
-                    photo: result.user.photoURL,
-                    role: "player"
-                })
-                dispatch({ type: SIGN_IN, payload: user })
-                history.push("/")
-            } else {
-                dispatch({ type: SIGN_IN, payload: user })
-            }
-        })
-    } else {
+    if (currentUser) {
         await db.collection('users').doc(currentUser.uid).get().then((res) => {
             const data = res.data()
             if (data) {
                 user = {
                     userId: currentUser.uid,
-                    name: data.displayname,
-                    photoURL: data.photo,
-                    roleAdmin: data.role === "admin" ? true : false
-                }
-            } else {
-                user = {
-                    userId: currentUser.uid,
-                    name: currentUser.displayName,
-                    photoURL: currentUser.photoURL
+                    displayname: data.displayname,
+                    photoURL: data.photoURL,
+                    roleAdmin: data.role === "admin" ? true : false,
+                    bio: data.bio
                 }
             }
         })
-
         dispatch({ type: SIGN_IN, payload: user })
+    } else {
+        dispatch({ type: SIGN_IN_FAILED })
     }
 
 }
 
-export const SignOut = () => dispatch => {
+export const SignIn = ({ email, pwd }) => async dispatch => {
+    var user = {}
+
+    firebase.auth().signInWithEmailAndPassword(email, pwd).then(function (result) {
+        // Login Completed
+        db.collection('users').doc(result.user.uid).get().then((res) => {
+            const data = res.data()
+            if (data) {
+                user = {
+                    userId: result.user.uid,
+                    displayname: data.displayname,
+                    photoURL: data.photoURL,
+                    roleAdmin: data.role === "admin" ? true : false,
+                    bio: data.bio
+                }
+            }
+            dispatch({ type: SIGN_IN, payload: user })
+        })
+    }).catch(function (err) {
+        // Login Failed
+        dispatch({ type: SIGN_IN_FAILED, payload: err.message })
+    })
+}
+
+export const SignInGoogle = () => async dispatch => {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    var user = {}
+    firebase.auth().signInWithPopup(provider).then(async function (result) {
+        if (result.additionalUserInfo.isNewUser) {
+            db.collection('users').doc(result.user.uid).set({
+                displayname: result.user.displayName,
+                email: result.user.email,
+                role: "player",
+                photoURL: ''
+            })
+            user = {
+                userId: result.user.uid,
+                displayname: result.user.displayName,
+                email: result.user.email,
+                roleAdmin: false,
+                bio: ''
+            }
+            dispatch({ type: SIGN_IN, payload: user })
+            history.push('/')
+        } else {
+            await db.collection('users').doc(result.user.uid).get().then((res) => {
+                const data = res.data()
+                user = {
+                    userId: result.user.uid,
+                    displayname: data.displayname,
+                    photoURL: data.photoURL,
+                    roleAdmin: data.role === "admin" ? true : false,
+                    bio: result.bio
+                }
+                dispatch({ type: SIGN_IN, payload: user })
+                history.push('/')
+            })
+        }
+    })
+}
+
+export const SignOut = () => async dispatch => {
     firebase.auth().signOut().then(function () {
         dispatch({ type: SIGN_OUT })
+        history.push('/')
     })
 }
 
-export const fetchChallengesByOwner = (userId) => async dispatch => {
-    var challenges = []
-    db.collection('challenges').where('owner', '==', userId).get().then((snapshot) => {
-        snapshot.forEach((res) => {
-            challenges.push(res.data())
+export const SignUp = user => async dispatch => {
+
+    await firebase.auth().createUserWithEmailAndPassword(user.email, user.pwd).then((result) => {
+        db.collection('users').doc(result.user.uid).set({
+            displayname: user.displayname,
+            email: user.email,
+            role: "player",
+            photoURL: ' ',
+            bio: ''
+        }).then(() => { // Success
+            // firebase.auth().signOut().then(function () {
+            dispatch({ type: SIGN_UP, payload: "สมัครสมาชิกสำเร็จ" })
+
+            setTimeout(() => {
+                history.push('/')
+            }, 3000)
+            // })
+
+        }).catch((err) => { // Failed
+            firebase.auth().signOut()
+            dispatch({ type: SIGN_UP_FAILED, payload: err.message })
         })
-        if (challenges.length === 0) {
-            dispatch({ type: FETCH_CHALLENGE_OWNER, payload: false })
-        } else {
-            dispatch({ type: FETCH_CHALLENGE_OWNER, payload: challenges })
-        }
+
+    }).catch(function (err) {
+        console.log("Error")
+        dispatch({ type: SIGN_UP_FAILED, payload: err.message })
     })
 }
 
-export const fetchActivityByOwner = (userId) => async dispatch => {
-    var challenges = []
-    var activities = []
-    var playerActs = []
-    const size = await contract.methods.getChallengeCount().call()
-    for (var i = 0; i < size; i++) {
-        var challenge = await contract.methods.challenges(i).call()
-        var joined = await contract.methods.getJoinedChallenge(i, userId).call()
-        if (joined) {
-            var actCount = await contract.methods.getActivityCount(i).call()
-            for (var j = 0; j < actCount; j++) {
-                var act = await contract.methods.getActivityByChallenge(i, j).call()
-                act = {
-                    title: act[0],
-                    image: act[1],
-                    category: act[2],
-                    times: act[3],
-                    point: act[4],
-                    exp: act[5],
-                    location: act[6]
-                }
-                if (act.category === 'qrcode') {
-                    var qrcode = []
-                    for (var k = 0; k < act.times; k++) {
-                        var hash = await contract.methods.getQRcodeByChallenge(i, j, k).call()
-                        qrcode.push(hash)
-                    }
-                    act.qrcode = qrcode
-                }
-                if (act.category === 'question') {
-                    var issue = await contract.methods.getQuestionByChallenge(i, k).call()
-                    act.question = issue[0]
-                    act.answer = issue[1]
-                }
-
-                var playerAct = await contract.methods.getActivityChallengeByPlayer(i, j, userId).call()
-                playerAct = {
-                    title: playerAct[0],
-                    times: playerAct[1]
-                }
-                playerActs.push(playerAct)
-                activities.push(act)
-            }
-            challenge.myActivity = playerActs
-            challenge.activities = activities
-            playerActs = []
-            activities = []
-            challenge.index = i
-            challenges.push(challenge)
+export const FetchProfile = () => async dispatch => {
+    var userId = firebase.auth().currentUser.uid
+    var player = {}
+    var posts = []
+    var data = await contract.methods.getPlayer(userId).call()
+    const medalCount = await contract.methods.getMedalCountByPlayer(userId).call()
+    const medals = []
+    for (var i = 0; i < medalCount; i++) {
+        var medal = await contract.methods.getMedalByPlayer(userId, i).call()
+        medal = {
+            title: medal[0].split(':.')[0],
+            challenge: medal[0].split(':.')[1],
+            image: `https://ipfs.infura.io/ipfs/${medal[1]}`,
+            end_time: medal[2]
         }
+        medals.push(medal)
     }
-    dispatch({ type: FETCH_ACTIVITY_BYOWNER, payload: challenges })
+    db.collection('posts').where('owner', '==', userId).get()
+        .then((snapshot) => {
+            snapshot.forEach((res) => {
+                var post = res.data()
+                storageRef.child(post.image).getDownloadURL().then(function (url) {
+                    post.image = url
+                })
+                posts.push(post)
+            })
+        }).catch((err) => {
+            console.log("Not FOund")
+            console.log(err.message)
+        })
+    player.posts = posts
+    player.exp = data[2]
+    player.challengeCount = data[3]
+    player.medals = medals
+    player.oneCount = player.medals.filter(medal => medal.title === 'ผู้ชนะอันดับที่ 1')
+    player.twoCount = player.medals.filter(medal => medal.title === 'ผู้ชนะอันดับที่ 2')
+    player.threeCount = player.medals.filter(medal => medal.title === 'ผู้ชนะอันดับที่ 3')
+    player.fourCount = player.medals.filter(medal => medal.title === 'ถ้วยรางวัลผู้เข้าร่วม')
+
+
+    dispatch({ type: FETCH_PROFILE, payload: player })
 }
 
-export const doPost = (index, count, userId, post) => async dispatch => {
-    const { image, caption } = post
-    const { fileName, buffer } = image
+export const load = (data) => async dispatch => {
+    dispatch({ type: INITIAL_PROFILE, payload: data })
+}
 
-    doPost()
+export const cleanLoad = () => async dispatch => {
+    dispatch({ type: INITIAL_PROFILE_CLEAN })
+}
 
-    function uploadImage() {
-        var ref = storageRef.child(`images/${fileName}`)
-        ref.put(buffer).then((snapshot) => {
-            console.log('Uploaded an array!')
-            uploadPost()
+export const EditPhoto = (profile) => async dispatch => {
+    console.log("Start ....")
+    var userId = firebase.auth().currentUser.uid
+    var batch = db.batch()
+    var profileRef = db.collection('users').doc(userId)
+    storageRef.child(`/profiles/${userId}`).put(profile.image.image)
+        .then(function () {
+            console.log("Image Profile Uploaded")
+            storageRef.child(`/profiles/${userId}`).getDownloadURL()
+                .then(async function (url) {
+                    console.log("Read path Image")
+                    batch.update(profileRef, { "photoURL": url })
+                    await batch.commit().then(() => {
+                        console.log("COmpleted")
+                        dispatch({ type: EDITE_PHOTO, isEdit: true })
+                    })
+                })
+        }).catch(function () {
+            dispatch({ type: EDITE_PHOTO, isEdit: false })
         })
+}
 
-    }
+export const EditProfile = (profile) => async dispatch => {
+    console.log("Start ....")
+    var userId = firebase.auth().currentUser.uid
+    var batch = db.batch()
+    var profileRef = db.collection('users').doc(userId)
+    batch.update(profileRef, { "displayname": profile.displayname, "bio": profile.bio })
+    await batch.commit().then(() => {
+        console.log("Complete")
+        dispatch({ type: EDITE_PROFILE, isEdit: true })
+    })
+}
 
-    function uploadPost() {
-        db.collection('posts').doc().set({
-            caption,
-            image: `images/${fileName}`,
-            userId,
-            date: moment().format('YYYY-MM-DD, HH:mm:ss ')
-        })
-    }
-
-    async function doPost() {
-        var data = contract.methods.doPost(index, count, userId).encodeABI()
-        const txHash = await createTransaction(data)
-        console.log(txHash)
-        uploadImage()
-        dispatch({ type: DO_POST, payload: true })
-    }
+export const EditClean = () => async dispatch => {
+    dispatch({ type: EDITE_CLEAN })
 }

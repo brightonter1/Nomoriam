@@ -1,33 +1,42 @@
-import React, { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
-import { fetchFeeds } from '../../store/actions/feedAction'
-import PostShow from './PostShow'
+import React, { useState } from 'react'
+import {
+    Container,
+    Grid,
+    Header,
+    Divider,
+    Icon,
+} from 'semantic-ui-react'
+import ActivityBar from './ActivitiBar'
 
-const HomePage = props => {
-
-    const { posts, userId } = props
+const HomePage = (props) => {
 
 
-
-    useEffect(() => {
-        props.fetchFeeds()
-    }, [posts])
 
 
     return (
-        <div className="ui container" style={{ paddingTop: 80 }}>
-            {
-                posts ? <PostShow posts={posts} userId={userId} /> : "Loading..."
-            }
-        </div>
+        <Grid style={{ paddingTop: '3em' }} stackable >
+            <Container>
+                <Grid.Row style={{ paddingBottom: '2em' }}>
+                    <Grid.Column floated="left" width={16}>
+                        <Header as='h1' color="olive">
+                            <Icon name='tasks' color="olive" />
+                            <Header.Content >
+                                ภารกิจทั้งหมด
+                                    <Header.Subheader>เลือกภารกิจและเล่นได้เลย!</Header.Subheader>
+                            </Header.Content>
+                        </Header>
+                    </Grid.Column>
+                    <Divider />
+                </Grid.Row>
+            </Container>
+
+            <Container>
+                <Grid.Row>
+                    <ActivityBar />
+                </Grid.Row>
+            </Container>
+        </Grid>
     )
-
-}
-const mapStateToProps = state => {
-    return {
-        posts: state.feed.posts,
-        userId: state.auth.userId,
-    }
 }
 
-export default connect(mapStateToProps, { fetchFeeds })(HomePage)
+export default HomePage
