@@ -11,10 +11,6 @@ import {
     Divider,
     Button,
     Segment,
-    Table,
-    Loader,
-    Statistic,
-    Card,
     Menu,
     Modal,
     Form,
@@ -27,11 +23,12 @@ import silver from '../../asset/archievement/silver.png'
 import bronze from '../../asset/archievement/bronze.png'
 import award from '../../asset/archievement/award.png'
 import { reduxForm, Field, formValueSelector } from 'redux-form'
-import { renderFileInput, renderInput, renderTextArea, alertMedal } from '../Challenge/Form'
+import { renderFileInput, renderInput, renderTextArea } from '../Challenge/Form'
 import { connect } from 'react-redux'
 import { FetchProfile, load, EditPhoto, EditProfile, EditClean, isSignIn } from '../../store/actions/authAction'
 import MariamSpinner from '../Layout/MariamSpinner'
 import { alertAction } from '../Challenge/Form'
+import moment from 'moment'
 
 
 let ProfilePage = props => {
@@ -245,8 +242,8 @@ let ProfilePage = props => {
                                                     <Feed.Label image={userInfo.photoURL ? userInfo.photoURL : photo} />
                                                     <Feed.Content>
                                                         <Feed.Summary>
-                                                            <Feed.User>{userInfo.displayname}</Feed.User> created a post
-                                                    <Feed.Date>{post.timestamp}</Feed.Date>
+                                                            <Feed.User>{userInfo.displayname}</Feed.User> ได้โพสต์
+                                                    <Feed.Date>{moment(post.timestamp, 'DD-MM-YYYY HH:mm:ss').fromNow()}</Feed.Date>
                                                         </Feed.Summary>
                                                         <Feed.Date style={{ paddingTop: 10 }}>{post.signTransaction.slice(0, 30) + '...'}</Feed.Date>
                                                         <Feed.Extra text>
@@ -275,7 +272,7 @@ let ProfilePage = props => {
         }
 
         return (
-            <Container style={{ paddingTop: '3em' }}>
+            <Container style={{ paddingTop: '3em', minHeight: 600 }}>
                 <ModalPhoto />
                 <ModalForm />
                 <MariamSpinner open={loading} />

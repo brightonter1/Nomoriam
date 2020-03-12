@@ -17,7 +17,8 @@ import {
     DOQRCODE,
     DOQRCODE_CLEAN,
     FETCH_MY_CHALLENGE,
-    FETCH_MY_CHALLENGES
+    FETCH_MY_CHALLENGES,
+    FETCH_POST
 } from '../actions/type'
 
 const INITIAL_STATE = {
@@ -68,6 +69,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, challengeApproved: action.payload, isAllFetch: true, challengeNotApprove: action.myChallenges }
         case FETCH_MY_CHALLENGES:
             return { ...state, getData: action.getData, myChallenge: action.payload }
+        case FETCH_POST:
+            return { ...state, posts: action.payload, isPost: true }
         default:
             return state;
     }

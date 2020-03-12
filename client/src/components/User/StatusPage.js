@@ -97,7 +97,7 @@ const StatusPage = props => {
 
 
         return (
-            <Grid style={{ paddingTop: '3em' }} stackable >
+            <Grid style={{ paddingTop: '3em', minHeight: 600 }} stackable >
                 <Container>
                     <Grid.Row >
                         <Grid.Column floated="left" width={16}>
@@ -113,10 +113,18 @@ const StatusPage = props => {
                     </Grid.Row>
                 </Container>
                 <Grid.Row>
-                    {approvedList}
+                    {
+                        approvedList.length === 0 ?
+                            <Container>
+                                <Grid.Column width={16}>
+                                    <a>ไม่พบชาเลนจ์ที่ยืนยันแล้ว</a>
+                                </Grid.Column>
+                            </Container>
+                            : approvedList
+                    }
                 </Grid.Row>
 
-                <Container style={{paddingTop: '3em'}} >
+                <Container style={{ paddingTop: '3em' }} >
                     <Grid.Row >
                         <Grid.Column floated="left" width={16}>
                             <Header as='h1' color="olive">
@@ -131,7 +139,15 @@ const StatusPage = props => {
                     </Grid.Row>
                 </Container>
                 <Grid.Row>
-                    {notApproveList}
+                    {
+                        notApproveList.length === 0 ?
+                            <Container>
+                                <Grid.Column width={16}>
+                                    <a>ไม่พบชาเลนจ์ที่ยังไม่ได้ยืนยัน</a>
+                                </Grid.Column>
+                            </Container>
+                            : notApproveList
+                    }
                 </Grid.Row>
             </Grid>
         )

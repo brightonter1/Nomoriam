@@ -28,11 +28,14 @@ import QrReader from 'react-qr-reader'
 let ActivityBar = props => {
 
     useEffect(() => {
-        props.fetchActivity()
         if (props.image) {
             setImage(props.image.imageFile)
         }
     }, [props.image])
+
+    useEffect(() => {
+        props.fetchActivity()
+    }, [props.challenges])
 
     useEffect(() => {
         if (props.isPosted === true) {
@@ -61,6 +64,7 @@ let ActivityBar = props => {
             } else {
                 setLoading(false)
                 alertAction('สำเร็จ', `รอสักพักคะแนนจะขึ้นนะครับ ^^\n${props.messageQR}`, 'success')
+
             }
         } else if (props.isQRCODED === false) {
             setLoading(false)
@@ -153,8 +157,8 @@ let ActivityBar = props => {
     const ModalForm = () => {
         return (
             <Modal open={modalPost} size='tiny' dimmer="inverted" onClose={() => setModalPost(false)}>
-                <Modal.Header><Header as='h3'>สแกนคิวอาโค้ด</Header></Modal.Header>
-                <Image src={image ? image : photo} fluid />
+                <Modal.Header><Header as='h3'>โพสต์รูปภาพพร้อมแคปชัน</Header></Modal.Header>
+                <Image src={image ? image : photo} centered style={{ height: 380, objectFit: 'cover', objectPosition: 'center center' }} />
                 <Modal.Content>
                     <Form onSubmit={props.handleSubmit(onSubmit)}>
                         <Field name="image" component={renderFileInput} type="file" label="เลือกรูปภาพ" />

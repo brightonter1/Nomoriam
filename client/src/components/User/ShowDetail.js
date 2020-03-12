@@ -21,6 +21,7 @@ import {
 } from 'semantic-ui-react'
 import MariamSpinner from '../Layout/MariamSpinner'
 import QRCode from 'qrcode.react'
+import moment from 'moment'
 
 
 
@@ -102,7 +103,7 @@ const ShowDetail = props => {
                         </Item>
                         <Grid centered>
                             {
-                                act.category &&
+                                act.category === 'qrcode' &&
                                 <Button
                                     fluid
                                     color='teal'
@@ -116,6 +117,32 @@ const ShowDetail = props => {
                     </Item.Group>
                 </Segment>
             </Segment.Group>
+        )
+
+        const playersList = props.challenge.players.map((player, index) =>
+            <Table.Row key={index} >
+                <Table.Cell >
+                    <Header as='h4' image>
+                        <Image src={player.photoURL} rounded size='mini' />
+                    </Header>
+                </Table.Cell>
+                <Table.Cell>
+                    <Header as='h4'>
+                        {player.displayname}
+                    </Header>
+                </Table.Cell>
+                <Table.Cell>
+                    <Header as='h4'>
+                        ผู้พิทักษ์
+                                                </Header>
+                </Table.Cell>
+                <Table.Cell>
+                    <Header as='h4'>
+                        <Progress value={player.point} total={challenge.sum_point} color="green" progress='ratio' />
+                    </Header>
+                </Table.Cell>
+            </Table.Row>
+
         )
 
 
@@ -143,7 +170,7 @@ const ShowDetail = props => {
                                     <Item.Extra style={{ paddingTop: 10 }}>
                                         <Label size='large' color="blue">
                                             <Icon name="calendar alternate outline" />
-                                            {challenge.create_time} - {challenge.end_time}
+                                            {moment(challenge.create_time).format('LL')} - {moment(challenge.end_time).format('LL')}
                                         </Label>
                                     </Item.Extra>
                                     <Item.Extra style={{ paddingTop: 10 }}>
@@ -196,32 +223,7 @@ const ShowDetail = props => {
                                         </Table.Row>
                                     </Table.Header>
                                     <Table.Body>
-
-                                        <Table.Row >
-                                            <Table.Cell>
-                                                <Header as='h4' image>
-                                                    <Image src={photo} rounded size='mini' />
-                                                </Header>
-                                            </Table.Cell>
-                                            <Table.Cell>
-                                                <Header as='h4'>
-                                                    {"player.uid"}
-                                                </Header>
-                                            </Table.Cell>
-                                            <Table.Cell>
-                                                <Header as='h4'>
-                                                    ผู้พิทักษ์
-                                                </Header>
-                                            </Table.Cell>
-                                            <Table.Cell>
-                                                <Header as='h4'>
-                                                    <Progress value={50} total={100} color="green" progress='ratio' />
-                                                </Header>
-                                            </Table.Cell>
-                                        </Table.Row>
-
-
-
+                                        {playersList}
                                     </Table.Body>
                                 </Table>
                             </Segment>

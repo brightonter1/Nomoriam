@@ -5,16 +5,21 @@ import {
     Header,
     Divider,
     Icon,
+    Feed,
+    Label,
+    Image,
+    Card
 } from 'semantic-ui-react'
 import ActivityBar from './ActivitiBar'
-
+import photo from '../../asset/mariam/Header.jpg'
+import PostList from './PostList'
 const HomePage = (props) => {
 
 
 
 
     return (
-        <Grid style={{ paddingTop: '3em' }} stackable >
+        <Grid style={{ paddingTop: '3em', minHeight: 600 }} stackable >
             <Container>
                 <Grid.Row style={{ paddingBottom: '2em' }}>
                     <Grid.Column floated="left" width={16}>
@@ -35,6 +40,10 @@ const HomePage = (props) => {
                     <ActivityBar />
                 </Grid.Row>
             </Container>
+
+            <Grid.Row style={{ paddingLeft: '4%' }}>
+                <PostList />
+            </Grid.Row>
         </Grid>
     )
 }

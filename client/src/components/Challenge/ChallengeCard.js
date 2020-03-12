@@ -83,7 +83,6 @@ const ChallengeCard = props => {
                             <Card.Header>{durationDate(challenge.end_time)}</Card.Header>
                         </Card.Content>
                     </Card>
-                    {/* <Progress percent={Math.floor(Math.abs(challenge.point / challenge.sum_point) * 100)} inverted color='red' progress /> */}
                     {!challenge.joined && !challenge.finished && <Button color="orange" fluid style={{ borderRadius: 20 }} onClick={() => handleJoin(index)}>เข้าร่วม</Button>}
                     {!challenge.joined && challenge.finished && <Button color="green" fluid style={{ borderRadius: 20 }} disabled>เข้าร่วม</Button>}
                     {challenge.joined && !challenge.finished && <Button color="teal" fluid style={{ borderRadius: 20 }} >เข้าร่วมเรียบร้อยแล้ว</Button>}

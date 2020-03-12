@@ -25,6 +25,7 @@ import { reduxForm, Field } from 'redux-form'
 import { renderTextArea, renderFileInput } from '../Challenge/Form'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import _ from 'lodash'
 import Reward from '../../asset/archievement/TheFirst.png'
 
 const MySwal = withReactContent(Swal)
@@ -81,6 +82,22 @@ class Test extends Component {
         })
     )
     render() {
+
+        var blogPosts = [
+            { date: "2016-10-26 13:37:00", title: "Blog-Post 3" },
+            { date: "2016-10-24 13:37:01", title: "Blog-Post 1" },
+            { date: "2016-10-25 13:37:03", title: "Blog-Post 2" },
+            { date: "2016-10-24 13:36:00", title: "Blog-Post 4"}
+        ];
+        console.log(moment().format())
+        console.log(moment().format("DD-MM-YYYY"))
+        blogPosts = _.sortBy(blogPosts, function (o) {
+            console.log((moment(o.date)))
+            return new moment(o.date);
+        }).reverse();
+
+        console.log(blogPosts)
+
         return (
             <div style={{ paddingLeft: '5em', paddingTop: '5em' }}>
                 {/* {this.time()}

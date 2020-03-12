@@ -18,7 +18,7 @@ import ChallengeCard from './ChallengeCard'
 const ChallengePage = () => {
 
     return (
-        <Grid style={{ paddingTop: '3em' }} stackable >
+        <Grid style={{ paddingTop: '3em', minHeight: 600 }} stackable >
             <Container>
                 <Grid.Row style={{ paddingBottom: '5em' }}>
                     <Grid.Column floated="left" width={5}>

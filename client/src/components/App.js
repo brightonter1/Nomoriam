@@ -27,7 +27,7 @@ const App = (props) => {
     }, [])
 
     // return (
-    //     <Test />
+    //     <HomePage />
     // )
 
     if (props.isSignedIn === true) {

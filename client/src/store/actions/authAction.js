@@ -170,6 +170,9 @@ export const FetchProfile = () => async dispatch => {
             console.log("Not FOund")
             console.log(err.message)
         })
+    posts = _.sortBy(posts, function (o) {
+        return new Date(o.timestamp)
+    }).reverse();
     player.posts = posts
     player.exp = data[2]
     player.challengeCount = data[3]

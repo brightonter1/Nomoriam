@@ -21,6 +21,7 @@ import { connect } from 'react-redux'
 import { fetchChallenge, fetchChallengeCleanUp, joinChallenge, joinCleanUp } from '../../store/actions/challengeAction'
 import MariamSpinner from '../Layout/MariamSpinner'
 import { alertAction } from '../Challenge/Form'
+import moment from 'moment'
 const ChallengeDetail = props => {
 
     const [open, setOpen] = useState(false)
@@ -75,18 +76,13 @@ const ChallengeDetail = props => {
             <Table.Row key={index}>
                 <Table.Cell>
                     <Header as='h4' image>
-                        <Image src={photo} rounded size='mini' />
+                        <Image src={player.photoURL} rounded size='mini' />
                     </Header>
                 </Table.Cell>
                 <Table.Cell>
                     <Header as='h4'>
-                        {player.uid}
+                        {player.displayname}
                     </Header>
-                </Table.Cell>
-                <Table.Cell>
-                    <Header as='h4'>
-                        ผู้พิทักษ์
-                                            </Header>
                 </Table.Cell>
                 <Table.Cell>
                     <Header as='h4'>
@@ -121,7 +117,7 @@ const ChallengeDetail = props => {
                                     <Item.Extra style={{ paddingTop: 10 }}>
                                         <Label size='large' color="blue">
                                             <Icon name="calendar alternate outline" />
-                                            {challenge.create_time} - {challenge.end_time}
+                                            {moment(challenge.create_time).format('LL')} - {moment(challenge.end_time).format('LL')}
                                         </Label>
                                     </Item.Extra>
                                     <Item.Extra style={{ paddingTop: 30 }}>
@@ -183,7 +179,6 @@ const ChallengeDetail = props => {
                                         <Table.Row>
                                             <Table.HeaderCell>#</Table.HeaderCell>
                                             <Table.HeaderCell>ชื่อผู้เล่น</Table.HeaderCell>
-                                            <Table.HeaderCell>Rank</Table.HeaderCell>
                                             <Table.HeaderCell>คะแนนสะสม</Table.HeaderCell>
                                         </Table.Row>
                                     </Table.Header>

@@ -17,7 +17,8 @@ import {
     DOQRCODE,
     DOQRCODE_CLEAN,
     FETCH_MY_CHALLENGE,
-    FETCH_MY_CHALLENGES
+    FETCH_MY_CHALLENGES,
+    FETCH_POST
 } from './type'
 
 import moment from 'moment'
@@ -200,7 +201,6 @@ export const fetchChallenge = index => async dispatch => {
     const acts = []
     const players = []
     const medals = []
-
     for (var count = 0; count < actCount; count++) {
         var data = await contract.methods.getActivityByChallenge(index, count).call()
         data = {
@@ -210,14 +210,6 @@ export const fetchChallenge = index => async dispatch => {
             times: data[3],
             point: data[4],
             exp: data[5]
-        }
-        const qrcodes = []
-        if (data.category === "qrcode") {
-            for (var j = 0; j < data.times; j++) {
-                const qr = await contract.methods.getQRcodeByChallenge(index, i, j).call()
-                qrcodes.push(qr)
-            }
-            data.qrcode = qrcodes;
         }
 
         acts.push(data)
@@ -241,8 +233,17 @@ export const fetchChallenge = index => async dispatch => {
             uid: player[0],
             point: player[1]
         }
+        db.collection('users').doc(player.uid).get()
+            .then(function (res) {
+                var data = res.data()
+                player.displayname = data.displayname
+                player.photoURL = data.photoURL
+            })
         players.push(player)
     }
+    player = _.sortBy(player, function (p) {
+        return p.point
+    }).reverse()
     challenge.medals = medals
     challenge.joined = joined
     challenge.activities = acts
@@ -325,7 +326,8 @@ export const fetchActivity = () => async dispatch => {
 }
 
 export const Post = (post, index, count) => async dispatch => {
-    var timestamp = moment().format('L') + "-" + moment().format('LT')
+    let time = moment().format().split('T')[1].split('+')[0]
+    var timestamp = moment().format("DD-MM-YYYY") + " " + time
     var userId = firebase.auth().currentUser.uid
     var check = await contract.methods.doPost(index, count, userId).call()
     var medal = ''
@@ -445,6 +447,7 @@ export const fetchMyChallenge = (index) => async dispatch => {
     var challenge = await contract.methods.challenges(index).call()
     const owner = await contract.methods.getOwnerByChallenge(index).call()
     const acts = []
+    const players = []
     if (owner === userId) {
         const actCount = await contract.methods.getActivityCount(index).call()
         for (var i = 0; i < actCount; i++) {
@@ -466,10 +469,68 @@ export const fetchMyChallenge = (index) => async dispatch => {
                 act.qrcode = qrcodes
             }
             acts.push(act)
+
+
+            const playerCount = await contract.methods.getPlayerCountByChallenge(index).call()
+            for (var i = 0; i < playerCount; i++) {
+                var uid = await contract.methods.getPlayerUID(index, i).call()
+                var player = await contract.methods.getPlayerByChallenge(index, uid).call()
+                player = {
+                    uid: player[0],
+                    point: player[1]
+                }
+                db.collection('users').doc(player.uid).get()
+                    .then((res) => {
+                        var data = res.data()
+                        player.displayname = data.displayname
+                        player.photoURL = data.photoURL
+                    })
+                players.push(player)
+            }
         }
+        player = _.sortBy(player, function (p) {
+            return p.point
+        }).reverse()
+        challenge.players = players
         challenge.activities = acts
         dispatch({ type: FETCH_MY_CHALLENGES, payload: challenge, getData: true })
     } else {
         dispatch({ type: FETCH_MY_CHALLENGES, getData: false })
+    }
+}
+
+export const fetchActivities = () => async dispatch => {
+    var posts = []
+    getPost()
+    async function getPost() {
+        await db.collection('posts').get()
+            .then(function (snapShot) {
+                snapShot.forEach(async (res) => {
+                    var post = res.data()
+                    posts.push(post)
+                })
+            })
+        for (var i = 0; i < posts.length; i++) {
+            await storageRef.child(posts[i].image).getDownloadURL()
+                .then(function (url) {
+                    posts[i].image = url
+                })
+            await db.collection('users').doc(posts[i].owner).get()
+                .then(function (res) {
+                    var profile = res.data()
+                    posts[i].displayname = profile.displayname
+                    posts[i].photoURL = profile.photoURL
+                })
+        }
+        await ShowTime()
+
+    }
+    async function ShowTime() {
+
+        posts = _.sortBy(posts, function (o) {
+            return new Date(o.timestamp)
+        }).reverse();
+
+        dispatch({ type: FETCH_POST, payload: posts })
     }
 }
