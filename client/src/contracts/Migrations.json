@@ -53,15 +53,15 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"constant\":true,\"inputs\":[],\"name\":\"last_completed_migration\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"completed\",\"type\":\"uint256\"}],\"name\":\"setCompleted\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/chayutaroonsang/Downloads/Project/CrytoNomoriam copy/contracts/Migrations.sol\":\"Migrations\"},\"evmVersion\":\"homestead\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[]},\"sources\":{\"/Users/chayutaroonsang/Downloads/Project/CrytoNomoriam copy/contracts/Migrations.sol\":{\"keccak256\":\"0x5b3bf470fddc971545b13240a991587d98d71ca0bcff91819e54bd51e32ab21a\",\"urls\":[\"bzz-raw://7f783f6433812edb781db0ea7432e04652dac4796dde274d3e194dafdae19c14\",\"dweb:/ipfs/QmZFZNLk25y7UBLDNnjAzoH8SXBPfEN6bWNzGZ2x9C9aVK\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b5060008054600160a060020a0319163317905561014c806100326000396000f3fe608060405234801561001057600080fd5b506004361061005d577c01000000000000000000000000000000000000000000000000000000006000350463445df0ac81146100625780638da5cb5b1461007c578063fdacd576146100ad575b600080fd5b61006a6100cc565b60408051918252519081900360200190f35b6100846100d2565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b6100ca600480360360208110156100c357600080fd5b50356100ee565b005b60015481565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b60005473ffffffffffffffffffffffffffffffffffffffff163314156101145760018190555b5056fea265627a7a7231582014de71ecc80d837ad214b9fa7300fc8d25ec843e3dceacef66d10a529f1e0afc64736f6c63430005100032",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061005d577c01000000000000000000000000000000000000000000000000000000006000350463445df0ac81146100625780638da5cb5b1461007c578063fdacd576146100ad575b600080fd5b61006a6100cc565b60408051918252519081900360200190f35b6100846100d2565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b6100ca600480360360208110156100c357600080fd5b50356100ee565b005b60015481565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b60005473ffffffffffffffffffffffffffffffffffffffff163314156101145760018190555b5056fea265627a7a7231582014de71ecc80d837ad214b9fa7300fc8d25ec843e3dceacef66d10a529f1e0afc64736f6c63430005100032",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"constant\":true,\"inputs\":[],\"name\":\"last_completed_migration\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"completed\",\"type\":\"uint256\"}],\"name\":\"setCompleted\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/chayutaroonsang/Downloads/Project/APP_NOMORIAM/Nomoriam/contracts/Migrations.sol\":\"Migrations\"},\"evmVersion\":\"homestead\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":1000},\"remappings\":[]},\"sources\":{\"/Users/chayutaroonsang/Downloads/Project/APP_NOMORIAM/Nomoriam/contracts/Migrations.sol\":{\"keccak256\":\"0x5b3bf470fddc971545b13240a991587d98d71ca0bcff91819e54bd51e32ab21a\",\"urls\":[\"bzz-raw://7f783f6433812edb781db0ea7432e04652dac4796dde274d3e194dafdae19c14\",\"dweb:/ipfs/QmZFZNLk25y7UBLDNnjAzoH8SXBPfEN6bWNzGZ2x9C9aVK\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5060008054600160a060020a0319163317905561014c806100326000396000f3fe608060405234801561001057600080fd5b506004361061005d577c01000000000000000000000000000000000000000000000000000000006000350463445df0ac81146100625780638da5cb5b1461007c578063fdacd576146100ad575b600080fd5b61006a6100cc565b60408051918252519081900360200190f35b6100846100d2565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b6100ca600480360360208110156100c357600080fd5b50356100ee565b005b60015481565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b60005473ffffffffffffffffffffffffffffffffffffffff163314156101145760018190555b5056fea265627a7a72315820c8935855348d9eecbe2c6d7df0db0d15f6f06d6179dd6d730b52b99f7c0576ca64736f6c63430005100032",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061005d577c01000000000000000000000000000000000000000000000000000000006000350463445df0ac81146100625780638da5cb5b1461007c578063fdacd576146100ad575b600080fd5b61006a6100cc565b60408051918252519081900360200190f35b6100846100d2565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b6100ca600480360360208110156100c357600080fd5b50356100ee565b005b60015481565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b60005473ffffffffffffffffffffffffffffffffffffffff163314156101145760018190555b5056fea265627a7a72315820c8935855348d9eecbe2c6d7df0db0d15f6f06d6179dd6d730b52b99f7c0576ca64736f6c63430005100032",
   "sourceMap": "34:311:0:-;;;123:50;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;150:5:0;:18;;-1:-1:-1;;;;;;150:18:0;158:10;150:18;;;34:311;;;;;;",
   "deployedSourceMap": "34:311:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;34:311:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;82:36;;;:::i;:::-;;;;;;;;;;;;;;;;58:20;;;:::i;:::-;;;;;;;;;;;;;;;;;;;240:103;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;240:103:0;;:::i;:::-;;82:36;;;;:::o;58:20::-;;;;;;:::o;240:103::-;223:5;;;;209:10;:19;205:26;;;302:24;:36;;;205:26;240:103;:::o",
   "source": "pragma solidity >=0.4.21 <0.7.0;\n\ncontract Migrations {\n  address public owner;\n  uint public last_completed_migration;\n\n  constructor() public {\n    owner = msg.sender;\n  }\n\n  modifier restricted() {\n    if (msg.sender == owner) _;\n  }\n\n  function setCompleted(uint completed) public restricted {\n    last_completed_migration = completed;\n  }\n}\n",
-  "sourcePath": "/Users/chayutaroonsang/Downloads/Project/CrytoNomoriam copy/contracts/Migrations.sol",
+  "sourcePath": "/Users/chayutaroonsang/Downloads/Project/APP_NOMORIAM/Nomoriam/contracts/Migrations.sol",
   "ast": {
-    "absolutePath": "/Users/chayutaroonsang/Downloads/Project/CrytoNomoriam copy/contracts/Migrations.sol",
+    "absolutePath": "/Users/chayutaroonsang/Downloads/Project/APP_NOMORIAM/Nomoriam/contracts/Migrations.sol",
     "exportedSymbols": {
       "Migrations": [
         36
@@ -472,7 +472,7 @@
     "src": "0:346:0"
   },
   "legacyAST": {
-    "absolutePath": "/Users/chayutaroonsang/Downloads/Project/CrytoNomoriam copy/contracts/Migrations.sol",
+    "absolutePath": "/Users/chayutaroonsang/Downloads/Project/APP_NOMORIAM/Nomoriam/contracts/Migrations.sol",
     "exportedSymbols": {
       "Migrations": [
         36
@@ -890,12 +890,12 @@
     "4": {
       "events": {},
       "links": {},
-      "address": "0x328d7e2F8522C050271ea94192bc6BA6cdfFDe4d",
-      "transactionHash": "0xe8cb04bf453410d44378768ab9c88ceb6a42ae7ea9c04da54c3862502e33a57d"
+      "address": "0xa29B812913EADAf2d5534D6415C9e90B8130b4EF",
+      "transactionHash": "0x376ebb02ee336f009a3c733c56818deeeb5a86a4d5de9abdbc41540e3d6ee4cb"
     }
   },
   "schemaVersion": "3.0.23",
-  "updatedAt": "2020-03-11T12:14:12.613Z",
+  "updatedAt": "2020-03-13T10:05:38.403Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
