@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { fetchMyChallenge } from '../../store/actions/challengeAction'
+import { fetchMyChallenge, fetchMyChallengeClean } from '../../store/actions/challengeAction'
 import photo from '../../asset/mariam/Header.jpg'
 import {
     Header,
@@ -23,18 +23,29 @@ import MariamSpinner from '../Layout/MariamSpinner'
 import QRCode from 'qrcode.react'
 import moment from 'moment'
 
+const checkTimeOut = (end) => {
+    const current = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()
+    const str = end.split('-')
+    end = str[0] + '-' + parseInt(str[1]) + '-' + str[2]
 
+    return new Date(current) > new Date(end)
+}
 
 const ShowDetail = props => {
 
     useEffect(() => {
         props.fetchMyChallenge(props.match.params.index)
+    }, [props.isFetch])
+
+    useEffect(() => {
+        return () => {
+            props.fetchMyChallengeClean()
+        }
     }, [])
 
     const [open, setOpen] = useState(false)
     const { challenge } = props
     const [qrcode, setQrcode] = useState(null)
-
 
     if (props.isFetch) {
 
@@ -153,7 +164,7 @@ const ShowDetail = props => {
                 <Grid stackable >
                     <Grid.Row>
                         <Grid.Column width={8}>
-                            <Image src={photo}
+                            <Image src={challenge.image}
                                 size='large'
                                 style={{ borderRadius: 20 }}
                                 label={{ as: 'a', corner: 'left', icon: 'gem', color: 'red' }}
@@ -178,7 +189,9 @@ const ShowDetail = props => {
                                         {challenge.finished && <Label color='green' size='large'>ชาเลนจ์สิ้นสุดแล้ว</Label>}
                                     </Item.Extra>
                                     <Item.Extra style={{ paddingTop: 30 }}>
-                                        <Button color="red" attached="bottom" >ปิดชาเลนจ์</Button>
+
+                                        {checkTimeOut(challenge.end_time) && <Button color="red" attached="bottom" >ปิดชาเลนจ์เพื่อให้รางวัล</Button>}
+                                        
                                     </Item.Extra>
                                 </Item.Content>
                             </Item>
@@ -244,4 +257,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { fetchMyChallenge })(ShowDetail)
+export default connect(mapStateToProps, { fetchMyChallenge, fetchMyChallengeClean })(ShowDetail)

@@ -120,12 +120,12 @@ let ProfilePage = props => {
             <Segment style={{ minHeight: 450 }}>
                 <Item.Group>
                     <Item style={{ paddingTop: '3em', paddingLeft: '1em' }}>
-                        <Item.Image src={rank} size='tiny' />
+                        <Item.Image src={userProfile.rankImage} size='tiny' />
                         <Item.Content style={{ paddingTop: '1em' }}>
-                            <Item.Header as='a' floated='left' >Rank: ราชาฝึกหัด</Item.Header>
+                            <Item.Header as='a' floated='left' >Rank: {userProfile.rankName}</Item.Header>
                             <Item.Meta>{userProfile.exp} แต้ม</Item.Meta>
                             <Item.Description>
-                                <Progress percent={70} indicating />
+                                <Progress percent={Math.floor(((userProfile.exp)/ (userProfile.rankExp + 1))*100)} inverted color='red' progress />
                             </Item.Description>
 
                         </Item.Content>
@@ -256,11 +256,11 @@ let ProfilePage = props => {
                                         <Grid.Row>
                                             <Image src={post.image} centered size='large' />
                                         </Grid.Row>
-                                        <Grid.Row style={{ paddingLeft: '1em' }}>
+                                        {/* <Grid.Row style={{ paddingLeft: '1em' }}>
                                             <Label size='large' image>
                                                 <Icon name='like' /> 23
                                     </Label>
-                                        </Grid.Row>
+                                        </Grid.Row> */}
                                         <Divider />
                                     </React.Fragment>
                                 )
@@ -352,6 +352,7 @@ const selector = formValueSelector('profileForm')
 
 const mapStateToProps = state => {
     const image = selector(state, 'image')
+    console.log(state)
     return {
         initialValues: state.auth.profile,
         userInfo: state.auth.userInfo,

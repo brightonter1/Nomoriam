@@ -5,9 +5,7 @@ import {
     Grid,
     Form,
     Button,
-    Image,
     Icon,
-    Label,
     Item
 } from 'semantic-ui-react'
 import photo from '../../asset/mariam/Header.jpg'

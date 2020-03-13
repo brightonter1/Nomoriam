@@ -16,6 +16,7 @@ import history from '../../api/history'
 import { connect } from 'react-redux'
 import { fetchMyChallenges, cleanUp } from '../../store/actions/challengeAction'
 import MariamSpinner from '../Layout/MariamSpinner'
+import moment from 'moment'
 
 const StatusPage = props => {
     useEffect(() => {
@@ -41,7 +42,7 @@ const StatusPage = props => {
                                 <Item.Content>
                                     <Item.Header as='a'>{challenge.title}</Item.Header>
                                     <Item.Meta>
-                                        <span className='cinema'>สร้างเมื่อ {challenge.create_time}</span>
+                                        <span className='cinema'>สร้างเมื่อ {moment(challenge.create_time).format('LL')}</span>
                                     </Item.Meta>
                                     <Item.Description>{challenge.desc}</Item.Description>
                                     <Item.Extra>

@@ -18,7 +18,8 @@ import {
     DOQRCODE_CLEAN,
     FETCH_MY_CHALLENGE,
     FETCH_MY_CHALLENGES,
-    FETCH_POST
+    FETCH_POST,
+    FETCH_MY_CHALLENGES_CLEAN
 } from './type'
 
 import moment from 'moment'
@@ -533,4 +534,8 @@ export const fetchActivities = () => async dispatch => {
 
         dispatch({ type: FETCH_POST, payload: posts })
     }
+}
+
+export const fetchMyChallengeClean = () => dispatch => {
+    dispatch({ type: FETCH_MY_CHALLENGES_CLEAN })
 }

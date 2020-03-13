@@ -12,11 +12,9 @@ import {
     Button, 
     Segment, 
     Table, 
-    Loader, 
     Statistic 
 } from 'semantic-ui-react'
 import RankTop from '../../asset/archievement/RankTop.png'
-import photo from '../../asset/mariam/Header.jpg'
 import { connect } from 'react-redux'
 import { fetchChallenge, fetchChallengeCleanUp, joinChallenge, joinCleanUp } from '../../store/actions/challengeAction'
 import MariamSpinner from '../Layout/MariamSpinner'

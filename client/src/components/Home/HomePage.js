@@ -1,23 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
     Container,
     Grid,
     Header,
     Divider,
-    Icon,
-    Feed,
-    Label,
-    Image,
-    Card
+    Icon
 } from 'semantic-ui-react'
 import ActivityBar from './ActivitiBar'
-import photo from '../../asset/mariam/Header.jpg'
 import PostList from './PostList'
 const HomePage = (props) => {
-
-
-
-
     return (
         <Grid style={{ paddingTop: '3em', minHeight: 600 }} stackable >
             <Container>

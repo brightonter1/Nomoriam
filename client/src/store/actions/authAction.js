@@ -76,7 +76,7 @@ export const SignInGoogle = () => async dispatch => {
                 displayname: result.user.displayName,
                 email: result.user.email,
                 role: "player",
-                photoURL: ''
+                photoURL: 'https://react.semantic-ui.com/images/avatar/small/joe.jpg'
             })
             user = {
                 userId: result.user.uid,
@@ -118,7 +118,7 @@ export const SignUp = user => async dispatch => {
             displayname: user.displayname,
             email: user.email,
             role: "player",
-            photoURL: ' ',
+            photoURL: 'https://react.semantic-ui.com/images/avatar/small/joe.jpg',
             bio: ''
         }).then(() => { // Success
             // firebase.auth().signOut().then(function () {
@@ -157,7 +157,7 @@ export const FetchProfile = () => async dispatch => {
         }
         medals.push(medal)
     }
-    db.collection('posts').where('owner', '==', userId).get()
+    await db.collection('posts').where('owner', '==', userId).get()
         .then((snapshot) => {
             snapshot.forEach((res) => {
                 var post = res.data()
@@ -170,11 +170,29 @@ export const FetchProfile = () => async dispatch => {
             console.log("Not FOund")
             console.log(err.message)
         })
+
+    player.exp = data[2]
+    var ranks = []
+    await db.collection('rank').get().then((snapshot) => {
+        snapshot.forEach((res) => {
+            var data = res.data()
+            ranks.push(data)
+        })
+    })
+
+    for(var k = 0 ; k < ranks.length;k++){
+        if(ranks[k].start <= player.exp && player.exp <= ranks[k].exp){
+            player.rankName = ranks[k].title
+            player.rankExp = ranks[k].exp
+            player.rankImage = ranks[k].image
+            player.rankStart = ranks[k].start
+        }
+    }
+
     posts = _.sortBy(posts, function (o) {
         return new Date(o.timestamp)
     }).reverse();
     player.posts = posts
-    player.exp = data[2]
     player.challengeCount = data[3]
     player.medals = medals
     player.oneCount = player.medals.filter(medal => medal.title === 'ผู้ชนะอันดับที่ 1')

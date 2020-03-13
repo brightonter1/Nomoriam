@@ -49,12 +49,12 @@ const PostList = (props) => {
                             {post.caption}
                         </Card.Description>
                     </Card.Content>
-                    <Card.Content extra>
+                    {/* <Card.Content extra>
                         <a>
                             <Icon name='like' />
                             22
                                     </a>
-                    </Card.Content>
+                    </Card.Content> */}
                 </Card>
             </Grid.Column>
         )

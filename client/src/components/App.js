@@ -17,7 +17,7 @@ import ManagePage from './Admin/ManagePage'
 import ChallengeShow from './Admin/ChallengeShow'
 import ChallengeDetail from './Challenge/ChallengeDetail'
 import ShowDetail from './User/ShowDetail'
-import Test from '../components/Home/Test'
+import LeaderboardPage from './Leaderboard/LeaderboardPage'
 
 const App = (props) => {
     useEffect(() => {
@@ -27,7 +27,7 @@ const App = (props) => {
     }, [])
 
     // return (
-    //     <HomePage />
+    //     <LeaderboardPage />
     // )
 
     if (props.isSignedIn === true) {
@@ -66,7 +66,7 @@ const App = (props) => {
 }
 
 const mapStateToProps = state => {
-    console.log(state)
+    // console.log(state)
     return {
         isSignedIn: state.auth.isSignedIn,
         userInfo: state.auth.userInfo
