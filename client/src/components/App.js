@@ -17,7 +17,6 @@ import ManagePage from './Admin/ManagePage'
 import ChallengeShow from './Admin/ChallengeShow'
 import ChallengeDetail from './Challenge/ChallengeDetail'
 import ShowDetail from './User/ShowDetail'
-import LeaderboardPage from './Leaderboard/LeaderboardPage'
 
 const App = (props) => {
     useEffect(() => {
@@ -25,10 +24,6 @@ const App = (props) => {
             return props.isSignIn()
         })
     }, [])
-
-    // return (
-    //     <LeaderboardPage />
-    // )
 
     if (props.isSignedIn === true) {
         return (
@@ -44,7 +39,7 @@ const App = (props) => {
                             <Route path="/account/status" exact component={StatusPage} />
                             <Route path="/admin/manage/:index" exact component={ChallengeShow} />
                             <Route path="/account/status/:index/show" exact component={ShowDetail} />
-                            
+
                             {props.userInfo.roleAdmin && <Route path="/admin/manage" exact component={ManagePage} />}
                         </Switch>
                     </div>

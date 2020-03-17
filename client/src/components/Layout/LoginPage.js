@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { alertAction } from '../Challenge/Form'
 
 const style = {
-    height: '105vh',
+    height: '130vh',
     backgroundColor: '#009e8b'
 }
 

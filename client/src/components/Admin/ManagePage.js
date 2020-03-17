@@ -24,8 +24,8 @@ const ManagePage = props => {
                                 <Header as='h1'>
                                     <Icon name='settings' color="olive" />
                                     <Header.Content>
-                                        Challenge Manage
-                                    <Header.Subheader>Manage our challenges</Header.Subheader>
+                                        จัดการชาเลนจ์
+                                    <Header.Subheader>เลือกชาเลนจ์และตรวจสอบ</Header.Subheader>
                                     </Header.Content>
                                 </Header>
                             </Grid.Column>

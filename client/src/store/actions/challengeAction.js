@@ -27,7 +27,7 @@ import firebase from '../../api/firebase'
 import ipfs from '../../api/ipfs'
 import history from '../../api/history'
 import _ from 'lodash'
-import { contract, createTransaction } from '../../contracts/config'
+import { contract, createTransaction, createAsyncTransaction } from '../../contracts/config'
 import { Medal } from '../../asset/archievement/Medal'
 const db = firebase.firestore()
 const storageRef = firebase.storage().ref()
@@ -109,9 +109,10 @@ export const approveChallenge = (challenge) => async dispatch => {
         console.log("Writing.. Challenge to Blockchain")
         const index = await contract.methods.getChallengeCount().call()
         const data = contract.methods.createChallenge(
-            challenge.title, challenge.desc, challenge.image, challenge.create_time, challenge.end_time, challenge.owner
+            challenge.title, challenge.desc, challenge.image,
+            challenge.create_time, challenge.end_time, challenge.owner
         ).encodeABI()
-        const txHash = await createTransaction(data)
+        const txHash = await createAsyncTransaction(data)
 
         console.log("Challenge Count ", index)
         console.log(txHash)
@@ -137,7 +138,7 @@ export const approveChallenge = (challenge) => async dispatch => {
         const value = contract.methods.addActivity(
             Number(index), act.title, image, act.category, Number(act.times)
         ).encodeABI()
-        const result = await createTransaction(value)
+        const result = await createAsyncTransaction(value)
         return result
     }
 
@@ -157,7 +158,7 @@ export const approveChallenge = (challenge) => async dispatch => {
         const value = contract.methods.addMedal(
             Number(index), medal.title, medal.image
         ).encodeABI()
-        const result = await createTransaction(value)
+        const result = await createAsyncTransaction(value)
         return result
     }
 
@@ -234,7 +235,7 @@ export const fetchChallenge = index => async dispatch => {
             uid: player[0],
             point: player[1]
         }
-        db.collection('users').doc(player.uid).get()
+        await db.collection('users').doc(player.uid).get()
             .then(function (res) {
                 var data = res.data()
                 player.displayname = data.displayname

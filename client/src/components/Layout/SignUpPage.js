@@ -9,7 +9,7 @@ import MariamLoading from '../../asset/mariam/Mariam-loading.gif'
 import MariamSpinner from './MariamSpinner'
 
 const style = {
-    height: '105vh',
+    height: '130vh',
     backgroundColor: '#00bba0'
 }
 

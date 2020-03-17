@@ -22,7 +22,6 @@ const ChallengeList = props => {
                 <Item.Extra>
                     <br />
                     <Label color="green">{challenge.approved ? "ตรวจสอบเรียบร้อยแล้ว" : "รอการตรวจสอบ"}</Label>
-                    <Label color="olive">{challenge.finished ? "ชาเลนจ์สิ้นสุดแล้ว" : "ชาเลนจ์กำลังดำเนินการอยู่"}</Label>
                     <Button primary floated='right' onClick={e => onClickShow(challenge.doc)}>
                         คลิ๊กดูรายละเอียด
                     <Icon name='right chevron' />

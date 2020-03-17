@@ -87,8 +87,8 @@ let FormStepThree = props => {
             {itemList}
 
             <Grid.Column width={16} style={{ paddingTop: '2em' }}>
-                <Button floated="right" onClick={() => handleSubmit(challenge, activity)}>ยืนยันสร้าง</Button>
-                <Button floated="right" type="button" onClick={props.previousStep}>ย้อนกลับ</Button>
+                <Button color='green' floated="right" onClick={() => handleSubmit(challenge, activity)}>ยืนยันสร้าง</Button>
+                <Button primary floated="right" type="button" onClick={props.previousStep}>ย้อนกลับ</Button>
             </Grid.Column>
             <MariamSpinner open={open} />
         </React.Fragment>

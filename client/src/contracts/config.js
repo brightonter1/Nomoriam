@@ -14,7 +14,7 @@ export const web3 = new Web3(provider)
 export const account = '0x51FF6Ea18b2895aaE622A59713fe179aB305d0d6'
 export const privateKey = Buffer.from('3407760727BCCAE592B094CDB1F1302E4FB8CBBD4B897DB169001A9E7CD13F41', 'hex')
 
-export const contractAddr = '0x618eE15c45F07d33d752B25d56034E8248868A9d'
+export const contractAddr = '0x90AbCc6F67B77dC9057f3fCd7604641747206D2F'
 export const contract = new web3.eth.Contract(Nomoriam.abi, contractAddr)
 
 const Accounts = [
@@ -51,7 +51,7 @@ const Accounts = [
 export const createTransaction = async data => {
 
     const account = Accounts[Math.floor(Math.random() * Accounts.length)]
-
+    console.log(account)
     const txCount = await web3.eth.getTransactionCount(account.account)
     // Build the transaction
     const txObject = {
@@ -61,14 +61,44 @@ export const createTransaction = async data => {
         // value: web3.utils.toHex(web3.utils.toWei('1', 'ether')),
         // gasLimit: web3.utils.toHex(21000),
         gasLimit: web3.utils.toHex(8000000),
-        gasPrice: web3.utils.toHex(web3.utils.toWei('20', 'gwei') * 1.5),
+        gasPrice: web3.utils.toHex(web3.utils.toWei('20', 'gwei')),
         data: data
     }
-    
-
+    console.log(txObject)
     //       Sign the transaction
     const tx = new Tx(txObject, { 'chain': 'rinkeby' })
     tx.sign(account.privateKey)
+
+    const serializedTransaction = tx.serialize()
+    const raw = '0x' + serializedTransaction.toString('hex')
+
+        //   Broadcast the transaction
+    const txHash = await web3.eth.sendSignedTransaction(raw, (err, txHash) => {
+        // console.log('txxHash: ', txHash)
+        return txHash
+    })
+
+    return txHash.transactionHash
+}
+
+export const createAsyncTransaction = async data => {
+
+    const txCount = await web3.eth.getTransactionCount(account)
+    // Build the transaction
+    const txObject = {
+        nonce: web3.utils.toHex(txCount),
+        // to: account3,
+        to: contractAddr,
+        // value: web3.utils.toHex(web3.utils.toWei('1', 'ether')),
+        // gasLimit: web3.utils.toHex(21000),
+        gasLimit: web3.utils.toHex(8000000),
+        gasPrice: web3.utils.toHex(web3.utils.toWei('20', 'gwei')),
+        data: data
+    }
+    console.log(txObject)
+    //       Sign the transaction
+    const tx = new Tx(txObject, { 'chain': 'rinkeby' })
+    tx.sign(privateKey)
 
     const serializedTransaction = tx.serialize()
     const raw = '0x' + serializedTransaction.toString('hex')
