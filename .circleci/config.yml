@@ -12,6 +12,9 @@ jobs:
           command: npm install
       - run:
           name: install npm
+          command: cd client
+      - run:
+          name: install npm
           command: ls
       - run:
           name: build react
