@@ -11,11 +11,6 @@ jobs:
           name: install npm
           command: npm install
       - run:
-          name: install npm
-          command:  |
-            cd client && \
-            ls
-      - run:
           name: build react
           command: npm run build
       - run:
