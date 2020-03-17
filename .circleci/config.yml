@@ -12,16 +12,7 @@ jobs:
           path: ~/Nomoriam/client
       - run:
           name: install npm
-          command: npm install
-      - run:
-          name: install npm
-          command: ls
-      - run:
-          name: install npm
-          command: cd ..
-      - run:
-          name: install npm
-          command: ls
+          command: cd client
       - run:
           name: install npm
           command: npm install
