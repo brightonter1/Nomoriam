@@ -6,6 +6,10 @@ jobs:
     working_directory: ~/Nomoriam/client
     docker:
       - image: circleci/node:10
+      
+    steps:
+      - checkout:
+          path: ~/Nomoriam/client
       - run:
           name: install npm
           command: npm install
@@ -18,9 +22,6 @@ jobs:
       - run:
           name: install npm
           command: ls
-    steps:
-      - checkout:
-          path: ~/Nomoriam/client
       - run:
           name: install npm
           command: npm install
