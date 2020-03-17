@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@1.1.6
 jobs:
   frontend:
-    working_directory: ~/Nomoriam/front-end
+    working_directory: ~/Nomoriam/client
     docker:
       - image: circleci/node:10
     steps:
