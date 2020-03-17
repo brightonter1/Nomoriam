@@ -3,16 +3,19 @@ orbs:
   node: circleci/node@1.1.6
 jobs:
   frontend:
-    working_directory: ~/Nomoriam/client
+    working_directory: ~/client
     docker:
       - image: circleci/node:10
       
     steps:
       - checkout:
-          path: ~/Nomoriam/client
+          path: ~/client
       - run:
           name: install npm
           command: npm install
+      - run:
+          name: install npm
+          command: ls
       - run:
           name: build react
           command: npm run build
