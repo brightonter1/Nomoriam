@@ -129,75 +129,76 @@ const HomeMockup = (props) => {
             </Modal.Header>
 
             <Modal.Content image scrolling style={{ paddingTop: '0em' }}>
-                <Item.Group style={{ width: '650px' }} unstackable >
-                    <Item style={{ backgroundColor: 'white', padding: '1.5em 1.5em 1em 1.5em', borderRadius: '25px' }}>
-                        <Item.Image size='tiny' src={organize} />
-                        <Item.Content verticalAlign='middle'>
-                            <Item.Header>ลดการใช้ถุงพลาสติก</Item.Header>
-                            <Item.Description >
-                                <p>สถานที่ : มหาวิทยาลัย</p>
-                                <p>จำนวนครั้ง</p>
-                                <Progress value='3' total='5' progress='ratio'
-                                    color='red' style={{ backgroundColor: '#e5e5e5', margin: '0em 0em 0em' }}
-                                >
-                                </Progress>
-                            </Item.Description>
-                            <Item.Description >
-                                <Label.Group >
-                                    เป้าหมาย : &nbsp;
+                <Modal.Description>
+                    <Item.Group unstackable >
+                        <Item style={{ backgroundColor: 'white', padding: '1.5em 1.5em 1em 1.5em', borderRadius: '25px' }}>
+                            <Item.Image size='tiny' src={organize} />
+                            <Item.Content verticalAlign='middle'>
+                                <Item.Header>ลดการใช้ถุงพลาสติก</Item.Header>
+                                <Item.Description >
+                                    <p>สถานที่ : มหาวิทยาลัย</p>
+                                    <p>จำนวนครั้ง</p>
+                                    <Progress value='3' total='5' progress='ratio'
+                                        color='red' style={{ backgroundColor: '#e5e5e5', margin: '0em 0em 0em' }}
+                                    >
+                                    </Progress>
+                                </Item.Description>
+                                <Item.Description >
+                                    <Label.Group >
+                                        เป้าหมาย : &nbsp;
                                     <Label as='a' tag color='yellow' content="ลดการใช้" style={{ fontSize: '0.7em' }} />
-                                    <Label as='a' tag color='orange' content="รีไซเคิล " style={{ fontSize: '0.7em' }} />
-                                </Label.Group>
-                                <Label.Group >
+                                        <Label as='a' tag color='orange' content="รีไซเคิล " style={{ fontSize: '0.7em' }} />
+                                    </Label.Group>
+                                    <Label.Group >
 
-                                    <Label icon='leaf' color='green' content={'+300'} />
-                                    <Label color='blue' content={'EXP +500'} />
-                                </Label.Group>
-                                <Button color='orange' floated='right' size='tiny' style={{ borderRadius: '25px' }}>
-                                    <Label as='a' image color='orange' >
-                                        <img src={qrcode} />สแกนคิวอาโค้ด
+                                        <Label icon='leaf' color='green' content={'+300'} />
+                                        <Label color='blue' content={'EXP +500'} />
+                                    </Label.Group>
+                                    <Button color='orange' floated='right' size='tiny' style={{ borderRadius: '25px' }}>
+                                        <Label as='a' image color='orange' >
+                                            <img src={qrcode} />สแกนคิวอาโค้ด
                                     </Label>
 
-                                    <Icon name='right chevron' />
-                                </Button>
-                            </Item.Description>
-                        </Item.Content>
-                    </Item>
+                                        <Icon name='right chevron' />
+                                    </Button>
+                                </Item.Description>
+                            </Item.Content>
+                        </Item>
 
-                    <Item style={{ backgroundColor: 'white', padding: '1.5em 1.5em 1em 1.5em', borderRadius: '25px' }}>
-                        <Item.Image size='tiny' src={organize} />
-                        <Item.Content verticalAlign='middle'>
-                            <Item.Header>ลดการใช้ถุงพลาสติก</Item.Header>
-                            <Item.Description >
-                                <p>สถานที่ : มหาวิทยาลัย</p>
-                                <p>จำนวนครั้ง</p>
-                                <Progress value='3' total='5' progress='ratio'
-                                    color='red' style={{ backgroundColor: '#e5e5e5', margin: '0em 0em 0em' }}
-                                />
-                            </Item.Description>
-                            <Item.Description >
-                                <Label.Group >
-                                    เป้าหมาย : &nbsp;
+                        <Item style={{ backgroundColor: 'white', padding: '1.5em 1.5em 1em 1.5em', borderRadius: '25px' }}>
+                            <Item.Image size='tiny' src={organize} />
+                            <Item.Content verticalAlign='middle'>
+                                <Item.Header>ลดการใช้ถุงพลาสติก</Item.Header>
+                                <Item.Description >
+                                    <p>สถานที่ : มหาวิทยาลัย</p>
+                                    <p>จำนวนครั้ง</p>
+                                    <Progress value='3' total='5' progress='ratio'
+                                        color='red' style={{ backgroundColor: '#e5e5e5', margin: '0em 0em 0em' }}
+                                    />
+                                </Item.Description>
+                                <Item.Description >
+                                    <Label.Group >
+                                        เป้าหมาย : &nbsp;
                                     <Label as='a' tag color='yellow' content="ลดการใช้" style={{ fontSize: '0.7em' }} />
-                                    <Label as='a' tag color='orange' content="รีไซเคิล " style={{ fontSize: '0.7em' }} />
-                                </Label.Group>
-                                <Label.Group >
+                                        <Label as='a' tag color='orange' content="รีไซเคิล " style={{ fontSize: '0.7em' }} />
+                                    </Label.Group>
+                                    <Label.Group >
 
-                                    <Label icon='leaf' color='green' content={'+300'} />
-                                    <Label color='blue' content={'EXP +500'} />
-                                </Label.Group>
-                                <Button color='orange' floated='right' size='tiny' style={{ borderRadius: '25px' }}>
-                                    <Label as='a' image color='orange' >
-                                        <img src={post} />โพสต์รูปภาพ
+                                        <Label icon='leaf' color='green' content={'+300'} />
+                                        <Label color='blue' content={'EXP +500'} />
+                                    </Label.Group>
+                                    <Button color='orange' floated='right' size='tiny' style={{ borderRadius: '25px' }}>
+                                        <Label as='a' image color='orange' >
+                                            <img src={post} />โพสต์รูปภาพ
                                     </Label>
 
-                                    <Icon name='right chevron' />
-                                </Button>
-                            </Item.Description>
-                        </Item.Content>
-                    </Item>
-
-                </Item.Group>
+                                        <Icon name='right chevron' />
+                                    </Button>
+                                </Item.Description>
+                            </Item.Content>
+                        </Item>
+                    </Item.Group>
+                </Modal.Description>
             </Modal.Content>
 
         </Modal>

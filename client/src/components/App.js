@@ -35,19 +35,19 @@ const App = (props) => {
 
 
 
-    return (
-        <Router history={history}>
-            <HomepageLayoutMockup>
-                <Switch>
-                    <Route path="/" exact component={HomeMockup} />
-                    <Route path="/challenges" exact component={ChallnegeMockup} />
-                    <Route path="/challenges/:id" exact component={ChallengeDetailMock} />
-                    <Route path="/account/profile" exact component={ProfileMockup} />
-                    <Route path="/account/status" exact component={StatusMockup} />
-                </Switch>
-            </HomepageLayoutMockup>
-        </Router>
-    )
+    // return (
+    //     <Router history={history}>
+    //         <HomepageLayoutMockup>
+    //             <Switch>
+    //                 <Route path="/" exact component={HomeMockup} />
+    //                 <Route path="/challenges" exact component={ChallnegeMockup} />
+    //                 <Route path="/challenges/:id" exact component={ChallengeDetailMock} />
+    //                 <Route path="/account/profile" exact component={ProfileMockup} />
+    //                 <Route path="/account/status" exact component={StatusMockup} />
+    //             </Switch>
+    //         </HomepageLayoutMockup>
+    //     </Router>
+    // )
 
     if (props.isSignedIn === true) {
         return (
