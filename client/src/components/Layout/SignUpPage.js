@@ -10,12 +10,12 @@ import MariamSpinner from './MariamSpinner'
 
 const style = {
     height: '130vh',
-    backgroundColor: '#00bba0'
+    backgroundColor: '#b5cc17'
 }
 
 const styleSegment = {
     borderRadius: 25,
-    backgroundColor: '#00fedf'
+    backgroundColor: '#c9e02a'
 }
 const renderField = ({ input, label, placeholder, type, meta: { touched, error } }) => (
     <Form.Field>
@@ -62,9 +62,8 @@ let SignUpPage = (props) => {
                         <Field name="email" type="email" placeholder="อีเมล์" component={renderField} />
                         <Field name="pwd" type="password" placeholder="รหัสผ่าน" component={renderField} />
                         <Button
-                            fluid color='teal'
                             size='large'
-                            style={{ marginBottom: 10, borderRadius: 50 }}
+                            style={{ marginBottom: 10, borderRadius: 50, backgroundColor: '#b5cc17' }}
                             onClick={e => setOpen(true)}
                         >
                             สมัครสมาชิก
@@ -86,7 +85,7 @@ let SignUpPage = (props) => {
 
                 </Segment>
 
-                <Message style={{ borderRadius: 25, backgroundColor: '#00fedf' }}>
+                <Message style={{ borderRadius: 25, backgroundColor: '#c9e02a' }}>
                     มีบัญชีอยู่แล้ว? <Link to="/">เข้าสู่ระบบ</Link>
                 </Message>
             </Grid.Column>

@@ -9,12 +9,12 @@ import { alertAction } from '../Challenge/Form'
 
 const style = {
     height: '130vh',
-    backgroundColor: '#009e8b'
+    backgroundColor: '#b5cc17'
 }
 
 const styleSegment = {
     borderRadius: 25,
-    backgroundColor: '#00fedf'
+    backgroundColor: '#c9e02a'
 }
 
 const renderField = ({ input, label, placeholder, type, meta: { touched, error } }) => (
@@ -55,7 +55,7 @@ let LoginPage = (props) => {
                     <Form onSubmit={props.handleSubmit(onSignIn)}>
                         <Field name="email" type="email" placeholder="อีเมล์" component={renderField} />
                         <Field name="pwd" type="password" placeholder="รหัสผ่าน" component={renderField} />
-                        <Button fluid color='teal' size='large' style={{ marginBottom: 10, borderRadius: 50 }}>
+                        <Button fluid size='large' style={{ marginBottom: 10, borderRadius: 50, backgroundColor:'#b5cc17' }}>
                             เข้าสู่ระบบ
                     </Button>
 
@@ -78,7 +78,7 @@ let LoginPage = (props) => {
 
                 </Segment>
 
-                <Message style={{ borderRadius: 25, backgroundColor: '#00fedf' }}>
+                <Message style={{ borderRadius: 25, backgroundColor: '#c9e02a' }}>
                     ไม่มีบัญชี? <Link to="/signup">สมัครสมาชิก</Link>
                 </Message>
             </Grid.Column>

@@ -17,6 +17,14 @@ import ManagePage from './Admin/ManagePage'
 import ChallengeShow from './Admin/ChallengeShow'
 import ChallengeDetail from './Challenge/ChallengeDetail'
 import ShowDetail from './User/ShowDetail'
+import FormChallenge from './Mockup/FormChallenge'
+import GoogleMap from './Challenge/MapGoogle'
+import HomeMockup from './Mockup/HomeMockup'
+import HomepageLayoutMockup from './Mockup/HomepageLayoutMockup'
+import ChallnegeMockup from './Mockup/ChallengeMockup'
+import ProfileMockup from './Mockup/ProfileMockup'
+import StatusMockup from './Mockup/StatusMockup'
+import ChallengeDetailMock from './Mockup/ChallengeDetailMock'
 
 const App = (props) => {
     useEffect(() => {
@@ -24,6 +32,22 @@ const App = (props) => {
             return props.isSignIn()
         })
     }, [])
+
+
+
+    return (
+        <Router history={history}>
+            <HomepageLayoutMockup>
+                <Switch>
+                    <Route path="/" exact component={HomeMockup} />
+                    <Route path="/challenges" exact component={ChallnegeMockup} />
+                    <Route path="/challenges/:id" exact component={ChallengeDetailMock} />
+                    <Route path="/account/profile" exact component={ProfileMockup} />
+                    <Route path="/account/status" exact component={StatusMockup} />
+                </Switch>
+            </HomepageLayoutMockup>
+        </Router>
+    )
 
     if (props.isSignedIn === true) {
         return (

@@ -118,7 +118,7 @@ class DesktopContainer extends Component {
                     item
                     simple
                     as='h4'
-                    text={this.props.displayname}
+                    text={"Chayut Aroonsang"}
                   >
                     <Dropdown.Menu>
                       {this.props.roleAdmin && <Dropdown.Item text="จัดการชาเลนจ์" onClick={() => history.push('/admin/manage')} />}
@@ -144,14 +144,7 @@ DesktopContainer.propTypes = {
   children: PropTypes.node,
 }
 
-const mapStateToProps = state => {
-  return {
-    displayname: state.auth.userInfo.displayname,
-    roleAdmin: state.auth.userInfo.roleAdmin
-  }
-}
 
-DesktopContainer = connect(mapStateToProps, { SignOut })(DesktopContainer)
 
 class MobileContainer extends Component {
   state = {}

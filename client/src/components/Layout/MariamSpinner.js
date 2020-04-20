@@ -13,7 +13,7 @@ const MariamSpinner = ({ open }) => {
             open={open}
             centered
             dimmer='inverted'
-            style={{ maxWidth: 150 }}
+            style={{ maxWidth: 75 }}
         >
             <Image src={MariamLoading} size='huge' />
         </Modal>

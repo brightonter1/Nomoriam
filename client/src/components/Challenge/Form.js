@@ -1,4 +1,4 @@
-import { Form, Label, TextArea, Dropdown } from 'semantic-ui-react'
+import { Form, Label, TextArea, Dropdown, Header } from 'semantic-ui-react'
 import React from 'react'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -28,11 +28,14 @@ export const alertMedal = (title, text, image) => (
     })
 )
 
-export const renderInput = ({ input, label, placeholder, type, meta: { touched, error } }) => (
+export const renderInput = ({ input, label, placeholder, message, type, width,  meta: { touched, error } }) => (
     <React.Fragment>
-        <Form.Field>
-            <label style={{ textAlign: 'left' }} >{label}</label>
-            <input {...input} type={type} icon="" placeholder={placeholder} autoComplete="off" style={{ borderRadius: 20, paddingLeft: '1em' }} />
+        <Form.Field width={width}>
+            <Header as='h5' style={{width:'105px'}}>
+                <label style={{ textAlign: 'left' }} >{label}</label>
+                {message && <Header.Subheader style={{ paddingTop: 10 }}>{message}</Header.Subheader>}
+            </Header>
+            <input {...input} type={type} icon="" placeholder={placeholder} autoComplete="off" style={{ borderRadius: 15, paddingLeft: '1em' }} />
         </Form.Field>
         {
             touched && error &&
@@ -43,11 +46,14 @@ export const renderInput = ({ input, label, placeholder, type, meta: { touched, 
     </React.Fragment>
 )
 
-export const renderTextArea = ({ input, label, placeholder, meta: { touched, error } }) => (
+export const renderTextArea = ({ input, label, message, placeholder, meta: { touched, error } }) => (
     <React.Fragment>
         <Form.Field>
-            <label style={{ textAlign: 'left' }}>{label}</label>
-            <TextArea {...input} placeholder={placeholder} autoComplete="off" style={{ borderRadius: 20, minHeight: 100 }} />
+            <Header as='h5'>
+                <label style={{ textAlign: 'left' }} >{label}</label>
+                {message && <Header.Subheader style={{ paddingTop: 10 }}>{message}</Header.Subheader>}
+            </Header>
+            <TextArea {...input} placeholder={placeholder} autoComplete="off" style={{ borderRadius: 15, minHeight: 100 }} />
         </Form.Field>
         {
             touched && error &&
@@ -58,15 +64,18 @@ export const renderTextArea = ({ input, label, placeholder, meta: { touched, err
     </React.Fragment>
 )
 
-export const renderFileInput = ({ input, label, type, meta: { touched, error } }) => (
+export const renderFileInput = ({ input, label, message, type, meta: { touched, error } }) => (
     <React.Fragment>
         <Form.Field>
-            <label style={{ textAlign: 'left' }}>{label}</label>
+            <Header as='h5'>
+                <label style={{ textAlign: 'left' }} >{label}</label>
+                {message && <Header.Subheader style={{ paddingTop: 10 }}>{message}</Header.Subheader>}
+            </Header>
             <input
                 name={input.name}
                 type={type}
                 onChange={e => handleFileInput(e, input)}
-                style={{ borderRadius: 25 }}
+                style={{ borderRadius: 15 }}
             />
         </Form.Field>
         {
@@ -109,17 +118,20 @@ const category = [
     }
 ]
 
-export const renderSelection = ({ input, label, placeholder, meta: { touched, error } }) => (
+export const renderSelection = ({ input, label, message, placeholder, meta: { touched, error } }) => (
     <React.Fragment>
         <Form.Field>
-            <label style={{ textAlign: 'left' }}>{label}</label>
+            <Header as='h5'>
+                <label style={{ textAlign: 'left' }} >{label}</label>
+                {message && <Header.Subheader style={{ paddingTop: 10 }}>{message}</Header.Subheader>}
+            </Header>
             <Dropdown
                 selection {...input}
                 value={input.value}
                 options={category}
                 onChange={(param, data) => input.onChange(data.value)}
                 placeholder="เลือกวิธีการเล่น"
-                style={{ borderRadius: 25 }}
+                style={{ borderRadius: 15 }}
             />
         </Form.Field>
     </React.Fragment>
