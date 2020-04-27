@@ -4,7 +4,7 @@ import {
     Grid,
     Header,
     List,
-    Segment,
+    Dropdown,
     Button,
     Image,
     Divider,
@@ -17,6 +17,7 @@ import {
 } from 'semantic-ui-react'
 import photo from '../../asset/mariam/logo.png'
 import history from '../../api/history'
+import { Link } from 'react-router-dom'
 
 const ChallnegeMockup = (props) => {
 
@@ -140,6 +141,26 @@ const ChallnegeMockup = (props) => {
         </Grid.Column>
     )
 
+    const tagOptions = [
+        {
+            key: 'Recycle',
+            text: 'รีไซเคิล (Recycle)',
+            value: 'recycle',
+            label: { color: 'red', empty: true, circular: true },
+        },
+        {
+            key: 'Reduce',
+            text: 'ลดการใช้งาน (Reduce)',
+            value: 'reduce',
+            label: { color: 'blue', empty: true, circular: true },
+        },
+        {
+            key: 'Refuse',
+            text: 'การปฏิเสธ (Refuse)',
+            value: 'refuse',
+            label: { color: 'black', empty: true, circular: true },
+        },
+    ]
 
     return (
         <Grid stackable style={{ paddingTop: '3em' }} container>
@@ -155,13 +176,40 @@ const ChallnegeMockup = (props) => {
                 </Grid.Column>
                 <Divider />
                 <Grid.Column floated="right" width={5}>
-                    <Button color="olive" size='small' icon labelPosition='left' floated="right">
-                        <Icon name="add" />
-                        สร้างชาเลนจ์
+                    <Link to="/challenges/new" style={{ color: 'white' }} >
+                        <Button color="olive" size='small' icon labelPosition='left' floated="right"
+                            onClick={() => history.push('/challenges/new')}
+                        >
+                            <Icon name="add" />
+                            สร้างชาเลนจ์
                             </Button>
+                    </Link>
                 </Grid.Column>
             </Grid.Row>
             <Divider />
+
+            <Grid.Row>
+                <Grid.Column>
+                    <Dropdown
+                        text='ค้นหาด้วย tags'
+                        icon='filter'
+                        floating
+                        labeled
+                        button
+                        className='icon'
+                        style={{ backgroundColor: 'gold' }}
+                    >
+                        <Dropdown.Menu>
+                            <Dropdown.Header icon='tags' content='Tags' />
+                            <Dropdown.Menu scrolling>
+                                {tagOptions.map((option) => (
+                                    <Dropdown.Item key={option.value} {...option} />
+                                ))}
+                            </Dropdown.Menu>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Grid.Column>
+            </Grid.Row>
 
             <Grid.Row columns='equal'>
                 {itemList}

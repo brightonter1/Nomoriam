@@ -19,7 +19,11 @@ import {
     FETCH_MY_CHALLENGE,
     FETCH_MY_CHALLENGES,
     FETCH_MY_CHALLENGES_CLEAN,
-    FETCH_POST
+    FETCH_POST,
+    FETCH_JOINED,
+    CLEAR_JOINED,
+    FETCH_PLAYERS,
+    CLEAR_PLAYERS
 } from '../actions/type'
 
 const INITIAL_STATE = {
@@ -71,9 +75,17 @@ export default (state = INITIAL_STATE, action) => {
         case FETCH_MY_CHALLENGES:
             return { ...state, getData: action.getData, myChallenge: action.payload }
         case FETCH_MY_CHALLENGES_CLEAN:
-            return { ...state, getData: null, myChallenge: null}
+            return { ...state, getData: null, myChallenge: null }
         case FETCH_POST:
             return { ...state, posts: action.payload, isPost: true }
+        case FETCH_JOINED:
+            return { ...state, JOINED_CHALLENGES: action.payload, JOINED: true }
+        case CLEAR_JOINED:
+            return { ...state, JOINED_CHALLENGES: null, JOINED: false }
+        case FETCH_PLAYERS:
+            return { ...state, players: action.payload, isPlayers: true }
+        case CLEAR_PLAYERS:
+            return { ...state, players: [], isPlayers: false}
         default:
             return state;
     }

@@ -45,5 +45,7 @@ export const DOPOST = 'DOPOST'
 export const DOPOST_CLEAN = 'DOPOST_CLEAN'
 export const DOQRCODE = 'DOQRCODE'
 export const DOQRCODE_CLEAN = 'DOQRCODE_CLEAN'
-
-
+export const FETCH_JOINED = 'FETCH_JOINED'
+export const CLEAR_JOINED = 'CLEAR_JOINED'
+export const FETCH_PLAYERS = 'FETCH_PLAYERS'
+export const CLEAR_PLAYERS = 'CLEAR_PLAYERS'

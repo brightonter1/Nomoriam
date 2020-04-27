@@ -68,7 +68,15 @@ const HomeMockup = (props) => {
     const itemList = items.map((post, index) =>
         <Grid.Column key={index} style={{ paddingTop: '1em' }}>
             <Card fluid >
-                <Image src={post.image} centered style={{ height: 380, objectFit: 'cover', objectPosition: 'center center' }} />
+                <Image src={post.image} centered
+                    style={{ height: 380, objectFit: 'cover', objectPosition: 'center center' }}
+                    label={
+                        <Label as='a' image size='small' attached='top right' >
+                            <img src={organize} />
+                            มหาวิทยาลัย
+                        </Label>
+                    }
+                />
                 <Card.Content>
                     <Feed>
                         <Feed.Event>

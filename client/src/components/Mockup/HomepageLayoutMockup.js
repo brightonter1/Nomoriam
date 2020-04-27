@@ -113,6 +113,7 @@ class DesktopContainer extends Component {
                   <Header as='h4' content="หน้าหลัก" style={{ color: 'white' }} />
                 </Menu.Item>
                 <Menu.Item onClick={() => history.push('/challenges')}><Header as='h4' content="ชาเลนจ์" style={{ color: 'white' }} /></Menu.Item>
+                <Menu.Item onClick={() => history.push('/hallofframe')}><Header as='h4' content="หอเกียรติยศ" style={{ color: 'white' }} /></Menu.Item>
                 <Menu.Item position='right'>
                   <Dropdown
                     item

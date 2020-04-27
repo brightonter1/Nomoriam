@@ -113,6 +113,7 @@ class DesktopContainer extends Component {
                   <Header as='h4' content="หน้าหลัก" style={{ color: 'white' }} />
                 </Menu.Item>
                 <Menu.Item onClick={() => history.push('/challenges')}><Header as='h4' content="ชาเลนจ์" style={{ color: 'white' }} /></Menu.Item>
+                <Menu.Item onClick={() => history.push('/hallofframe')}><Header as='h4' content="หอเกียรติยศ" style={{ color: 'white' }} /></Menu.Item>
                 <Menu.Item position='right'>
                   <Dropdown
                     item
@@ -183,6 +184,9 @@ class MobileContainer extends Component {
           </Menu.Item>
           <Menu.Item onClick={() => (history.push('/challenges'), this.setState({ sidebarOpened: false }))}
           >ชาเลนจ์</Menu.Item>
+          <Menu.Item onClick={() => (history.push('/hallofframe'), this.setState({ sidebarOpened: false }))}
+          >หอเกียรติยศ</Menu.Item>
+
           {/* <Menu.Item onClick={() => (history.push('/'), this.setState({ sidebarOpened: false }))} >กระดานคะแนน</Menu.Item> */}
           <Menu.Item onClick={() => (history.push('/account/profile'), this.setState({ sidebarOpened: false }))}>โปรไฟล์</Menu.Item>
           <Menu.Item onClick={() => (history.push('/account/status'), this.setState({ sidebarOpened: false }))}>สถานะชาเลนจ์</Menu.Item>

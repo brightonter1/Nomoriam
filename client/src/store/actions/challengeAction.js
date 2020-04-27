@@ -19,7 +19,11 @@ import {
     FETCH_MY_CHALLENGE,
     FETCH_MY_CHALLENGES,
     FETCH_POST,
-    FETCH_MY_CHALLENGES_CLEAN
+    FETCH_MY_CHALLENGES_CLEAN,
+    FETCH_JOINED,
+    CLEAR_JOINED,
+    FETCH_PLAYERS,
+    CLEAR_PLAYERS
 } from './type'
 
 import moment from 'moment'
@@ -32,29 +36,23 @@ import { Medal } from '../../asset/archievement/Medal'
 const db = firebase.firestore()
 const storageRef = firebase.storage().ref()
 
-export const CreateChallenge = (challenge, activity) => async dispatch => {
+export const CreateChallenge = (challenge) => async dispatch => {
     var userId = firebase.auth().currentUser.uid
+    let time = moment().format().split('T')[1].split('+')[0]
+    var timestamp = moment().format("DD-MM-YYYY") + " " + time
 
-    const concat = ({ title, category, times, location }) => {
-        return {
-            title: title + ":," + location,
-            category: category,
-            times: times
-        }
-    }
-
-    activity = _.map(activity, concat)
     await ipfs.add(challenge.image.image, async (error, result) => {
         const image = result[0].hash
-        console.log("image: ", image)
         db.collection('challenges').doc().set({
             owner: userId,
             title: challenge.name,
             desc: challenge.desc,
+            goal: challenge.goal,
             image: 'https://ipfs.infura.io/ipfs/' + image,
             create_time: challenge.create_time,
             end_time: challenge.end_time,
-            activities: activity,
+            activities: challenge.activities,
+            timestamp: timestamp,
             approved: false,
             finished: false
         }).then(function () {
@@ -75,7 +73,7 @@ export const fetchChallengeOnApprove = () => async dispatch => {
     db.collection('challenges').where('approved', '==', false).get().then((snapShot) => {
         snapShot.forEach((res) => {
             const data = res.data()
-            data.doc = res.id
+            data.documentId = res.id
             challenges.push(data)
         })
         dispatch({ type: FETCH_CHALLENGE_ON_APPROVE, payload: challenges })
@@ -106,6 +104,8 @@ export const approveChallenge = (challenge) => async dispatch => {
     createChallenge()
 
     async function createChallenge() {
+        challenge.desc = challenge.desc + ">,<" + challenge.goal
+        challenge.create_time = challenge.create_time + ">time<" + challenge.timestamp
         console.log("Writing.. Challenge to Blockchain")
         const index = await contract.methods.getChallengeCount().call()
         const data = contract.methods.createChallenge(
@@ -134,6 +134,11 @@ export const approveChallenge = (challenge) => async dispatch => {
     }
 
     async function transaction(act, index) {
+        if (act.location === 'map') {
+            act.category = act.category + ">location<" + act.location + ">extra<" + act.extra + ">latlng<" + act.latlng
+        } else {
+            act.category = act.category + ">location<" + act.location + ">extra<" + "none" + ">latlng<" + "none"
+        }
         var image = act.category === 'post' ? 'QmTVAbNEUe3mtLQibRcWB2drchJgiWxQCaKmaZJB43WMAs' : 'QmRPj4nmcSUyRKTK5KSP73t7Lkj1Tnmaqgkt5pFHQZTPkf'
         const value = contract.methods.addActivity(
             Number(index), act.title, image, act.category, Number(act.times)
@@ -186,6 +191,11 @@ export const fetchChallenges = () => async dispatch => {
         const joined = await contract.methods.getJoinedChallenge(index, userId).call()
         const playerCount = await contract.methods.getPlayerCountByChallenge(index).call()
         const actCount = await contract.methods.getActivityCount(index).call()
+        const owner = await contract.methods.getOwnerByChallenge(index).call()
+        await db.collection('users').doc(owner).get().then((res) => {
+            var data = res.data()
+            challenge.owner = data.displayname
+        })
         challenge.joined = joined
         challenge.playerCount = playerCount
         challenge.actCount = actCount
@@ -196,7 +206,13 @@ export const fetchChallenges = () => async dispatch => {
 
 export const fetchChallenge = index => async dispatch => {
     var userId = firebase.auth().currentUser.uid
+    var qrcodes = []
     const challenge = await contract.methods.challenges(index).call()
+    const owner = await contract.methods.getOwnerByChallenge(index).call()
+    db.collection('users').doc(owner).get().then((res) => {
+        var data = res.data()
+        challenge.owner = data.displayname
+    })
     const actCount = await contract.methods.getActivityCount(index).call()
     const playerCount = await contract.methods.getPlayerCountByChallenge(index).call()
     const joined = await contract.methods.getJoinedChallenge(index, userId).call()
@@ -214,12 +230,20 @@ export const fetchChallenge = index => async dispatch => {
             exp: data[5]
         }
 
+        if (data.category.split('>location<')[0] === "qrcode") {
+            for (var j = 0; j < data.times; j++) {
+                const qr = await contract.methods.getQRcodeByChallenge(index, count, j).call()
+                qrcodes.push(qr)
+            }
+            data.qrcode = qrcodes;
+        }
+
         acts.push(data)
     }
 
     const sizeMedal = await contract.methods.getMedalByChallenge(index).call()
-    for (var j = 0; j < sizeMedal; j++) {
-        var medal = await contract.methods.getMedalByIndex(index, j).call()
+    for (var l = 0; l < sizeMedal; j++) {
+        var medal = await contract.methods.getMedalByIndex(index, l).call()
         medal = {
             title: medal[0],
             image: medal[1],
@@ -237,9 +261,9 @@ export const fetchChallenge = index => async dispatch => {
         }
         await db.collection('users').doc(player.uid).get()
             .then(function (res) {
-                var data = res.data()
-                player.displayname = data.displayname
-                player.photoURL = data.photoURL
+                var www = res.data()
+                player.displayname = www.displayname
+                player.photoURL = www.photoURL
             })
         players.push(player)
     }
@@ -301,7 +325,7 @@ export const fetchActivity = () => async dispatch => {
                     point: act[4],
                     exp: act[5]
                 }
-                if (act.category === "qrcode") {
+                if (act.category.split('>location<')[0] === "qrcode") {
                     for (var j = 0; j < act.times; j++) {
                         const qr = await contract.methods.getQRcodeByChallenge(index, i, j).call()
                         qrcodes.push(qr)
@@ -314,6 +338,12 @@ export const fetchActivity = () => async dispatch => {
                 acts.push(act)
             }
             const myCha = await contract.methods.getPlayerByChallenge(index, userId).call()
+            const userBC = await contract.methods.getPlayer(userId).call()
+            challenge.userBC = {
+                main_POINT: userBC[1],
+                main_EXP: userBC[2],
+                challenge_COUNT: userBC[3]
+            }
 
             challenge.myUid = myCha[0]
             challenge.myPoint = myCha[1]
@@ -427,6 +457,8 @@ export const fetchMyChallenges = () => async dispatch => {
         var owner = await contract.methods.getOwnerByChallenge(i).call()
         if (userId === owner) {
             var challenge = await contract.methods.challenges(i).call()
+            var actCount = await contract.methods.getActivityCount(i).call()
+            challenge.actCount = actCount
             challenge.index = i
             challenges.push(challenge)
         }
@@ -437,6 +469,7 @@ export const fetchMyChallenges = () => async dispatch => {
             snapshot.forEach((res) => {
                 var challenge = res.data()
                 if (challenge.approved === false) {
+                    challenge.documentId = res.id
                     notApprove.push(challenge)
                 }
             })
@@ -474,8 +507,8 @@ export const fetchMyChallenge = (index) => async dispatch => {
 
 
             const playerCount = await contract.methods.getPlayerCountByChallenge(index).call()
-            for (var i = 0; i < playerCount; i++) {
-                var uid = await contract.methods.getPlayerUID(index, i).call()
+            for (var p = 0; p < playerCount; p++) {
+                var uid = await contract.methods.getPlayerUID(index, p).call()
                 var player = await contract.methods.getPlayerByChallenge(index, uid).call()
                 player = {
                     uid: player[0],
@@ -539,4 +572,80 @@ export const fetchActivities = () => async dispatch => {
 
 export const fetchMyChallengeClean = () => dispatch => {
     dispatch({ type: FETCH_MY_CHALLENGES_CLEAN })
+}
+
+export const fetchJoinedChallenge = () => async dispatch => {
+    var userId = firebase.auth().currentUser.uid
+    var challenges = []
+    const count = await contract.methods.getChallengeCount().call()
+    for (var i = 0; i < count; i++) {
+        const joined = await contract.methods.getJoinedChallenge(i, userId)
+        if (joined) {
+            var challenge = await contract.methods.challenges(i).call()
+            const actCount = await contract.methods.getActivityCount(i).call()
+            const playerCount = await contract.methods.getPlayerCountByChallenge(i).call()
+            const owner = await contract.methods.getOwnerByChallenge(i).call()
+            await db.collection('users').doc(owner).get().then(function (res) {
+                const data = res.data()
+                challenge.owner = data.displayname
+            })
+            challenge.playerCount = playerCount
+            challenge.actCount = actCount
+            challenge.index = i
+            challenges.push(challenge)
+
+        }
+    }
+
+    dispatch({ type: FETCH_JOINED, payload: challenges })
+}
+
+export const clearJoinedChallenge = () => dispatch => {
+    dispatch({ type: CLEAR_JOINED })
+}
+
+export const fetchPlayers = () => async dispatch => {
+    var players = []
+    var ranks = []
+
+    await db.collection('users').get().then(function (snapShot) {
+        snapShot.forEach(function (res) {
+            var player = res.data()
+            player.uid = res.id
+            players.push(player)
+        })
+    })
+
+    await db.collection('rank').get().then((snapshot) => {
+        snapshot.forEach((res) => {
+            var dataRank = res.data()
+            ranks.push(dataRank)
+        })
+    })
+
+    for (var i = 0; i < players.length; i++) {
+        const data = await contract.methods.getPlayer(players[i].uid).call()
+        players[i].point = Number(data[1])
+        players[i].exp = Number(data[2])
+        players[i].challengeCount = data[3]
+
+        for (var k = 0; k < ranks.length; k++) {
+            if (ranks[k].start <= players[i].exp && players[i].exp <= ranks[k].exp) {
+                players[i].rankName = ranks[k].title
+                players[i].rankExp = ranks[k].exp
+                players[i].rankImage = ranks[k].image
+                players[i].rankStart = ranks[k].start
+            }
+        }
+    }
+    players = _.orderBy(players, ['exp'], ['desc'])
+    _.forEach(players, function(player, i) {
+        player.rankNumber = i+1
+    })
+
+    dispatch({ type: FETCH_PLAYERS, payload: players })
+}
+
+export const clearPlayers = () => dispatch => {
+    dispatch({ type: CLEAR_PLAYERS })
 }

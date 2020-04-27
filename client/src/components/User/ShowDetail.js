@@ -46,6 +46,7 @@ const ShowDetail = props => {
     const [open, setOpen] = useState(false)
     const { challenge } = props
     const [qrcode, setQrcode] = useState(null)
+    console.log(challenge)
 
     if (props.isFetch) {
 

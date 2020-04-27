@@ -14,11 +14,12 @@ module.exports = {
                 return new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/v3/f770e2b03ba84a39abf119740db92bce");
             },
             network_id: 4,
-            gas: 8000000
+            gas: 8200000
         }
     },
     compilers: {
         solc: {
+          version: "0.4.25",
           settings: {
             optimizer: {
               enabled: true, // Default: false

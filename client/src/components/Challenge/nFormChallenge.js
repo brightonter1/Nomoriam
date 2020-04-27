@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Segment,
     Header,
@@ -14,10 +14,16 @@ import {
 } from 'semantic-ui-react'
 import photo from '../../asset/mariam/Header.jpg'
 import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form'
-import { renderInput, renderTextArea, renderFileInput, renderSelection } from '../Challenge/Form'
+// import validate from './FormValidate'
+import { renderInput, renderTextArea, renderFileInput, renderSelection } from './Form'
 import { connect } from 'react-redux'
-import GoogleMap from '../Challenge/MapGoogle'
+import GoogleMap from './MapGoogle'
 import _ from 'lodash'
+import { CreateChallenge, cleanUp } from '../../store/actions/challengeAction'
+import { alertAction } from './Form'
+import MariamSpinner from '../Layout/MariamSpinner'
+
+
 
 const options = [
     { key: 'reuse', text: 'การใช้ซ้ำ [Reuse]', value: 'reuse' },
@@ -65,51 +71,45 @@ const categoryRadio = ({ input, message, label }) => (
     </React.Fragment>
 )
 
-const locationRadio = ({ input, message, label }) => (
-    <React.Fragment>
-        <Form.Group style={{ paddingBottom: '1em' }} >
-            <Form.Field>
-                <Segment style={{ paddingTop: '0px', borderRadius: '15px' }}>
-                    <input id={`${input.name}.home`} onChange={(param) => input.onChange(param.target.value)} type="radio" name={input.name} value="home"
-                    />
-                    <label htmlFor={`${input.name}.home`} className="radio-image home" />
-                    <span >บ้าน</span>
-                </Segment>
-            </Form.Field>
-            <Form.Field>
-                <Segment style={{ paddingTop: '0px', borderRadius: '15px' }}>
-                    <input id={`${input.name}.store`} onChange={(param) => input.onChange(param.target.value)} type="radio" name={input.name} value="store"
-                    />
-                    <label htmlFor={`${input.name}.store`} className="radio-image store" />
-                    <span >ร้านสะดวกซื้อ</span>
-                </Segment>
-            </Form.Field>
-            <Form.Field>
-                <Segment style={{ paddingTop: '0px', borderRadius: '15px' }}>
-                    <input id={`${input.name}.organize`} onChange={(param) => input.onChange(param.target.value)} type="radio" name={input.name} value="school"
-                    />
-                    <label htmlFor={`${input.name}.organize`} className="radio-image organize" />
-                    <span >สถานศึกษา</span>
-                </Segment>
-            </Form.Field>
-            {/* <Form.Field>
-                <Segment style={{ paddingTop: '0px', borderRadius: '15px' }} >
-                    <input id={`${input.name}.global`} onChange={(param) => input.onChange(param.target.value)} type="radio" value="global" name={input.name} />
-                    <label htmlFor={`${input.name}.global`} className="radio-image global" />
-                    <span >ที่ใดก็ได้</span>
-                </Segment>
-            </Form.Field> */}
-            <Form.Field>
-                <Segment style={{ paddingTop: '0px', borderRadius: '15px' }}>
-                    <input id={`${input.name}.pin`} onChange={(param) => input.onChange(param.target.value)} type="radio" name={input.name} value="map"
-                    />
-                    <label htmlFor={`${input.name}.pin`} className="radio-image pin" />
-                    <span >จุดนัดพบ</span>
-                </Segment>
-            </Form.Field>
-        </Form.Group>
-    </React.Fragment>
-)
+// const locationRadio = ({ input, message, label }) => (
+//     <React.Fragment>
+//         <Form.Group style={{ paddingBottom: '1em' }} >
+//             <Form.Field>
+//                 <Segment style={{ paddingTop: '0px', borderRadius: '15px' }}>
+//                     <input id={`${input.name}.home`} onChange={(param) => input.onChange(param.target.value)} type="radio" name={input.name} value="home"
+//                     />
+//                     <label htmlFor={`${input.name}.home`} className="radio-image home" />
+//                     <span >บ้าน</span>
+//                 </Segment>
+//             </Form.Field>
+//             <Form.Field>
+//                 <Segment style={{ paddingTop: '0px', borderRadius: '15px' }}>
+//                     <input id={`${input.name}.store`} onChange={(param) => input.onChange(param.target.value)} type="radio" name={input.name} value="store"
+//                     />
+//                     <label htmlFor={`${input.name}.store`} className="radio-image store" />
+//                     <span >ร้านสะดวกซื้อ</span>
+//                 </Segment>
+//             </Form.Field>
+//             <Form.Field>
+//                 <Segment style={{ paddingTop: '0px', borderRadius: '15px' }}>
+//                     <input id={`${input.name}.organize`} onChange={(param) => input.onChange(param.target.value)} type="radio" name={input.name} value="school"
+//                     />
+//                     <label htmlFor={`${input.name}.organize`} className="radio-image organize" />
+//                     <span >สถานศึกษา</span>
+//                 </Segment>
+//             </Form.Field>
+
+//             <Form.Field>
+//                 <Segment style={{ paddingTop: '0px', borderRadius: '15px' }}>
+//                     <input id={`${input.name}.pin`} onChange={(param) => input.onChange(param.target.value)} type="radio" name={input.name} value="map"
+//                     />
+//                     <label htmlFor={`${input.name}.pin`} className="radio-image pin" />
+//                     <span >จุดนัดพบ</span>
+//                 </Segment>
+//             </Form.Field>
+//         </Form.Group>
+//     </React.Fragment>
+// )
 
 const renderRange = ({ input, label, message, width, placeholder }) => {
     return (
@@ -144,11 +144,7 @@ const renderActivity = ({ fields, acts }) => {
                     return (
                         <Grid.Column width={8} style={{ paddingTop: '1em', paddingBottom: '1em' }} key={index} >
                             <Segment style={{ paddingTop: '10px' }} raised>
-                                <Icon name="remove"
-                                    style={
-                                        { position: 'absolute', color: 'red', right: '10px', cursor: 'pointer' }}
-                                    onClick={
-                                        () => fields.remove(index)} />
+                                {/*  */}
                                 <Item.Group divided style={
                                     { padding: '0em 1em 1em 1em' }} >
                                     <Header as='h3' > ภารกิจที่ {index + 1} </Header>
@@ -223,6 +219,7 @@ const renderActivity = ({ fields, acts }) => {
 let FormChallenge = props => {
 
     const [modal, setModal] = useState(false)
+    const [open, setOpen] = useState(false)
 
     const Guide = (
         <Modal
@@ -262,9 +259,39 @@ let FormChallenge = props => {
         </Modal>
     )
 
-    console.log(props.fillCompleted)
+    const onSubmit = (result) => {
+        setOpen(true)
+        var challenge = {
+            name: result.name,
+            desc: result.desc,
+            goal: result.goal,
+            create_time: result.create_time,
+            end_time: result.end_time,
+            image: result.image,
+            activities: result.activities
+        }
+        props.CreateChallenge(challenge)
+    }
+
+    useEffect(() => {
+        if (props.isCompleted === true) {
+            setOpen(false)
+            alertAction("สร้างชาเลนจ์สำเร็จ", props.message, 'success')
+        } else if (props.isCompleted === false) {
+            setOpen(false)
+            alertAction("เกิดข้อผิดพลาดโปรดลองอีกครั้ง", props.message, 'error')
+        }
+    }, [props.isCompleted, props.message])
+
+    useEffect(() => {
+        return () => {
+            props.cleanUp()
+        }
+    }, [])
+
     return (
         <Grid container stackable style={{ paddingTop: '3em' }}  >
+            <MariamSpinner open={open} />
             <Grid.Row >
                 <Grid.Column width={16} >
                     <Header as='h2' >
@@ -290,7 +317,7 @@ let FormChallenge = props => {
                             </label>
                         }
                         rounded
-                        style={{ objectFit: 'cover', objectPosition: 'center center' }}
+                        style={{ minHeight: '400px', minWidth: '450px', maxHeight: '400px', maxWidth: '450px', objectFit: 'cover', objectPosition: 'center center' }}
                     />
                     <Form style={{ paddingTop: 10 }}
                         style={{ width: '.1px', height: '.1px', opacity: 0, overflow: 'hidden', zIndex: -1 }}
@@ -303,7 +330,6 @@ let FormChallenge = props => {
                             id='image'
                         />
                     </Form>
-
 
                 </Grid.Column>
                 <Grid.Column width={8} >
@@ -362,20 +388,22 @@ let FormChallenge = props => {
                 />
             </Grid.Row>
 
-            {console.log(props.fillCompleted)}
 
             <Grid.Row>
                 <Grid.Column width={16} style={{ paddingTop: '2em' }} textAlign='center' verticalAlign='bottom'>
+
                     {
                         props.fillCompleted ?
-                            <Button size='massive' primary style={{ borderRadius: '45px', paddingBottom: '1em' }} >สร้างชาเลนจ์</Button>
+                            <Form onSubmit={props.handleSubmit(onSubmit)} >
+                                <Button size='massive' primary
+                                    style={{ borderRadius: '45px', paddingBottom: '1em' }}
+                                    type='submit'
+                                >
+                                    สร้างชาเลนจ์
+                                </Button>
+                            </Form>
                             : null
                     }
-                    {/* <Button size='massive' primary disabled={props.fillCompleted ? false : true} style={{ borderRadius: '45px', paddingBottom: '1em' }} >สร้างชาเลนจ์</Button> */}
-                    {/* {fields.length > 0 && <Button primary floated="right" type="button" >
-                        ถัดไป<Icon name="arrow right" />
-                    </Button>}
-                    <Button primary floated="right" type="button" ><Icon name="arrow left" />ย้อนกลับ</Button> */}
                 </Grid.Column>
             </Grid.Row>
         </Grid>
@@ -383,7 +411,7 @@ let FormChallenge = props => {
 }
 
 const selector = formValueSelector('challengeForm')
-FormChallenge = connect(state => {
+const mapStateToProps = state => {
     const imageFile = selector(state, 'image')
     const acts = selector(state, 'activities')
     const { image, name, desc, create_time, end_time, goal } = selector(
@@ -393,7 +421,7 @@ FormChallenge = connect(state => {
     var total = 6
     try {
         if (acts) {
-            total += (acts.length * 5)
+            total += (acts.length * 6)
             count += image ? 1 : 0
             count += name ? 1 : 0
             count += desc ? 1 : 0
@@ -413,12 +441,16 @@ FormChallenge = connect(state => {
             return {
                 image: imageFile.imageFile,
                 acts: acts,
-                fillCompleted: total === count ? true : false
+                fillCompleted: total === count ? true : false,
+                isCompleted: state.challenge.isCompleted,
+                message: state.challenge.message
             }
         } else {
             return {
                 acts: acts,
-                fillCompleted: total === count ? true : false
+                fillCompleted: total === count ? true : false,
+                isCompleted: state.challenge.isCompleted,
+                message: state.challenge.message
             }
         }
     }
@@ -426,10 +458,14 @@ FormChallenge = connect(state => {
     if (image) {
         return {
             image: image.imageFile,
-            fillCompleted: total === count ? true : false
+            fillCompleted: total === count ? true : false,
+            isCompleted: state.challenge.isCompleted,
+            message: state.challenge.message
         }
     }
-})(FormChallenge)
+}
+
+FormChallenge = connect(mapStateToProps, { CreateChallenge, cleanUp })(FormChallenge)
 
 export default reduxForm({
     form: 'challengeForm'

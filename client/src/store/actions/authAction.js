@@ -23,6 +23,7 @@ const storageRef = firebase.storage().ref()
 export const isSignIn = () => async dispatch => {
     var currentUser = firebase.auth().currentUser
     var user = {}
+    var ranks = []
     if (currentUser) {
         await db.collection('users').doc(currentUser.uid).get().then((res) => {
             const data = res.data()
@@ -36,6 +37,27 @@ export const isSignIn = () => async dispatch => {
                 }
             }
         })
+
+        var data = await contract.methods.getPlayer(currentUser.uid).call()
+        user.POINT = data[1]
+        user.EXP = data[2]
+        user.CHALLENGE_COUNT = data[3]
+
+        await db.collection('rank').get().then((snapshot) => {
+            snapshot.forEach((res) => {
+                var dataRank = res.data()
+                ranks.push(dataRank)
+            })
+        })
+
+        for (var k = 0; k < ranks.length; k++) {
+            if (ranks[k].start <= user.EXP && user.EXP <= ranks[k].exp) {
+                user.rankName = ranks[k].title
+                user.rankExp = ranks[k].exp
+                user.rankImage = ranks[k].image
+                user.rankStart = ranks[k].start
+            }
+        }
         dispatch({ type: SIGN_IN, payload: user })
     } else {
         dispatch({ type: SIGN_IN_FAILED })
@@ -45,10 +67,11 @@ export const isSignIn = () => async dispatch => {
 
 export const SignIn = ({ email, pwd }) => async dispatch => {
     var user = {}
+    var ranks = []
 
     firebase.auth().signInWithEmailAndPassword(email, pwd).then(function (result) {
         // Login Completed
-        db.collection('users').doc(result.user.uid).get().then((res) => {
+        db.collection('users').doc(result.user.uid).get().then(async (res) => {
             const data = res.data()
             if (data) {
                 user = {
@@ -57,6 +80,26 @@ export const SignIn = ({ email, pwd }) => async dispatch => {
                     photoURL: data.photoURL,
                     roleAdmin: data.role === "admin" ? true : false,
                     bio: data.bio
+                }
+            }
+            var eiei = await contract.methods.getPlayer(result.user.uid).call()
+            user.POINT = eiei[1]
+            user.EXP = eiei[2]
+            user.CHALLENGE_COUNT = eiei[3]
+
+            await db.collection('rank').get().then((snapshot) => {
+                snapshot.forEach((res) => {
+                    var dataRank = res.data()
+                    ranks.push(dataRank)
+                })
+            })
+
+            for (var k = 0; k < ranks.length; k++) {
+                if (ranks[k].start <= user.EXP && user.EXP <= ranks[k].exp) {
+                    user.rankName = ranks[k].title
+                    user.rankExp = ranks[k].exp
+                    user.rankImage = ranks[k].image
+                    user.rankStart = ranks[k].start
                 }
             }
             dispatch({ type: SIGN_IN, payload: user })
@@ -70,6 +113,7 @@ export const SignIn = ({ email, pwd }) => async dispatch => {
 export const SignInGoogle = () => async dispatch => {
     var provider = new firebase.auth.GoogleAuthProvider();
     var user = {}
+    var ranks = []
     firebase.auth().signInWithPopup(provider).then(async function (result) {
         if (result.additionalUserInfo.isNewUser) {
             db.collection('users').doc(result.user.uid).set({
@@ -84,6 +128,27 @@ export const SignInGoogle = () => async dispatch => {
                 email: result.user.email,
                 roleAdmin: false,
                 bio: ''
+            }
+
+            var eiei = await contract.methods.getPlayer(result.user.uid).call()
+            user.POINT = eiei[1]
+            user.EXP = eiei[2]
+            user.CHALLENGE_COUNT = eiei[3]
+
+            await db.collection('rank').get().then((snapshot) => {
+                snapshot.forEach((res) => {
+                    var dataRank = res.data()
+                    ranks.push(dataRank)
+                })
+            })
+
+            for (var k = 0; k < ranks.length; k++) {
+                if (ranks[k].start <= user.EXP && user.EXP <= ranks[k].exp) {
+                    user.rankName = ranks[k].title
+                    user.rankExp = ranks[k].exp
+                    user.rankImage = ranks[k].image
+                    user.rankStart = ranks[k].start
+                }
             }
             dispatch({ type: SIGN_IN, payload: user })
             history.push('/')
@@ -180,8 +245,8 @@ export const FetchProfile = () => async dispatch => {
         })
     })
 
-    for(var k = 0 ; k < ranks.length;k++){
-        if(ranks[k].start <= player.exp && player.exp <= ranks[k].exp){
+    for (var k = 0; k < ranks.length; k++) {
+        if (ranks[k].start <= player.exp && player.exp <= ranks[k].exp) {
             player.rankName = ranks[k].title
             player.rankExp = ranks[k].exp
             player.rankImage = ranks[k].image

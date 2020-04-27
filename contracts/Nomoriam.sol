@@ -1,5 +1,6 @@
 pragma solidity >=0.4.21 <0.7.0;
 
+
 contract Nomoriam {
     struct Activity {
         string title;
@@ -178,6 +179,7 @@ contract Nomoriam {
         player[uid].challenges.push(getChallengeCountByPlayer(uid));
         challenges[index].joined[uid] = true;
     }
+
     function addActivity(
         uint256 _index,
         string memory title,
@@ -196,12 +198,12 @@ contract Nomoriam {
             category
         );
         challenges[_index].sum_point += generatePoint(category) * times;
-        if (compareString(category, "qrcode")) {
-            for (uint256 i = 0; i < times; i++) {
-                challenges[_index].activity[getActivityCount(_index)]
-                    .qrcode[i] = generateQRcode(title, category, i);
-            }
+        // if (compareString(category, "qrcode")) {
+        for (uint256 i = 0; i < times; i++) {
+            challenges[_index].activity[getActivityCount(_index)]
+                .qrcode[i] = generateQRcode(title, category, i + 1);
         }
+        // }
         challenges[_index].activities.push(getActivityCount(_index));
     }
 
@@ -245,6 +247,7 @@ contract Nomoriam {
         challenges[_index].player[uid].point += challenges[_index]
             .activity[_count]
             .point;
+        player[uid].point += challenges[_index].activity[_count].point;
 
         if (
             challenges[_index].player[uid].point == challenges[_index].sum_point
@@ -262,17 +265,6 @@ contract Nomoriam {
 
         return 0;
     }
-
-    // function doQuestion(uint _index, uint _count, string memory uid, string memory answer) public returns(bool){
-    //     require(compareString(answer, challenges[_index].activity[_count].answer),"");
-    //     require(player[uid].challenge[_index].activity[_count].times == 1, "");
-
-    //     // add Exp to player
-    //     player[uid].challenge[_index].activity[_count].times--;
-    //     player[uid].exp += challenges[_index].activity[_count].exp;
-    //     // add Point to challenge
-    //     challenges[_index].player[uid].point += challenges[_index].activity[_count].point;
-    // }
 
     function doQRCode(
         uint256 _index,
@@ -302,6 +294,7 @@ contract Nomoriam {
                 challenges[_index].player[uid].point += challenges[_index]
                     .activity[_count]
                     .point;
+                player[uid].point += challenges[_index].activity[_count].point;
             }
         }
         if (isExist) {
@@ -321,10 +314,9 @@ contract Nomoriam {
             } else {
                 return 5;
             }
-        }else{
+        } else {
             return 0;
         }
-
     }
 
     function generatePoint(string memory category)
@@ -353,7 +345,7 @@ contract Nomoriam {
                 : 100;
     }
 
-    /* 
+    /*
         Player
     */
 
@@ -530,8 +522,11 @@ contract Nomoriam {
         );
     }
 
-    function getOwnerByChallenge(uint index) public view returns(string memory) {
+    function getOwnerByChallenge(uint256 index)
+        public
+        view
+        returns (string memory)
+    {
         return owner[index];
     }
-
 }

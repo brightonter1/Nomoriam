@@ -14,7 +14,7 @@ export const web3 = new Web3(provider)
 export const account = '0x51FF6Ea18b2895aaE622A59713fe179aB305d0d6'
 export const privateKey = Buffer.from('3407760727BCCAE592B094CDB1F1302E4FB8CBBD4B897DB169001A9E7CD13F41', 'hex')
 
-export const contractAddr = '0x90AbCc6F67B77dC9057f3fCd7604641747206D2F'
+export const contractAddr = '0xA6cE85deFf8b503C318f22edcF5fa36E2c42c313'
 export const contract = new web3.eth.Contract(Nomoriam.abi, contractAddr)
 
 const Accounts = [
@@ -64,7 +64,7 @@ export const createTransaction = async data => {
         gasPrice: web3.utils.toHex(web3.utils.toWei('20', 'gwei')),
         data: data
     }
-    console.log(txObject)
+    // console.log(txObject)
     //       Sign the transaction
     const tx = new Tx(txObject, { 'chain': 'rinkeby' })
     tx.sign(account.privateKey)
@@ -95,7 +95,7 @@ export const createAsyncTransaction = async data => {
         gasPrice: web3.utils.toHex(web3.utils.toWei('20', 'gwei')),
         data: data
     }
-    console.log(txObject)
+    // console.log(txObject)
     //       Sign the transaction
     const tx = new Tx(txObject, { 'chain': 'rinkeby' })
     tx.sign(privateKey)

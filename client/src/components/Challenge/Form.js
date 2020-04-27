@@ -2,6 +2,11 @@ import { Form, Label, TextArea, Dropdown, Header } from 'semantic-ui-react'
 import React from 'react'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import home from '../../asset/icon/home.png'
+import global from '../../asset/icon/global.png'
+import store from '../../asset/icon/store.png'
+import pin from '../../asset/icon/pin.png'
+import organize from '../../asset/icon/orgranize.png'
 const MySwal = withReactContent(Swal)
 
 export const alertAction = (title, message, icon) => {
@@ -28,14 +33,14 @@ export const alertMedal = (title, text, image) => (
     })
 )
 
-export const renderInput = ({ input, label, placeholder, message, type, width,  meta: { touched, error } }) => (
+export const renderInput = ({ input, label, placeholder, message, type, width, meta: { touched, error } }) => (
     <React.Fragment>
         <Form.Field width={width}>
-            <Header as='h5' style={{width:'105px'}}>
+            <Header as='h5' style={{ width: '105px' }}>
                 <label style={{ textAlign: 'left' }} >{label}</label>
                 {message && <Header.Subheader style={{ paddingTop: 10 }}>{message}</Header.Subheader>}
             </Header>
-            <input {...input} type={type} icon="" placeholder={placeholder} autoComplete="off" style={{ borderRadius: 15, paddingLeft: '1em' }} />
+            <input {...input} type={type} placeholder={placeholder} autoComplete="off" style={{ borderRadius: 15, paddingLeft: '1em' }} />
         </Form.Field>
         {
             touched && error &&
@@ -64,7 +69,7 @@ export const renderTextArea = ({ input, label, message, placeholder, meta: { tou
     </React.Fragment>
 )
 
-export const renderFileInput = ({ input, label, message, type, meta: { touched, error } }) => (
+export const renderFileInput = ({ id, input, label, message, type, meta: { touched, error } }) => (
     <React.Fragment>
         <Form.Field>
             <Header as='h5'>
@@ -76,6 +81,8 @@ export const renderFileInput = ({ input, label, message, type, meta: { touched, 
                 type={type}
                 onChange={e => handleFileInput(e, input)}
                 style={{ borderRadius: 15 }}
+                id={id}
+                accept=".png, .jpg, .jpeg"
             />
         </Form.Field>
         {
@@ -103,38 +110,64 @@ export const QUESTION = 'https://firebasestorage.googleapis.com/v0/b/crytonomori
 export const QRCODE = 'https://firebasestorage.googleapis.com/v0/b/crytonomoriam.appspot.com/o/category%2Fqrcode.png?alt=media&token=a936aad6-052b-4858-9489-be1be533f241'
 const category = [
     {
-        //QmTVAbNEUe3mtLQibRcWB2drchJgiWxQCaKmaZJB43WMAs
         key: '0',
-        text: 'โพสต์รูปภาพ',
-        value: 'post',
-        image: { avatar: true, src: POST }
+        text: 'บ้าน',
+        value: 'home',
+        image: { avatar: true, src: home }
     },
     {
-        //QmRPj4nmcSUyRKTK5KSP73t7Lkj1Tnmaqgkt5pFHQZTPkf
         key: '1',
-        text: 'สแกนคิวอาโค้ด',
-        value: 'qrcode',
-        image: { avatar: true, src: QRCODE }
+        text: 'ร้านสะดวกซื้อ',
+        value: 'store',
+        image: { avatar: true, src: store }
+    },
+    {
+        key: '2',
+        text: 'สถานศึกษา',
+        value: 'school',
+        image: { avatar: true, src: organize }
+    },
+    {
+        key: '3',
+        text: 'ที่ไหนก็ได้',
+        value: 'anywhere',
+        image: { avatar: true, src: global }
+    },
+    {
+        key: '4',
+        text: 'แผนที่',
+        value: 'map',
+        image: { avatar: true, src: pin }
     }
 ]
 
-export const renderSelection = ({ input, label, message, placeholder, meta: { touched, error } }) => (
-    <React.Fragment>
-        <Form.Field>
-            <Header as='h5'>
-                <label style={{ textAlign: 'left' }} >{label}</label>
-                {message && <Header.Subheader style={{ paddingTop: 10 }}>{message}</Header.Subheader>}
-            </Header>
-            <Dropdown
-                selection {...input}
-                value={input.value}
-                options={category}
-                onChange={(param, data) => input.onChange(data.value)}
-                placeholder="เลือกวิธีการเล่น"
-                style={{ borderRadius: 15 }}
-            />
-        </Form.Field>
-    </React.Fragment>
-)
+
+
+export const renderSelection = ({ input, label, message, placeholder, meta: { touched, error } }) => {
+
+    return (
+        <React.Fragment>
+            <Form.Field>
+                <Header as='h5'>
+                    <label style={{ textAlign: 'left' }} >{label}</label>
+                    <Header.Subheader style={{ paddingTop: 10 }}>
+                        <p>&nbsp; สถานที่จะเป็นจุดที่ผู้เล่นเข้าใจได้ว่าในแต่ภารกิจ</p>
+                        <p>นั้นจะต้องเล่นสถานที่ใด</p>
+                    </Header.Subheader>
+                </Header>
+
+                <Dropdown
+                    selection {...input}
+                    options={category}
+                    onChange={(param, data) => input.onChange(data.value)}
+                    placeholder="เลือกวิธีการเล่น"
+                    style={{ borderRadius: 15 }}
+                />
+
+            </Form.Field>
+        </React.Fragment>
+    )
+}
+
 
 
