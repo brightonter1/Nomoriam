@@ -26,7 +26,6 @@ const StatusPage = props => {
         }
     }, [])
 
-    console.log(props)
 
 
     const itemList = (

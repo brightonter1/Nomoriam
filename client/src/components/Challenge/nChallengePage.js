@@ -58,7 +58,6 @@ const NChallengePage = (props) => {
         props.joinChallenge(index)
     }
 
-    console.log(challenges)
 
 
 

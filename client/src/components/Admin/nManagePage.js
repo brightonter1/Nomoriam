@@ -66,7 +66,6 @@ const ManagePage = props => {
 
 
     if (onApprove) {
-        console.log(onApprove)
         const itemApprove = (
             <Grid.Column style={{ paddingTop: '1em' }}>
                 <Item.Group >

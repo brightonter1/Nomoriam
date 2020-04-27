@@ -66,7 +66,6 @@ const NChallengeDetail = (props) => {
         props.joinChallenge(index)
     }
 
-
     const HowToReward = (
         <Modal
             trigger={<React.Fragment ><Icon name='hand point right outline' />ของรางวัลเอาไปทำอะไรได้ ?</React.Fragment>}
@@ -160,183 +159,6 @@ const NChallengeDetail = (props) => {
                 </span>
             </Grid.Column>
         </React.Fragment>
-    )
-
-    const ChallengeLoad = (
-        <React.Fragment>
-            <Grid.Column width={7}>
-                <div className="ui large image">
-                    <Placeholder>
-                        <Placeholder.Image square />
-                    </Placeholder>
-                </div>
-            </Grid.Column>
-            <Grid.Column width={9}>
-                <Item>
-
-
-                    <Item.Content>
-                        <Item.Header as='h2'>
-                            <Placeholder>
-                                <Placeholder.Header>
-                                    <Placeholder.Line />
-                                    <Placeholder.Line />
-                                </Placeholder.Header>
-                            </Placeholder>
-                        </Item.Header>
-
-                        <Item.Description as='h4'>
-                            <Placeholder>
-                                <Placeholder.Header>
-                                    <Placeholder.Line />
-                                    <Placeholder.Line length='long' />
-                                    <Placeholder.Line length='medium' />
-                                    <Placeholder.Line />
-                                </Placeholder.Header>
-                            </Placeholder>
-                        </Item.Description>
-
-                    </Item.Content>
-                </Item>
-            </Grid.Column>
-        </React.Fragment>
-    )
-
-    const ActLoad = (
-        <React.Fragment>
-            <Grid.Column >
-                <Item.Group unstackable>
-                    <Item
-                        style={{
-                            padding: '2em 2em 1em 2em',
-                            borderRadius: '15px',
-                            border: '1px solid rgba(34,36,38,.15)'
-                        }}
-                    >
-                        <Item.Image size='tiny' src={qrcode}>
-                        </Item.Image>
-                        <Item.Content>
-                            <Item.Header style={{ color: '#2a2825' }}>
-                                ซื้อของไม่รับถุงพลาสติก
-                                </Item.Header>
-
-                            <Item.Description as='h4' >
-                                <p>สถานที่ : มหาวิทยาลัย</p>
-                                <Label style={{ border: '1px solid rgba(34,36,38,.15)', backgroundColor: 'white' }}>
-                                    <Image src={organize} size='tiny' centered />
-                                </Label>
-                            </Item.Description>
-                            <Item.Extra>
-                                <Label color='green' content={'+300 POINT'} />
-                                <Label color='blue' content={'+500 EXP'} />
-                                <Label color='red' content={'จำนวน 3 ครั้ง'} />
-                            </Item.Extra>
-                        </Item.Content>
-                    </Item>
-                </Item.Group>
-            </Grid.Column>
-            <Grid.Column >
-                <Item.Group unstackable>
-                    <Item style={{ backgroundColor: 'white', padding: '2em 2em 1em 2em', borderRadius: '15px', border: '1px solid rgba(34,36,38,.15)' }}>
-                        <Item.Image size='tiny' src={qrcode}>
-                        </Item.Image>
-                        <Item.Content>
-                            <Item.Header style={{ color: '#0fcb1c' }}>
-                                ซื้อของไม่รับถุงพลาสติก
-                                </Item.Header>
-
-                            <Item.Description as='h4' style={{ color: '#4cb1e6' }}>
-                                <p>สถานที่ : มหาวิทยาลัย</p>
-                                <Label style={{ border: '1px solid rgba(34,36,38,.15)', backgroundColor: 'white' }}>
-                                    <Image src={organize} size='tiny' centered />
-                                </Label>
-                            </Item.Description>
-                            <Item.Extra>
-                                <Label color='orange' >+300 Point</Label>
-                                <Label color='green' content='+500 EXP' />
-                                <Label color='blue' >3 ครั้ง</Label>
-                            </Item.Extra>
-                        </Item.Content>
-                    </Item>
-                </Item.Group>
-            </Grid.Column>
-            <Grid.Column>
-                <Item.Group unstackable style={true && { paddingTop: '2em' }}>
-                    <Item style={{ backgroundColor: 'white', padding: '2em 2em 1em 2em', borderRadius: '15px', border: '1px solid rgba(34,36,38,.15)' }}>
-                        <Item.Image size='tiny' src={qrcode}>
-                        </Item.Image>
-                        <Item.Content>
-                            <Item.Header style={{ color: '#0fcb1c' }}>
-                                ซื้อของไม่รับถุงพลาสติก
-                                </Item.Header>
-
-                            <Item.Description as='h4' style={{ color: '#4cb1e6' }}>
-                                <p>สถานที่ : มหาวิทยาลัย</p>
-                                <Label style={{ border: '1px solid rgba(34,36,38,.15)', backgroundColor: 'white' }}>
-                                    <Image src={organize} size='tiny' centered />
-                                </Label>
-                            </Item.Description>
-                            <Item.Extra>
-                                <Label color='orange' >+300 Point</Label>
-                                <Label color='green' content='+500 EXP' />
-                                <Label color='blue' >3 ครั้ง</Label>
-                            </Item.Extra>
-                        </Item.Content>
-                    </Item>
-                </Item.Group>
-            </Grid.Column>
-        </React.Fragment>
-    )
-
-    const LeaderLoad = (
-        <Grid.Column>
-            <Segment>
-                <Table basic="very" textAlign='center' unstackable>
-                    <Table.Header >
-                        <Table.Row >
-                            <Table.HeaderCell width={1}>อันดับ</Table.HeaderCell>
-                            <Table.HeaderCell width={1}>แร้งค์</Table.HeaderCell>
-                            <Table.HeaderCell width={3}>ผู้เล่น</Table.HeaderCell>
-                            <Table.HeaderCell width={3}>คะแนน</Table.HeaderCell>
-                            <Table.HeaderCell width={1}>รางวัล</Table.HeaderCell>
-                        </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                        <Table.Row >
-                            <Table.Cell>
-                                <Header as='h3'>
-                                    1
-                                </Header>
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Image src={rank1} rounded size='tiny' centered />
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Header as='h4' image>
-                                    <Image src={photo} rounded size='small' />
-                                    <Header.Content>
-                                        Chayut Aroonsang
-                                    </Header.Content>
-                                </Header>
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Progress value={100} total={500} progress='ratio' color='orange' autoSuccess style={{ margin: '0em 0em 0em' }} />
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Header as='h4' image>
-                                    <Image src={gold} rounded size='small' />
-                                    <Image src={award} rounded size='small' />
-                                </Header>
-
-                            </Table.Cell>
-                        </Table.Row>
-
-
-
-                    </Table.Body>
-                </Table>
-            </Segment>
-        </Grid.Column>
     )
 
     const handleClick = (qrcode) => {
@@ -514,7 +336,7 @@ const NChallengeDetail = (props) => {
                                 <Table.HeaderCell width={2}>แร้งค์</Table.HeaderCell>
                                 <Table.HeaderCell width={5}>ผู้เล่น</Table.HeaderCell>
                                 <Table.HeaderCell width={4}>คะแนน</Table.HeaderCell>
-                                <Table.HeaderCell width={3}>รางวัล</Table.HeaderCell>
+                                {/* <Table.HeaderCell width={3}>รางวัล</Table.HeaderCell> */}
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
@@ -529,7 +351,7 @@ const NChallengeDetail = (props) => {
                                         <Table.Cell>
                                             <Image src={rank1} rounded size='tiny' centered />
                                         </Table.Cell>
-                                        <Table.Cell textAlign='left' style={{ paddingLeft: '2em' }}>
+                                        <Table.Cell textAlign='left' style={{ paddingLeft: '5em' }}>
                                             <Header as='h4' image>
                                                 <Image src={player.photoURL} rounded size='small' />
                                                 <Header.Content>
@@ -538,15 +360,15 @@ const NChallengeDetail = (props) => {
                                             </Header>
                                         </Table.Cell>
                                         <Table.Cell>
-                                            <Progress value={player.point} total={challenge.sum_point} progress='ratio' color='orange' autoSuccess style={{ margin: '0em 0em 0em' }} />
+                                            {player.point}
                                         </Table.Cell>
-                                        <Table.Cell>
+                                        {/* <Table.Cell>
                                             <Header as='h4' image>
                                                 <Image src={gold} rounded size='small' />
                                                 <Image src={award} rounded size='small' />
                                             </Header>
 
-                                        </Table.Cell>
+                                        </Table.Cell> */}
                                     </Table.Row>
                                 ))
                             }

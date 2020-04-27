@@ -33,7 +33,6 @@ const renderField = ({ input, label, placeholder, type, meta: { touched, error }
 
 let LoginPage = (props) => {
 
-    console.log(props.isSignedIn)
 
     useEffect(() => {
         if (props.isSignedIn === true){

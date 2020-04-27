@@ -8,6 +8,7 @@ import {
     Icon,
     Card,
     Feed,
+    Loader
 } from 'semantic-ui-react'
 import photo from '../../asset/mariam/logo.png'
 
@@ -22,7 +23,7 @@ const NHomePage = (props) => {
 
     useEffect(() => {
         props.fetchActivities()
-    }, [props.posts])
+    }, [props.isPost])
 
     const items = [
         {
@@ -124,12 +125,12 @@ const NHomePage = (props) => {
                 <Card fluid >
                     <Image src={post.image} centered
                         style={{ height: 380, objectFit: 'cover', objectPosition: 'center center' }}
-                        label={
-                            <Label as='a' image size='small' attached='top right' >
-                                <img src={organize} />
-                                มหาวิทยาลัย
-                        </Label>
-                        }
+                        // label={
+                        //     <Label as='a' image size='small' attached='top right' >
+                        //         <img src={organize} />
+                        //         มหาวิทยาลัย
+                        //     </Label>
+                        // }
                     />
                     <Card.Content>
                         <Feed>
@@ -151,12 +152,12 @@ const NHomePage = (props) => {
                             {post.caption}
                         </Card.Description>
                     </Card.Content>
-                    <Card.Content extra>
+                    {/* <Card.Content extra>
                         <a>
                             <Icon name='like' />
                             22
                                     </a>
-                    </Card.Content>
+                    </Card.Content> */}
                 </Card>
             </Grid.Column>
         )
@@ -179,7 +180,7 @@ const NHomePage = (props) => {
             <Grid.Row>
                 <NActivityBar />
             </Grid.Row>
-            
+
             <Divider />
             <Grid.Row>
                 <Grid.Column >
@@ -193,8 +194,7 @@ const NHomePage = (props) => {
                 </Grid.Column>
             </Grid.Row>
             <Grid.Row columns={3}>
-                {loadList}
-                {props.isPost && itemList}
+                {props.isPost ? itemList : <Loader active inline='centered' />}
             </Grid.Row>
         </Grid>
     )

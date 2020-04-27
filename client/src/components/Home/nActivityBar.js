@@ -48,7 +48,7 @@ let NActivityBar = props => {
 
     useEffect(() => {
         props.fetchActivity()
-    }, [props.challenges])
+    }, [props.isFetch])
 
     useEffect(() => {
         if (props.isPosted === true) {

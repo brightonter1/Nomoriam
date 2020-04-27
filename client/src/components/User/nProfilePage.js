@@ -77,7 +77,7 @@ let NProfilePage = (props) => {
         setLoading(true)
         props.EditProfile(profile)
     }
-    const paragraph = <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
+
 
     if (isFetch && props.fetchJoined) {
         const ModalForm = () => (
@@ -312,7 +312,7 @@ let NProfilePage = (props) => {
                                                     <Item.Extra>
 
                                                         <Label icon='group' color='blue' content={`ผู้เข้าร่วม ${challenge.playerCount} คน`} />
-                                                        <Label icon='tasks' color='black' content={`${challenge.actCOunt} ภารกิจ`} />
+                                                        <Label icon='tasks' color='black' content={`${challenge.actCount} ภารกิจ`} />
                                                         <Label icon='leaf' color='green' content={`${challenge.sum_point} แต้ม`} />
                                                     </Item.Extra>
                                                     <Item.Extra>
@@ -398,7 +398,7 @@ let NProfilePage = (props) => {
                 <Grid.Column width={4}>
                     <Menu fluid vertical tabular>
                         <Menu.Item active={active === 'สถานะ' ? true : false} onClick={() => setActive('สถานะ')}><Header as='h3' content="สถานะ" /></Menu.Item>
-                        <Menu.Item active={active === 'ชาเลนจ์ที่เข้าร่วมแล้ว' ? true : false} onClick={() => setActive('ชาเลนจ์ที่เข้าร่วมแล้ว')}><Header as='h3' content="ชาเลนจ์ที่เข้าร่วมแล้ว" /></Menu.Item>
+                        <Menu.Item active={active === 'ชาเลนจ์ที่เข้าร่วมแล้ว' ? true : false} onClick={() => setActive('ชาเลนจ์ที่เข้าร่วมแล้ว')}><Header as='h3' content={`ชาเลนจ์ที่เข้าร่วมแล้ว (${props.challenges.length})`} /></Menu.Item>
                         <Menu.Item active={active === 'รางวัลที่ได้รับ' ? true : false} onClick={() => setActive('รางวัลที่ได้รับ')}><Header as='h3' content={`รางวัลที่ได้รับ (${userProfile.medals.length})`} /></Menu.Item>
                         <Menu.Item active={active === 'กิจกรรม' ? true : false} onClick={() => setActive('กิจกรรม')}><Header as='h3' content={`กิจกรรม (${userProfile.posts.length})`} /></Menu.Item>
                     </Menu>

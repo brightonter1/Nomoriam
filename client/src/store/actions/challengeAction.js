@@ -242,8 +242,8 @@ export const fetchChallenge = index => async dispatch => {
     }
 
     const sizeMedal = await contract.methods.getMedalByChallenge(index).call()
-    for (var l = 0; l < sizeMedal; j++) {
-        var medal = await contract.methods.getMedalByIndex(index, l).call()
+    for (var i = 0; i < sizeMedal; i++) {
+        var medal = await contract.methods.getMedalByIndex(index, i).call()
         medal = {
             title: medal[0],
             image: medal[1],
