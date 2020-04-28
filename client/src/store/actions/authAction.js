@@ -114,6 +114,8 @@ export const SignInGoogle = () => async dispatch => {
     var provider = new firebase.auth.GoogleAuthProvider();
     var user = {}
     var ranks = []
+    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+
     firebase.auth().signInWithPopup(provider).then(async function (result) {
         if (result.additionalUserInfo.isNewUser) {
             db.collection('users').doc(result.user.uid).set({
@@ -150,10 +152,10 @@ export const SignInGoogle = () => async dispatch => {
                     user.rankStart = ranks[k].rankStart
                 }
             }
+            console.log(user)
             dispatch({ type: SIGN_IN, payload: user })
-            history.push('/')
         } else {
-            await db.collection('users').doc(result.user.uid).get().then((res) => {
+            db.collection('users').doc(result.user.uid).get().then((res) => {
                 const data = res.data()
                 user = {
                     userId: result.user.uid,
@@ -162,9 +164,9 @@ export const SignInGoogle = () => async dispatch => {
                     roleAdmin: data.role === "admin" ? true : false,
                     bio: result.bio
                 }
-                dispatch({ type: SIGN_IN, payload: user })
-                history.push('/')
-            })
+            }).catch(() => { })
+            console.log(user)
+            dispatch({ type: SIGN_IN, payload: user })
         }
     })
 }

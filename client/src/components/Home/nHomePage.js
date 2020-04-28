@@ -164,7 +164,7 @@ const NHomePage = (props) => {
     }
 
     return (
-        <Grid stackable style={{ paddingTop: '3em', minHeight: 600 }} container>
+        <Grid stackable style={{ paddingTop: '3em'}} container>
             <Grid.Row>
                 <Grid.Column>
                     <Header as='h2' color="blue">
@@ -182,7 +182,7 @@ const NHomePage = (props) => {
             </Grid.Row>
 
             <Divider />
-            <Grid.Row>
+            <Grid.Row >
                 <Grid.Column >
                     <Header as='h2' color="orange">
                         <Icon name='globe' color="red" />

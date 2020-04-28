@@ -99,7 +99,7 @@ let NProfilePage = (props) => {
                 <Image name='image' src={props.image ? props.image.imageFile : photo} centered style={{ height: 380, objectFit: 'cover', objectPosition: 'center center' }} />
                 <Modal.Content>
                     <Form.Field style={{ paddingBottom: '1em' }}>
-                        <label className='ui label blue' htmlFor='image' style={{ display: 'unset', textAlign: 'center', cursor: 'pointer', left: '80%', right: '20%', position: 'relative' }}>
+                        <label className='ui label blue' htmlFor='image' id='BLabel' style={{ display: 'unset', textAlign: 'center', cursor: 'pointer', left: '0', position: 'relative' }}>
                             <Icon name='edit' /> อัพรูปภาพ
                         </label>
                     </Form.Field>
@@ -134,7 +134,7 @@ let NProfilePage = (props) => {
                         name="image"
                         circular
                         src={userInfo.photoURL}
-                        style={{ height: 250, objectFit: 'cover', objectPosition: 'center center' }}
+                        style={{ height: 280, objectFit: 'cover', objectPosition: 'center center' }}
                     />
                     <Button circular icon="magic" floated='right' color='yellow' onClick={() => handleEdit()} />
                 </Grid.Column>

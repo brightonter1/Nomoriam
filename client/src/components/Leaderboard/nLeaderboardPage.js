@@ -59,30 +59,26 @@ const NLeaderBoard = (props) => {
         }
         const playerList = (
             <Grid.Column>
-                <Segment>
-                    <Table basic="very" textAlign='center' unstackable sortable celled fixed >
+                <Segment raised id="BRIGHT">
+                    <Table basic="very" textAlign='center' unstackable  >
                         <Table.Header >
                             <Table.Row >
                                 <Table.HeaderCell
-                                    width={2}
                                     sorted={state.column === 'rankNumber' ? state.direction : null}
                                     onClick={handleSort('rankNumber')}
                                 >อันดับ</Table.HeaderCell>
                                 <Table.HeaderCell
-                                    width={3}
                                     sorted={state.column === 'rankNumber' ? state.direction : null}
                                     onClick={handleSort('rankNumber')}
                                 >แร้งค์</Table.HeaderCell>
                                 <Table.HeaderCell
-                                    width={6}
                                     sorted={state.column === 'displayname' ? state.direction : null}
                                     onClick={handleSort('displayname')}
                                 >ผู้เล่น</Table.HeaderCell>
                                 <Table.HeaderCell
-                                    width={5}
                                     sorted={state.column === 'exp' ? state.direction : null}
                                     onClick={handleSort('exp')}
-                                >ค่าประสบการณ์ (EXP)</Table.HeaderCell>
+                                >ค่าประสบการณ์ <p>(EXP)</p></Table.HeaderCell>
                                 {/* <Table.HeaderCell width={3}><Icon name='leaf' /> คะแนน (POINT)</Table.HeaderCell> */}
                             </Table.Row>
                         </Table.Header>

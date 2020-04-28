@@ -397,7 +397,6 @@ let NActivityBar = props => {
                                             active
                                             style={{ width: '400px', margin: '0em 0em 0em' }}
                                         >
-                                            {`${userProfile.EXP}/${userProfile.rankExp}`}
                                         </Progress>
 
                                     </Item.Description>

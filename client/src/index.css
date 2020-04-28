@@ -114,9 +114,15 @@ input[type='radio']:checked + label {
     cursor: pointer;
 }
 
+.ui.progress .bar>.progress {
+    font-size: 1em;
+    left: 12em;
+    color: black;
+}
+
 @media only screen and (max-width: 767px) {
     .ui.stackable.grid>.row>.column>.segment {
-        font-size: 10px;
+        font-size: .8em;
     }
 
     .ui.tiny.image {
@@ -139,7 +145,7 @@ input[type='radio']:checked + label {
     }
 
     .ui.progress .bar>.progress {
-        font-size: .8em;
+        font-size: .7em;
     }
 
     .ui.label, .ui.labels .label {
@@ -153,4 +159,28 @@ input[type='radio']:checked + label {
     .ui.label, .ui.labels .label {
         font-size: .7em;
     }
+
+    .ui.green.button, .ui.green.buttons .button {
+        font-size: .8em;
+    }
+
+    #BRIGHT{
+        margin-bottom: 15em;
+    }
+    
+    .ui.circular.image, .ui.circular.image>*, .ui.circular.images .image, .ui.circular.images .image>* {
+        left: 12%;
+        position: relative;
+    }
+
+    #BLabel{
+        display: unset;
+        text-align: center;
+        cursor: pointer;
+        left: 70%;
+        right: 20%;
+        position: relative;
+    }
+
 }
+
