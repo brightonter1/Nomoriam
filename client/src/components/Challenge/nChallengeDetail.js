@@ -332,10 +332,10 @@ const NChallengeDetail = (props) => {
                     <Table basic="very" textAlign='center' unstackable>
                         <Table.Header >
                             <Table.Row>
-                                <Table.HeaderCell width={2}>อันดับ</Table.HeaderCell>
-                                <Table.HeaderCell width={2}>แร้งค์</Table.HeaderCell>
-                                <Table.HeaderCell width={5}>ผู้เล่น</Table.HeaderCell>
-                                <Table.HeaderCell width={4}>คะแนน</Table.HeaderCell>
+                                <Table.HeaderCell>อันดับ</Table.HeaderCell>
+                                <Table.HeaderCell >แร้งค์</Table.HeaderCell>
+                                <Table.HeaderCell >ผู้เล่น</Table.HeaderCell>
+                                <Table.HeaderCell >คะแนน</Table.HeaderCell>
                                 {/* <Table.HeaderCell width={3}>รางวัล</Table.HeaderCell> */}
                             </Table.Row>
                         </Table.Header>
@@ -344,20 +344,13 @@ const NChallengeDetail = (props) => {
                                 challenge.players.map((player, index) => (
                                     <Table.Row active={props.userId === player.uid ? true : false} key={index} >
                                         <Table.Cell>
-                                            <Header as='h3'>
-                                                {index + 1}
-                                            </Header>
+                                            {index + 1}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            <Image src={rank1} rounded size='tiny' centered />
+                                            <Image src={rank1} rounded size='tiny' centered style={{ maxWidth: 'none' }} />
                                         </Table.Cell>
                                         <Table.Cell textAlign='left' style={{ paddingLeft: '5em' }}>
-                                            <Header as='h4' image>
-                                                <Image src={player.photoURL} rounded size='small' />
-                                                <Header.Content>
-                                                    {player.displayname}
-                                                </Header.Content>
-                                            </Header>
+                                            {player.displayname}
                                         </Table.Cell>
                                         <Table.Cell>
                                             {player.point}

@@ -13,7 +13,8 @@ import {
     Label,
     Modal,
     Image,
-    Form
+    Form,
+    Container
 } from 'semantic-ui-react'
 import photo from '../../asset/mariam/Header.jpg'
 import QRCODE from '../../asset/category/qrcodeIcon.png'
@@ -238,126 +239,128 @@ let NActivityBar = props => {
 
     if (props.isFetch) {
         const ActivityBtn = (
-            <Modal
-                trigger={<Button color='green' floated='right' size='small' onClick={() => setModal(true)}>ดูภารกิจทั้งหมด</Button>}
-                open={modal}
-                onClose={() => setModal(false)}
-                basic
-                size='large'
-                centered={false}
-            >
+            <Container>
+                <Modal
+                    trigger={<Button color='green' floated='right' size='small' onClick={() => setModal(true)}>ดูภารกิจทั้งหมด</Button>}
+                    open={modal}
+                    onClose={() => setModal(false)}
+                    basic
+                    size='large'
+                    centered={false}
+                >
 
-                <Modal.Header >
-                    <Header as='h2' icon='browser' content='ภารกิจ' floated='left' style={{ color: 'white' }} />
-                    <Header icon='close' floated='right' onClick={() => setModal(false)} style={{ cursor: 'pointer' }} style={{ color: 'white' }} />
-                </Modal.Header>
+                    <Modal.Header >
+                        <Header as='h2' icon='browser' content='ภารกิจ' floated='left' style={{ color: 'white' }} />
+                        <Header icon='close' floated='right' onClick={() => setModal(false)} style={{ cursor: 'pointer' }} style={{ color: 'white' }} />
+                    </Modal.Header>
 
-                {
-                    challenges.length === 0 ?
-                        <Modal.Content>
-                            <Modal.Description>
-                                <Header as='h2' style={{ textAlign: 'center', color: 'lightsteelblue', paddingTop: '2em' }} >
-                                    ยังไม่มีภารกิจในตอนนี้ คลิ๊กเข้าร่วมชาเลนจ์เพื่อทำภารกิจ !
+                    {
+                        challenges.length === 0 ?
+                            <Modal.Content>
+                                <Modal.Description>
+                                    <Header as='h2' style={{ textAlign: 'center', color: 'lightsteelblue', paddingTop: '2em' }} >
+                                        ยังไม่มีภารกิจในตอนนี้ คลิ๊กเข้าร่วมชาเลนจ์เพื่อทำภารกิจ !
                                </Header>
-                            </Modal.Description>
-                        </Modal.Content>
-                        :
+                                </Modal.Description>
+                            </Modal.Content>
+                            :
 
-                        <Modal.Content image scrolling style={{ paddingTop: '0em' }}>
-                            <Modal.Description>
-                                <Item.Group unstackable >
-                                    {
-                                        challenges.map((challenge, i) => (
-                                            challenge.activities.map((act, index) => (
-                                                <Item key={index} style={{ backgroundColor: 'white', padding: '1.5em 1.5em 1em 1.5em', borderRadius: '25px' }}>
-                                                    {act.category.split('>location<')[1].split('>extra<')[0] === 'school' && <Item.Image src={organize} size='tiny' />}
-                                                    {act.category.split('>location<')[1].split('>extra<')[0] === 'store' && <Item.Image src={store} size='tiny' />}
-                                                    {act.category.split('>location<')[1].split('>extra<')[0] === 'map' && <Item.Image src={pin} size='tiny' />}
-                                                    {act.category.split('>location<')[1].split('>extra<')[0] === 'home' && <Item.Image src={home} size='tiny' />}
-                                                    {act.category.split('>location<')[1].split('>extra<')[0] === 'anywhere' && <Item.Image src={global} size='tiny' />}
-                                                    <Item.Content verticalAlign='middle'>
-                                                        <Item.Header>{act.title}</Item.Header>
-                                                        <Item.Description >
-                                                            <p>สถานที่ : &nbsp;
+                            <Modal.Content image scrolling style={{ paddingTop: '0em' }}>
+                                <Modal.Description>
+                                    <Item.Group unstackable >
+                                        {
+                                            challenges.map((challenge, i) => (
+                                                challenge.activities.map((act, index) => (
+                                                    <Item key={index} style={{ backgroundColor: 'white', padding: '1.5em 1.5em 1em 1.5em', borderRadius: '25px' }}>
+                                                        {act.category.split('>location<')[1].split('>extra<')[0] === 'school' && <Item.Image src={organize} size='tiny' />}
+                                                        {act.category.split('>location<')[1].split('>extra<')[0] === 'store' && <Item.Image src={store} size='tiny' />}
+                                                        {act.category.split('>location<')[1].split('>extra<')[0] === 'map' && <Item.Image src={pin} size='tiny' />}
+                                                        {act.category.split('>location<')[1].split('>extra<')[0] === 'home' && <Item.Image src={home} size='tiny' />}
+                                                        {act.category.split('>location<')[1].split('>extra<')[0] === 'anywhere' && <Item.Image src={global} size='tiny' />}
+                                                        <Item.Content verticalAlign='middle'>
+                                                            <Item.Header>{act.title}</Item.Header>
+                                                            <Item.Description >
+                                                                <p>สถานที่ : &nbsp;
                                                         {act.category.split('>location<')[1].split('>extra<')[0] === 'map' && "แผนที่"}
-                                                                {act.category.split('>location<')[1].split('>extra<')[0] === 'anywhere' && "ที่ใดก็ได้"}
-                                                                {act.category.split('>location<')[1].split('>extra<')[0] === 'store' && "ร้านสะดวกซื้อ"}
-                                                                {act.category.split('>location<')[1].split('>extra<')[0] === 'school' && "สถานศึกษา"}
-                                                                {act.category.split('>location<')[1].split('>extra<')[0] === 'home' && "บ้าน"}
-                                                            </p>
+                                                                    {act.category.split('>location<')[1].split('>extra<')[0] === 'anywhere' && "ที่ใดก็ได้"}
+                                                                    {act.category.split('>location<')[1].split('>extra<')[0] === 'store' && "ร้านสะดวกซื้อ"}
+                                                                    {act.category.split('>location<')[1].split('>extra<')[0] === 'school' && "สถานศึกษา"}
+                                                                    {act.category.split('>location<')[1].split('>extra<')[0] === 'home' && "บ้าน"}
+                                                                </p>
 
-                                                            <p>จำนวนครั้ง</p>
-                                                            <Progress autoSuccess value={Math.abs(Number(act.myTimes) - Number(act.times))} total={act.times} progress='ratio'
-                                                                color='red' style={{ width: '400px', backgroundColor: '#e5e5e5', margin: '0em 0em 0em' }}
-                                                            >
-                                                                จำนวน {`${Math.abs(Number(act.myTimes) - Number(act.times))}/${act.times}`} ครั้ง
+                                                                <p>จำนวนครั้ง</p>
+                                                                <Progress autoSuccess value={Math.abs(Number(act.myTimes) - Number(act.times))} total={act.times} progress='ratio'
+                                                                    color='red' style={{ width: '400px', backgroundColor: '#e5e5e5', margin: '0em 0em 0em' }}
+                                                                >
+                                                                    จำนวน {`${Math.abs(Number(act.myTimes) - Number(act.times))}/${act.times}`} ครั้ง
                                                     </Progress>
-                                                        </Item.Description>
-                                                        <Item.Description style={{ paddingTop: '1.2em' }} >
-                                                            <Label.Group >
-                                                                เป้าหมาย : &nbsp;
+                                                            </Item.Description>
+                                                            <Item.Description style={{ paddingTop: '1.2em' }} >
+                                                                <Label.Group >
+                                                                    เป้าหมาย : &nbsp;
                                                         {
-                                                                    challenge.desc.split('>,<')[1].split(',').map((goal, index) => (
-                                                                        <React.Fragment key={index}>
-                                                                            {goal === 'return' && <Label as='a' tag color='green' content='ตอบแทนธรรมชาติ (Return)' />}
-                                                                            {goal === 'reduce' && <Label as='a' tag color='blue' content='ลดการใช้งาน (Reduce)' />}
-                                                                            {goal === 'refuse' && <Label as='a' tag color='red' content='การปฏิเสธการใช้ (Refuse)' />}
-                                                                            {goal === 'reuse' && <Label as='a' tag color='olive' content='การใช้งานซ้ำ (Reuse)' />}
-                                                                            {goal === 'recycle' && <Label as='a' tag color='orange' content='การนำกลับมาใช้ใหม่ (Recycle)' />}
-                                                                        </React.Fragment>
-                                                                    ))
-                                                                }
-                                                            </Label.Group>
-                                                            <Label.Group >
+                                                                        challenge.desc.split('>,<')[1].split(',').map((goal, index) => (
+                                                                            <React.Fragment key={index}>
+                                                                                {goal === 'return' && <Label as='a' tag color='green' content='ตอบแทนธรรมชาติ (Return)' />}
+                                                                                {goal === 'reduce' && <Label as='a' tag color='blue' content='ลดการใช้งาน (Reduce)' />}
+                                                                                {goal === 'refuse' && <Label as='a' tag color='red' content='การปฏิเสธการใช้ (Refuse)' />}
+                                                                                {goal === 'reuse' && <Label as='a' tag color='olive' content='การใช้งานซ้ำ (Reuse)' />}
+                                                                                {goal === 'recycle' && <Label as='a' tag color='orange' content='การนำกลับมาใช้ใหม่ (Recycle)' />}
+                                                                            </React.Fragment>
+                                                                        ))
+                                                                    }
+                                                                </Label.Group>
+                                                                <Label.Group >
 
-                                                                <Label icon='leaf' color='green' content={`+ ${act.point}`} />
-                                                                <Label color='blue' content={`+ ${act.exp}`} />
-                                                            </Label.Group>
+                                                                    <Label icon='leaf' color='green' content={`+ ${act.point}`} />
+                                                                    <Label color='blue' content={`+ ${act.exp}`} />
+                                                                </Label.Group>
 
-                                                            {
-                                                                act.myTimes !== '0' ?
-                                                                    act.category.split('>location<')[0] !== 'post' ?
-                                                                        <Button color='orange' floated='right' size='tiny' style={{ borderRadius: '25px' }}
-                                                                            onClick={() => handleQRCode(challenge.index, index, act.qrcode)}
-                                                                        >
-                                                                            <Label as='a' image color='orange' >
-                                                                                <img src={QRCODE} />สแกนคิวอาโค้ด
+                                                                {
+                                                                    act.myTimes !== '0' ?
+                                                                        act.category.split('>location<')[0] !== 'post' ?
+                                                                            <Button color='orange' floated='right' size='tiny' style={{ borderRadius: '25px' }}
+                                                                                onClick={() => handleQRCode(challenge.index, index, act.qrcode)}
+                                                                            >
+                                                                                <Label as='a' image color='orange' >
+                                                                                    <img src={QRCODE} />สแกนคิวอาโค้ด
                                                                              </Label>
 
-                                                                            <Icon name='right chevron' />
-                                                                        </Button>
+                                                                                <Icon name='right chevron' />
+                                                                            </Button>
+                                                                            :
+                                                                            <Button color='orange' floated='right' size='tiny' style={{ borderRadius: '25px' }}
+                                                                                onClick={() => handlePost(challenge.index, index)}
+                                                                            >
+                                                                                <Label as='a' image color='orange' >
+                                                                                    <img src={post} />โพสต์รูปภาพ
+                                                                            </Label>
+
+                                                                                <Icon name='right chevron' />
+                                                                            </Button>
                                                                         :
-                                                                        <Button color='orange' floated='right' size='tiny' style={{ borderRadius: '25px' }}
-                                                                            onClick={() => handlePost(challenge.index, index)}
+                                                                        <Button color='blue' floated='right' size='tiny' style={{ borderRadius: '25px' }}
                                                                         >
-                                                                            <Label as='a' image color='orange' >
-                                                                                <img src={post} />โพสต์รูปภาพ
+                                                                            <Label as='a' image color='blue'  >
+                                                                                <Icon name='check' />
+                                                                                สำเร็จแล้ว
                                                                             </Label>
 
-                                                                            <Icon name='right chevron' />
                                                                         </Button>
-                                                                    :
-                                                                    <Button color='blue' floated='right' size='tiny' style={{ borderRadius: '25px' }}
-                                                                    >
-                                                                        <Label as='a' image color='blue'  >
-                                                                            <Icon name='check' />
-                                                                            สำเร็จแล้ว
-                                                                            </Label>
-
-                                                                    </Button>
-                                                            }
-                                                        </Item.Description>
-                                                    </Item.Content>
-                                                </Item>
+                                                                }
+                                                            </Item.Description>
+                                                        </Item.Content>
+                                                    </Item>
+                                                ))
                                             ))
-                                        ))
-                                    }
-                                </Item.Group>
-                            </Modal.Description>
-                        </Modal.Content>
-                }
+                                        }
+                                    </Item.Group>
+                                </Modal.Description>
+                            </Modal.Content>
+                    }
 
-            </Modal>
+                </Modal>
+            </Container>
         )
 
         const profileBar = (

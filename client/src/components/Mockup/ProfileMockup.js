@@ -152,8 +152,8 @@ const ProfileMockup = (props) => {
 
     const Activity = () => {
         return (
-            <Segment style={{ minHeight: 300 }}>
-                <Grid stackable style={{overflow: 'scroll', maxHeight: 'calc(70vh)'}} >
+            <Segment style={{ minHeight: 1200 }}>
+                <Grid stackable style={{overflow: 'scroll', maxHeight: 'calc(80vh)'}} >
                     {/* {
                         userProfile.posts.map((post, index) => {
                             return ( */}
@@ -161,7 +161,7 @@ const ProfileMockup = (props) => {
                         <Grid.Row style={{ paddingLeft: '1em', paddingTop: '2em' }} >
                             <Feed>
                                 <Feed.Event>
-                                    <Feed.Label image={photo} />
+                                    <Feed.Label image={photo}  />
                                     <Feed.Content>
                                         <Feed.Summary>
                                             <Feed.User>Chayut Aroonsang</Feed.User> ได้โพสต์
@@ -176,7 +176,7 @@ const ProfileMockup = (props) => {
                             </Feed>
                         </Grid.Row>
                         <Grid.Row>
-                            <Image src={photo} centered size='large' />
+                            <Image src={photo} centered style={{ minHeight: '300px', minWidth: '350px', maxHeight: '300px', maxWidth: '350px', objectFit: 'cover', objectPosition: 'center center' }} />
                         </Grid.Row>
                         {/* <Grid.Row style={{ paddingLeft: '1em' }}>
                                         <Label size='large' image>

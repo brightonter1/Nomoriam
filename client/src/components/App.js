@@ -17,7 +17,13 @@ import nChallengeShow from './Admin/nChallengeShow'
 import NHomePage from './Home/nHomePage'
 import NProfilePage from './User/nProfilePage'
 import nLeaderboardPage from './Leaderboard/nLeaderboardPage'
-
+import Home from './Mockup/HomeMockup'
+import HomepageLayoutMockup from './Mockup/HomepageLayoutMockup'
+import Challenge from './Mockup/ChallengeMockup'
+import ChallengeDetailMock from './Mockup/ChallengeDetailMock'
+import ProfileMockup from './Mockup/ProfileMockup'
+import StatusMockup from './Mockup/StatusMockup'
+import LeaderBoardMock from './Mockup/LeaderBoardMock'
 const App = (props) => {
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
@@ -29,13 +35,14 @@ const App = (props) => {
     //     <Router history={history}>
     //         <HomepageLayoutMockup>
     //             <Switch>
-    //                 <Route path="/" exact component={HomeMockup} />
-    //                 <Route path="/challenges" exact component={ChallnegeMockup} />
+    //                 <Route path="/" exact component={Home} />
+    //                 <Route path="/challenges" exact component={Challenge} />
     //                 {/* <Route path="/challenges/:index" exact component={ChallengeDetailMock} /> */}
-    //                 <Route path="/challenges/new" exact component={FormChallenge} />
     //                 <Route path="/account/profile" exact component={ProfileMockup} />
     //                 <Route path="/account/status" exact component={StatusMockup} />
     //                 <Route path="/hallofframe" exact component={LeaderBoardMock} />
+    //                 <Route path="/challenges/new" exact component={nFormChallenge} />
+
     //             </Switch>
     //         </HomepageLayoutMockup>
     //     </Router>

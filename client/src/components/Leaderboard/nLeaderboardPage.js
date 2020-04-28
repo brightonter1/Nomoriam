@@ -3,20 +3,10 @@ import {
     Modal,
     Grid,
     Header,
-    Divider,
     Segment,
-    Button,
     Image,
-    Label,
     Icon,
-    Card,
-    Feed,
-    Item,
-    Progress,
-    Accordion,
-    Placeholder,
     Table,
-    Statistic
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { fetchPlayers, clearPlayers } from '../../store/actions/challengeAction'
@@ -100,20 +90,13 @@ const NLeaderBoard = (props) => {
                             {_.map(state.data, (player, index) => (
                                 <Table.Row key={index} active={player.uid === userInfo.userId ? true : false}>
                                     <Table.Cell>
-                                        <Header as='h3'>
-                                            {player.rankNumber}
-                                        </Header>
+                                        {player.rankNumber}
                                     </Table.Cell>
                                     <Table.Cell>
-                                        <Image src={player.rankImage} rounded size='tiny' centered />
+                                        <Image src={player.rankImage} rounded size='tiny' centered  style={{ maxWidth: 'none' }} />
                                     </Table.Cell>
                                     <Table.Cell textAlign='left' style={{ paddingLeft: '4em' }}>
-                                        <Header as='h4' image>
-                                            <Image src={player.photoURL} rounded size='small' />
-                                            <Header.Content>
-                                                {player.displayname}
-                                            </Header.Content>
-                                        </Header>
+                                        {player.displayname}
                                     </Table.Cell>
                                     <Table.Cell>
                                         {player.exp}
@@ -127,7 +110,7 @@ const NLeaderBoard = (props) => {
         )
 
         return (
-            <Grid stackable style={{ paddingTop: '3em' }} container>
+            <Grid stackable style={{ paddingTop: '3em', minHeight: '600px' }} container>
                 <Grid.Row>
                     <Grid.Column>
                         <Header as='h2' color="olive">

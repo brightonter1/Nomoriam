@@ -16,7 +16,9 @@ import {
     Accordion,
     Placeholder,
     Table,
-    Statistic
+    Statistic,
+    Responsive,
+    Container
 } from 'semantic-ui-react'
 import gold from '../../asset/archievement/gold.png'
 import silver from '../../asset/archievement/silver.png'
@@ -31,103 +33,40 @@ const LeaderBoardMock = (props) => {
     const leaderList = (
         <Grid.Column>
             <Segment>
-                <Table basic="very" textAlign='center' unstackable >
+                <Table basic="very" textAlign='center' fixed unstackable >
                     <Table.Header >
                         <Table.Row >
-                            <Table.HeaderCell width={1}>อันดับ</Table.HeaderCell>
-                            <Table.HeaderCell width={1}>แร้งค์</Table.HeaderCell>
-                            <Table.HeaderCell width={2}>ผู้เล่น</Table.HeaderCell>
-                            <Table.HeaderCell width={3}>ค่าประสบการณ์ (EXP)</Table.HeaderCell>
-                            <Table.HeaderCell width={2}><Icon name='leaf' /> คะแนน (POINT)</Table.HeaderCell>
+                            <Table.HeaderCell width={2} >อันดับ</Table.HeaderCell>
+                            <Table.HeaderCell width={3} >แร้งค์</Table.HeaderCell>
+                            <Table.HeaderCell width={4}>ผู้เล่น</Table.HeaderCell>
+                            <Table.HeaderCell width={4}>ค่าประสบการณ์ <p>(EXP)</p></Table.HeaderCell>
+                            <Table.HeaderCell width={3}><Icon name='leaf' /> คะแนน <p>(POINT)</p></Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
                         <Table.Row active >
                             <Table.Cell>
-                                <Header as='h3'>
-                                    16
-                                </Header>
+                                16
                             </Table.Cell>
                             <Table.Cell>
-                                <Image src={rank1} rounded size='tiny' centered />
+                                <Image src={rank1} rounded size='tiny' centered style={{ maxWidth: 'none' }} />
                             </Table.Cell>
                             <Table.Cell>
-                                <Header as='h4' image>
-                                    <Image src={photo} rounded size='small' />
-                                    <Header.Content>
-                                        Chayut Aroonsang
-                                    </Header.Content>
-                                </Header>
+                                Chayut Aroonsang
                             </Table.Cell>
                             <Table.Cell>
-                                <Progress value={100} total={500} progress='ratio' color='orange' autoSuccess style={{ margin: '0em 0em 0em' }} />
+                                800
                             </Table.Cell>
                             <Table.Cell>
-                                <Header as='h4'>
-                                    800
-                                </Header>
+                                800
 
                             </Table.Cell>
                         </Table.Row>
 
-                        <Table.Row >
-                            <Table.Cell>
-                                <Header as='h3'>
-                                    1
-                                </Header>
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Image src={rank1} rounded size='tiny' centered />
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Header as='h4' image>
-                                    <Image src={photo} rounded size='small' />
-                                    <Header.Content>
-                                        Chayut Aroonsang
-                                    </Header.Content>
-                                </Header>
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Progress value={450} total={500} progress='ratio' color='orange' autoSuccess style={{ margin: '0em 0em 0em' }} />
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Header as='h4'>
-                                    3400
-                                </Header>
-
-                            </Table.Cell>
-                        </Table.Row>
-
-                        <Table.Row >
-                            <Table.Cell>
-                                <Header as='h3'>
-                                    2
-                                </Header>
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Image src={rank1} rounded size='tiny' centered />
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Header as='h4' image>
-                                    <Image src={photo} rounded size='small' />
-                                    <Header.Content>
-                                        Chayut Aroonsang
-                                    </Header.Content>
-                                </Header>
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Progress value={300} total={500} progress='ratio' color='orange' autoSuccess style={{ margin: '0em 0em 0em' }} />
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Header as='h4'>
-                                    2000
-                                </Header>
-                            </Table.Cell>
-                        </Table.Row>
                     </Table.Body>
                 </Table>
             </Segment>
-        </Grid.Column>
+        </Grid.Column >
     )
     return (
         <Grid stackable style={{ paddingTop: '3em' }} container>

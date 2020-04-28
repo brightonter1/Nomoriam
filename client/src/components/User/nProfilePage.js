@@ -376,7 +376,7 @@ let NProfilePage = (props) => {
                                             </Feed>
                                         </Grid.Row>
                                         <Grid.Row>
-                                            <Image src={post.image} centered size='large' />
+                                            <Image src={post.image} centered style={{ minHeight: '300px', minWidth: '350px', maxHeight: '300px', maxWidth: '350px', objectFit: 'cover', objectPosition: 'center center' }} />
                                         </Grid.Row>
                                         {/* <Grid.Row style={{ paddingLeft: '1em' }}>
                                             <Label size='large' image>
@@ -395,7 +395,7 @@ let NProfilePage = (props) => {
 
         const menuBar = (
             <React.Fragment>
-                <Grid.Column width={4}>
+                <Grid.Column width={4} >
                     <Menu fluid vertical tabular>
                         <Menu.Item active={active === 'สถานะ' ? true : false} onClick={() => setActive('สถานะ')}><Header as='h3' content="สถานะ" /></Menu.Item>
                         <Menu.Item active={active === 'ชาเลนจ์ที่เข้าร่วมแล้ว' ? true : false} onClick={() => setActive('ชาเลนจ์ที่เข้าร่วมแล้ว')}><Header as='h3' content={`ชาเลนจ์ที่เข้าร่วมแล้ว (${props.challenges.length})`} /></Menu.Item>
