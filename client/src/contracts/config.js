@@ -14,7 +14,7 @@ export const web3 = new Web3(provider)
 export const account = '0x51FF6Ea18b2895aaE622A59713fe179aB305d0d6'
 export const privateKey = Buffer.from('3407760727BCCAE592B094CDB1F1302E4FB8CBBD4B897DB169001A9E7CD13F41', 'hex')
 
-export const contractAddr = '0xA6cE85deFf8b503C318f22edcF5fa36E2c42c313'
+export const contractAddr = '0xBa644f85a7Ac81eA100f4C8a7f78D9b0F59EFDf6'
 export const contract = new web3.eth.Contract(Nomoriam.abi, contractAddr)
 
 const Accounts = [

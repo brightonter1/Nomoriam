@@ -43,7 +43,7 @@ export const isSignIn = () => async dispatch => {
         user.EXP = data[2]
         user.CHALLENGE_COUNT = data[3]
 
-        await db.collection('rank').get().then((snapshot) => {
+        await db.collection('ranks').get().then((snapshot) => {
             snapshot.forEach((res) => {
                 var dataRank = res.data()
                 ranks.push(dataRank)
@@ -51,11 +51,11 @@ export const isSignIn = () => async dispatch => {
         })
 
         for (var k = 0; k < ranks.length; k++) {
-            if (ranks[k].start <= user.EXP && user.EXP <= ranks[k].exp) {
-                user.rankName = ranks[k].title
-                user.rankExp = ranks[k].exp
-                user.rankImage = ranks[k].image
-                user.rankStart = ranks[k].start
+            if (ranks[k].rankStart <= user.EXP && user.EXP <= ranks[k].rankExp) {
+                user.rankName = ranks[k].rankName
+                user.rankExp = ranks[k].rankExp
+                user.rankImage = ranks[k].rankImage
+                user.rankStart = ranks[k].rankStart
             }
         }
         dispatch({ type: SIGN_IN, payload: user })
@@ -87,7 +87,7 @@ export const SignIn = ({ email, pwd }) => async dispatch => {
             user.EXP = eiei[2]
             user.CHALLENGE_COUNT = eiei[3]
 
-            await db.collection('rank').get().then((snapshot) => {
+            await db.collection('ranks').get().then((snapshot) => {
                 snapshot.forEach((res) => {
                     var dataRank = res.data()
                     ranks.push(dataRank)
@@ -95,11 +95,11 @@ export const SignIn = ({ email, pwd }) => async dispatch => {
             })
 
             for (var k = 0; k < ranks.length; k++) {
-                if (ranks[k].start <= user.EXP && user.EXP <= ranks[k].exp) {
-                    user.rankName = ranks[k].title
-                    user.rankExp = ranks[k].exp
-                    user.rankImage = ranks[k].image
-                    user.rankStart = ranks[k].start
+                if (ranks[k].rankStart <= user.EXP && user.EXP <= ranks[k].rankExp) {
+                    user.rankName = ranks[k].rankName
+                    user.rankExp = ranks[k].rankExp
+                    user.rankImage = ranks[k].rankImage
+                    user.rankStart = ranks[k].rankStart
                 }
             }
             dispatch({ type: SIGN_IN, payload: user })
@@ -135,7 +135,7 @@ export const SignInGoogle = () => async dispatch => {
             user.EXP = eiei[2]
             user.CHALLENGE_COUNT = eiei[3]
 
-            await db.collection('rank').get().then((snapshot) => {
+            await db.collection('ranks').get().then((snapshot) => {
                 snapshot.forEach((res) => {
                     var dataRank = res.data()
                     ranks.push(dataRank)
@@ -143,11 +143,11 @@ export const SignInGoogle = () => async dispatch => {
             })
 
             for (var k = 0; k < ranks.length; k++) {
-                if (ranks[k].start <= user.EXP && user.EXP <= ranks[k].exp) {
-                    user.rankName = ranks[k].title
-                    user.rankExp = ranks[k].exp
-                    user.rankImage = ranks[k].image
-                    user.rankStart = ranks[k].start
+                if (ranks[k].rankStart <= user.EXP && user.EXP <= ranks[k].rankExp) {
+                    user.rankName = ranks[k].rankName
+                    user.rankExp = ranks[k].rankExp
+                    user.rankImage = ranks[k].rankImage
+                    user.rankStart = ranks[k].rankStart
                 }
             }
             dispatch({ type: SIGN_IN, payload: user })
@@ -238,7 +238,7 @@ export const FetchProfile = () => async dispatch => {
 
     player.exp = data[2]
     var ranks = []
-    await db.collection('rank').get().then((snapshot) => {
+    await db.collection('ranks').get().then((snapshot) => {
         snapshot.forEach((res) => {
             var data = res.data()
             ranks.push(data)
@@ -246,11 +246,11 @@ export const FetchProfile = () => async dispatch => {
     })
 
     for (var k = 0; k < ranks.length; k++) {
-        if (ranks[k].start <= player.exp && player.exp <= ranks[k].exp) {
-            player.rankName = ranks[k].title
-            player.rankExp = ranks[k].exp
-            player.rankImage = ranks[k].image
-            player.rankStart = ranks[k].start
+        if (ranks[k].rankStart <= player.exp && player.exp <= ranks[k].rankExp) {
+            player.rankName = ranks[k].rankName
+            player.rankExp = ranks[k].rankExp
+            player.rankImage = ranks[k].rankImage
+            player.rankStart = ranks[k].rankStart
         }
     }
 

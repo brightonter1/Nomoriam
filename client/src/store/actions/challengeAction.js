@@ -192,9 +192,10 @@ export const fetchChallenges = () => async dispatch => {
         const playerCount = await contract.methods.getPlayerCountByChallenge(index).call()
         const actCount = await contract.methods.getActivityCount(index).call()
         const owner = await contract.methods.getOwnerByChallenge(index).call()
-        await db.collection('users').doc(owner).get().then((res) => {
+        await db.collection('users').doc(owner).get().then(function(res){
             var data = res.data()
             challenge.owner = data.displayname
+        }).catch(() => {
         })
         challenge.joined = joined
         challenge.playerCount = playerCount
@@ -212,7 +213,7 @@ export const fetchChallenge = index => async dispatch => {
     db.collection('users').doc(owner).get().then((res) => {
         var data = res.data()
         challenge.owner = data.displayname
-    })
+    }).catch(() => {})
     const actCount = await contract.methods.getActivityCount(index).call()
     const playerCount = await contract.methods.getPlayerCountByChallenge(index).call()
     const joined = await contract.methods.getJoinedChallenge(index, userId).call()
@@ -264,7 +265,7 @@ export const fetchChallenge = index => async dispatch => {
                 var www = res.data()
                 player.displayname = www.displayname
                 player.photoURL = www.photoURL
-            })
+            }).catch(()=>{})
         players.push(player)
     }
     player = _.sortBy(player, function (p) {
@@ -588,6 +589,8 @@ export const fetchJoinedChallenge = () => async dispatch => {
             await db.collection('users').doc(owner).get().then(function (res) {
                 const data = res.data()
                 challenge.owner = data.displayname
+            }).catch(()=>{
+
             })
             challenge.playerCount = playerCount
             challenge.actCount = actCount
@@ -616,7 +619,7 @@ export const fetchPlayers = () => async dispatch => {
         })
     })
 
-    await db.collection('rank').get().then((snapshot) => {
+    await db.collection('ranks').get().then((snapshot) => {
         snapshot.forEach((res) => {
             var dataRank = res.data()
             ranks.push(dataRank)
@@ -630,11 +633,11 @@ export const fetchPlayers = () => async dispatch => {
         players[i].challengeCount = data[3]
 
         for (var k = 0; k < ranks.length; k++) {
-            if (ranks[k].start <= players[i].exp && players[i].exp <= ranks[k].exp) {
-                players[i].rankName = ranks[k].title
-                players[i].rankExp = ranks[k].exp
-                players[i].rankImage = ranks[k].image
-                players[i].rankStart = ranks[k].start
+            if (ranks[k].rankStart <= players[i].exp && players[i].exp <= ranks[k].rankExp) {
+                players[i].rankName = ranks[k].rankName
+                players[i].rankExp = ranks[k].rankExp
+                players[i].rankImage = ranks[k].rankImage
+                players[i].rankStart = ranks[k].rankStart
             }
         }
     }
@@ -642,6 +645,8 @@ export const fetchPlayers = () => async dispatch => {
     _.forEach(players, function(player, i) {
         player.rankNumber = i+1
     })
+
+    console.log(players)
 
     dispatch({ type: FETCH_PLAYERS, payload: players })
 }

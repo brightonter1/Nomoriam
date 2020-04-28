@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "crytonomoriam"
+    "default": "crytonomoriam",
+    "staging": "nomoriam-fe66e"
   }
 }
