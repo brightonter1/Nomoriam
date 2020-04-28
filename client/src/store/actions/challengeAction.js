@@ -619,7 +619,7 @@ export const fetchPlayers = () => async dispatch => {
         })
     })
 
-    await db.collection('ranks').get().then((snapshot) => {
+    await db.collection('rank').get().then((snapshot) => {
         snapshot.forEach((res) => {
             var dataRank = res.data()
             ranks.push(dataRank)

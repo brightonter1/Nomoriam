@@ -43,7 +43,7 @@ export const isSignIn = () => async dispatch => {
         user.EXP = data[2]
         user.CHALLENGE_COUNT = data[3]
 
-        await db.collection('ranks').get().then((snapshot) => {
+        await db.collection('rank').get().then((snapshot) => {
             snapshot.forEach((res) => {
                 var dataRank = res.data()
                 ranks.push(dataRank)
@@ -87,7 +87,7 @@ export const SignIn = ({ email, pwd }) => async dispatch => {
             user.EXP = eiei[2]
             user.CHALLENGE_COUNT = eiei[3]
 
-            await db.collection('ranks').get().then((snapshot) => {
+            await db.collection('rank').get().then((snapshot) => {
                 snapshot.forEach((res) => {
                     var dataRank = res.data()
                     ranks.push(dataRank)
@@ -137,7 +137,7 @@ export const SignInGoogle = () => async dispatch => {
             user.EXP = eiei[2]
             user.CHALLENGE_COUNT = eiei[3]
 
-            await db.collection('ranks').get().then((snapshot) => {
+            await db.collection('rank').get().then((snapshot) => {
                 snapshot.forEach((res) => {
                     var dataRank = res.data()
                     ranks.push(dataRank)
@@ -240,7 +240,7 @@ export const FetchProfile = () => async dispatch => {
 
     player.exp = data[2]
     var ranks = []
-    await db.collection('ranks').get().then((snapshot) => {
+    await db.collection('rank').get().then((snapshot) => {
         snapshot.forEach((res) => {
             var data = res.data()
             ranks.push(data)
