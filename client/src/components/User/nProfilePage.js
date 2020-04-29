@@ -129,16 +129,17 @@ let NProfilePage = (props) => {
 
         const Profile = (
             <React.Fragment>
-                <Grid.Column width={5}>
+                <Grid.Column width={7}>
                     <Image
                         name="image"
-                        circular
                         src={userInfo.photoURL}
-                        style={{ height: 280, objectFit: 'cover', objectPosition: 'center center' }}
+                        size='large'
+                        centered
+                        style={{ borderRadius: '35px', minHeight: 250, maxHeight: 350, objectFit: 'cover', objectPosition: 'center center' }}
                     />
                     <Button circular icon="magic" floated='right' color='yellow' onClick={() => handleEdit()} />
                 </Grid.Column>
-                <Grid.Column width={11} style={{ paddingLeft: '5em' }}>
+                <Grid.Column width={9} >
                     <Item.Group>
                         <Item style={{ paddingTop: '2em' }}>
                             <Item.Content>
@@ -263,27 +264,36 @@ let NProfilePage = (props) => {
             return (
                 <Segment style={{ minHeight: 500, paddingTop: '3em' }}>
                     <Grid >
+
                         {
-                            userProfile.medals.map((medal, index) => {
-                                return (
-                                    <Grid.Column width={4} textAlign='center' key={index}>
-                                        <Item.Group>
-                                            <Image src={medal.image} size='tiny' centered />
-                                            <Item>
-                                                <Item.Content>
-                                                    <Item.Header as='a'>
-                                                        {medal.challenge}
-                                                    </Item.Header>
-                                                    <Item.Meta>{moment(medal.end_time).format('LL')}</Item.Meta>
-                                                    <Item.Description>
-                                                        {medal.title}
-                                                    </Item.Description>
-                                                </Item.Content>
-                                            </Item>
-                                        </Item.Group>
-                                    </Grid.Column>
-                                )
-                            })
+                            userProfile.medals.length === 0 ?
+                                <Grid.Column>
+                                    <Header as='h4' style={{ textAlign: 'center', color: 'lightsteelblue', paddingTop: '2em' }} >
+                                        ยังไม่มีเหรียญสะสม
+                                    </Header>
+                                </Grid.Column>
+                                :
+                                userProfile.medals.map((medal, index) => {
+                                    console.log("KSDFSDF")
+                                    return (
+                                        <Grid.Column width={4} textAlign='center' key={index}>
+                                            <Item.Group>
+                                                <Image src={medal.image} size='tiny' centered />
+                                                <Item>
+                                                    <Item.Content>
+                                                        <Item.Header as='a'>
+                                                            {medal.challenge}
+                                                        </Item.Header>
+                                                        <Item.Meta>{moment(medal.end_time).format('LL')}</Item.Meta>
+                                                        <Item.Description>
+                                                            {medal.title}
+                                                        </Item.Description>
+                                                    </Item.Content>
+                                                </Item>
+                                            </Item.Group>
+                                        </Grid.Column>
+                                    )
+                                })
                         }
                     </Grid>
                 </Segment>
@@ -295,51 +305,56 @@ let NProfilePage = (props) => {
                     <Grid>
                         <Grid.Row>
                             <Grid.Column>
-                                <Item.Group style={{ overflow: 'scroll', maxHeight: 'calc(70vh)' }} >
+                                <Item.Group style={props.challenges.length > 0 ? { overflow: 'scroll', maxHeight: 'calc(70vh)' } : { overflow: 'none', maxHeight: 'calc(70vh)' }} >
                                     {
-                                        props.challenges.map((challenge, i) => (
-                                            <Item key={i} style={{ backgroundColor: 'white', padding: '2em 2em .5em 2em', borderRadius: '15px', border: '1px solid rgba(34,36,38,.15)' }}>
-                                                <Item.Image size='small' src={challenge.image} />
+                                        props.challenges.length === 0 ?
+                                            <Header as='h4' style={{ textAlign: 'center', color: 'lightsteelblue', paddingTop: '2em' }} >
+                                                ยังไม่มีชาเลนจ์ที่เข่าร่วม
+                                                </Header>
+                                            :
+                                            props.challenges.map((challenge, i) => (
+                                                <Item key={i} style={{ backgroundColor: 'white', padding: '2em 2em .5em 2em', borderRadius: '15px', border: '1px solid rgba(34,36,38,.15)' }}>
+                                                    <Item.Image size='small' src={challenge.image} />
 
-                                                <Item.Content>
+                                                    <Item.Content>
 
-                                                    <Item.Header>{challenge.title}</Item.Header>
-                                                    <Item.Description>
-                                                        <p>สร้างโดย {challenge.owner}</p>
-                                                        &nbsp;&nbsp;{challenge.desc.split('>,<')[0]}
+                                                        <Item.Header>{challenge.title}</Item.Header>
+                                                        <Item.Description>
+                                                            <p>สร้างโดย {challenge.owner}</p>
+                                                            &nbsp;&nbsp;{challenge.desc.split('>,<')[0]}
 
-                                                    </Item.Description>
-                                                    <Item.Extra>
+                                                        </Item.Description>
+                                                        <Item.Extra>
 
-                                                        <Label icon='group' color='blue' content={`ผู้เข้าร่วม ${challenge.playerCount} คน`} />
-                                                        <Label icon='tasks' color='black' content={`${challenge.actCount} ภารกิจ`} />
-                                                        <Label icon='leaf' color='green' content={`${challenge.sum_point} แต้ม`} />
-                                                    </Item.Extra>
-                                                    <Item.Extra>
-                                                        <Label.Group tag>
-                                                            {
-                                                                challenge.desc.split('>,<')[1].split(',').map((goal, index) => (
-                                                                    <React.Fragment key={index}>
-                                                                        {goal === 'return' && <Label as='a' tag color='green' content='ตอบแทนธรรมชาติ (Return)' />}
-                                                                        {goal === 'reduce' && <Label as='a' tag color='blue' content='ลดการใช้งาน (Reduce)' />}
-                                                                        {goal === 'refuse' && <Label as='a' tag color='red' content='การปฏิเสธการใช้ (Refuse)' />}
-                                                                        {goal === 'reuse' && <Label as='a' tag color='olive' content='การใช้งานซ้ำ (Reuse)' />}
-                                                                        {goal === 'recycle' && <Label as='a' tag color='orange' content='การนำกลับมาใช้ใหม่ (Recycle)' />}
-                                                                    </React.Fragment>
-                                                                ))
-                                                            }
-                                                        </Label.Group>
-                                                    </Item.Extra>
-                                                    <Item.Extra>
-                                                        <Button primary floated='right' onClick={() => history.push(`/challenges/${challenge.index}`)}>
-                                                            ดูรายละเอียด
+                                                            <Label icon='group' color='blue' content={`ผู้เข้าร่วม ${challenge.playerCount} คน`} />
+                                                            <Label icon='tasks' color='black' content={`${challenge.actCount} ภารกิจ`} />
+                                                            <Label icon='leaf' color='green' content={`${challenge.sum_point} แต้ม`} />
+                                                        </Item.Extra>
+                                                        <Item.Extra>
+                                                            <Label.Group tag>
+                                                                {
+                                                                    challenge.desc.split('>,<')[1].split(',').map((goal, index) => (
+                                                                        <React.Fragment key={index}>
+                                                                            {goal === 'return' && <Label as='a' tag color='green' content='ตอบแทนธรรมชาติ (Return)' />}
+                                                                            {goal === 'reduce' && <Label as='a' tag color='blue' content='ลดการใช้งาน (Reduce)' />}
+                                                                            {goal === 'refuse' && <Label as='a' tag color='red' content='การปฏิเสธการใช้ (Refuse)' />}
+                                                                            {goal === 'reuse' && <Label as='a' tag color='olive' content='การใช้งานซ้ำ (Reuse)' />}
+                                                                            {goal === 'recycle' && <Label as='a' tag color='orange' content='การนำกลับมาใช้ใหม่ (Recycle)' />}
+                                                                        </React.Fragment>
+                                                                    ))
+                                                                }
+                                                            </Label.Group>
+                                                        </Item.Extra>
+                                                        <Item.Extra>
+                                                            <Button primary floated='right' onClick={() => history.push(`/challenges/${challenge.index}`)}>
+                                                                ดูรายละเอียด
                                                         <Icon name='right chevron' />
-                                                        </Button>
-                                                    </Item.Extra>
+                                                            </Button>
+                                                        </Item.Extra>
 
-                                                </Item.Content>
-                                            </Item>
-                                        ))
+                                                    </Item.Content>
+                                                </Item>
+                                            ))
                                     }
 
                                 </Item.Group>
@@ -353,40 +368,44 @@ let NProfilePage = (props) => {
         const Activity = () => {
             return (
                 <Segment style={{ minHeight: 300 }}>
-                    <Grid stackable style={{ overflow: 'scroll', maxHeight: 'calc(70vh)' }} >
+                    <Grid stackable style={userProfile.posts.length > 0 ? { overflow: 'scroll', maxHeight: 'calc(70vh)' } : { overflow: 'none', maxHeight: 'calc(70vh)' }} >
                         {
-                            userProfile.posts.map((post, index) => {
-                                return (
-                                    <React.Fragment key={index}>
-                                        <Grid.Row style={{ paddingLeft: '1em', paddingTop: '2em' }} >
-                                            <Feed>
-                                                <Feed.Event>
-                                                    <Feed.Label image={userInfo.photoURL} />
-                                                    <Feed.Content>
-                                                        <Feed.Summary>
-                                                            <Feed.User>{userInfo.displayname}</Feed.User> ได้โพสต์
+                            userProfile.posts.length === 0 ?
+                                <Grid.Row style={{ paddingLeft: '1em', paddingTop: '2em' }}>
+                                    <Grid.Column>
+                                        <Header as='h4' style={{ textAlign: 'center', color: 'lightsteelblue', paddingTop: '2em' }} >
+                                            ยังไม่มีกิจกรรม โปรดเข้าร่วมชาเลนจ์และทำภารกิจ
+                                    </Header>
+                                    </Grid.Column>
+                                </Grid.Row>
+                                :
+                                userProfile.posts.map((post, index) => {
+                                    return (
+                                        <React.Fragment key={index}>
+                                            <Grid.Row style={{ paddingLeft: '1em', paddingTop: '2em' }} >
+                                                <Feed>
+                                                    <Feed.Event>
+                                                        <Feed.Label image={userInfo.photoURL} />
+                                                        <Feed.Content>
+                                                            <Feed.Summary>
+                                                                <Feed.User>{userInfo.displayname}</Feed.User> ได้โพสต์
                                                     <Feed.Date>{moment(post.timestamp, 'DD-MM-YYYY HH:mm:ss').fromNow()}</Feed.Date>
-                                                        </Feed.Summary>
-                                                        <Feed.Date style={{ paddingTop: 10 }}>{post.signTransaction.slice(0, 30) + '...'}</Feed.Date>
-                                                        <Feed.Extra text>
-                                                            {post.caption}
-                                                        </Feed.Extra>
-                                                    </Feed.Content>
-                                                </Feed.Event>
-                                            </Feed>
-                                        </Grid.Row>
-                                        <Grid.Row>
-                                            <Image src={post.image} centered style={{ minHeight: '300px', minWidth: '350px', maxHeight: '300px', maxWidth: '350px', objectFit: 'cover', objectPosition: 'center center' }} />
-                                        </Grid.Row>
-                                        {/* <Grid.Row style={{ paddingLeft: '1em' }}>
-                                            <Label size='large' image>
-                                                <Icon name='like' /> 23
-                                    </Label>
-                                        </Grid.Row> */}
-                                        <Divider />
-                                    </React.Fragment>
-                                )
-                            })
+                                                            </Feed.Summary>
+                                                            <Feed.Date style={{ paddingTop: 10 }}>{post.signTransaction.slice(0, 30) + '...'}</Feed.Date>
+                                                            <Feed.Extra text>
+                                                                {post.caption}
+                                                            </Feed.Extra>
+                                                        </Feed.Content>
+                                                    </Feed.Event>
+                                                </Feed>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Image src={post.image} centered style={{ minHeight: '300px', minWidth: '350px', maxHeight: '300px', maxWidth: '350px', objectFit: 'cover', objectPosition: 'center center' }} />
+                                            </Grid.Row>
+                                            <Divider />
+                                        </React.Fragment>
+                                    )
+                                })
                         }
                     </Grid>
                 </Segment>

@@ -168,10 +168,6 @@ input[type='radio']:checked + label {
         margin-bottom: 15em;
     }
     
-    .ui.circular.image, .ui.circular.image>*, .ui.circular.images .image, .ui.circular.images .image>* {
-        left: 12%;
-        position: relative;
-    }
 
     #BLabel{
         display: unset;
