@@ -31,7 +31,7 @@ import store from '../../asset/icon/store.png'
 import pin from '../../asset/icon/pin.png'
 import global from '../../asset/icon/global.png'
 import home from '../../asset/icon/home.png'
-
+import FormValidate from '../Challenge/FormValidate'
 let NActivityBar = props => {
 
     const [modal, setModal] = useState(false)
@@ -182,7 +182,7 @@ let NActivityBar = props => {
                             </label>
                     }
                     rounded
-                    style={{ minHeight: '400px', minWidth: '450px', maxHeight: '350px', maxWidth: '450px', objectFit: 'cover', objectPosition: 'center center' }}
+                    style={{ objectFit: 'cover', objectPosition: 'center center' }}
                 />
 
                 <Modal.Content>
@@ -508,7 +508,8 @@ let NActivityBar = props => {
 }
 
 NActivityBar = reduxForm({
-    form: 'postForm'
+    form: 'postForm',
+    validate: FormValidate
 })(NActivityBar)
 const selector = formValueSelector('postForm')
 const mapStateToProps = state => {

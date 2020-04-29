@@ -28,7 +28,7 @@ const durationDate = (end) => {
     var d2 = end.split('-')
     var a = moment([d1[0], d1[1], d1[2]]);
     var b = moment([d2[0], d2[1], d2[2]]);
-    return Math.abs(a.diff(b)) / 86400000
+    return (Math.abs(a.diff(b)) / 86400000) === 0 ? "วันสุดท้าย" : "เหลือ " + (Math.abs(a.diff(b)) / 86400000) + " วัน"
 }
 
 const checkTimeOut = (end) => {
@@ -233,13 +233,12 @@ const NChallengePage = (props) => {
                                     label={{
                                         as: 'a',
                                         color: 'yellow',
-                                        content: "เหลือ " + durationDate(challenge.end_time) + " วัน",
+                                        content: durationDate(challenge.end_time),
                                         icon: 'clock outline',
                                         ribbon: true,
                                     }}
                                 >
                                 </Item.Image>
-
                                 <Item.Content>
                                     <Item.Header>{challenge.title}</Item.Header>
                                     <Item.Description >

@@ -1,6 +1,9 @@
 const validate = values => {
-
+    console.log(values)
     const errors = {}
+    if(!values.caption){
+        errors.caption = 'โปรดใส่แคปชัน'
+    }
     if (!values.name) {
         errors.name = 'โปรดระบุชื่อชาเล้นจ์'
     }
