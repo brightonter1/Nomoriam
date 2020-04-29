@@ -646,7 +646,6 @@ export const fetchPlayers = () => async dispatch => {
         player.rankNumber = i+1
     })
 
-    console.log(players)
 
     dispatch({ type: FETCH_PLAYERS, payload: players })
 }

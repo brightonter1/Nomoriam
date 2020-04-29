@@ -71,46 +71,6 @@ const categoryRadio = ({ input, message, label }) => (
     </React.Fragment>
 )
 
-// const locationRadio = ({ input, message, label }) => (
-//     <React.Fragment>
-//         <Form.Group style={{ paddingBottom: '1em' }} >
-//             <Form.Field>
-//                 <Segment style={{ paddingTop: '0px', borderRadius: '15px' }}>
-//                     <input id={`${input.name}.home`} onChange={(param) => input.onChange(param.target.value)} type="radio" name={input.name} value="home"
-//                     />
-//                     <label htmlFor={`${input.name}.home`} className="radio-image home" />
-//                     <span >บ้าน</span>
-//                 </Segment>
-//             </Form.Field>
-//             <Form.Field>
-//                 <Segment style={{ paddingTop: '0px', borderRadius: '15px' }}>
-//                     <input id={`${input.name}.store`} onChange={(param) => input.onChange(param.target.value)} type="radio" name={input.name} value="store"
-//                     />
-//                     <label htmlFor={`${input.name}.store`} className="radio-image store" />
-//                     <span >ร้านสะดวกซื้อ</span>
-//                 </Segment>
-//             </Form.Field>
-//             <Form.Field>
-//                 <Segment style={{ paddingTop: '0px', borderRadius: '15px' }}>
-//                     <input id={`${input.name}.organize`} onChange={(param) => input.onChange(param.target.value)} type="radio" name={input.name} value="school"
-//                     />
-//                     <label htmlFor={`${input.name}.organize`} className="radio-image organize" />
-//                     <span >สถานศึกษา</span>
-//                 </Segment>
-//             </Form.Field>
-
-//             <Form.Field>
-//                 <Segment style={{ paddingTop: '0px', borderRadius: '15px' }}>
-//                     <input id={`${input.name}.pin`} onChange={(param) => input.onChange(param.target.value)} type="radio" name={input.name} value="map"
-//                     />
-//                     <label htmlFor={`${input.name}.pin`} className="radio-image pin" />
-//                     <span >จุดนัดพบ</span>
-//                 </Segment>
-//             </Form.Field>
-//         </Form.Group>
-//     </React.Fragment>
-// )
-
 const renderRange = ({ input, label, message, width, placeholder }) => {
     return (
         <React.Fragment>
@@ -306,7 +266,7 @@ let FormChallenge = props => {
                 </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-                <Grid.Column width={8} >
+                <Grid.Column width={7} >
                     <Image
                         src={!props.image ? photo : props.image}
                         name="image-show"
@@ -317,7 +277,7 @@ let FormChallenge = props => {
                             </label>
                         }
                         rounded
-                        style={{ minHeight: '400px', minWidth: '450px', maxHeight: '400px', maxWidth: '450px', objectFit: 'cover', objectPosition: 'center center' }}
+                        style={{ borderRadius: '35px', minHeight: 250, maxHeight: 350, objectFit: 'cover', objectPosition: 'center center' }}
                     />
                     <Form style={{ paddingTop: 10 }}
                         style={{ width: '.1px', height: '.1px', opacity: 0, overflow: 'hidden', zIndex: -1 }}
@@ -332,7 +292,7 @@ let FormChallenge = props => {
                     </Form>
 
                 </Grid.Column>
-                <Grid.Column width={8} >
+                <Grid.Column width={9} >
                     <Form >
 
                         <Field

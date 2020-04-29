@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {
-    Modal,
+    Label,
     Grid,
     Header,
     Segment,
@@ -57,25 +57,32 @@ const NLeaderBoard = (props) => {
                 direction: direction === 'ascending' ? 'descending' : 'ascending',
             })
         }
+
+        const colors = ['floralwhite', '#f2ede2']
+
         const playerList = (
             <Grid.Column>
-                <Segment raised id="BRIGHT">
-                    <Table basic="very" textAlign='center' unstackable  >
+                <Segment raised id="BRIGHT" style={{ backgroundColor: 'floralwhite' }}>
+                    <Table basic="very" textAlign='center' unstackable sortable  >
                         <Table.Header >
-                            <Table.Row >
+                            <Table.Row style={{ backgroundColor: '#eae2d2' }} >
                                 <Table.HeaderCell
+                                    style={{ borderLeft: 'none' }}
                                     sorted={state.column === 'rankNumber' ? state.direction : null}
                                     onClick={handleSort('rankNumber')}
                                 >อันดับ</Table.HeaderCell>
                                 <Table.HeaderCell
+                                    style={{ borderLeft: 'none' }}
                                     sorted={state.column === 'rankNumber' ? state.direction : null}
                                     onClick={handleSort('rankNumber')}
                                 >แร้งค์</Table.HeaderCell>
                                 <Table.HeaderCell
+                                    style={{ borderLeft: 'none' }}
                                     sorted={state.column === 'displayname' ? state.direction : null}
                                     onClick={handleSort('displayname')}
                                 >ผู้เล่น</Table.HeaderCell>
                                 <Table.HeaderCell
+                                    style={{ borderLeft: 'none' }}
                                     sorted={state.column === 'exp' ? state.direction : null}
                                     onClick={handleSort('exp')}
                                 >ค่าประสบการณ์ <p>(EXP)</p></Table.HeaderCell>
@@ -84,12 +91,12 @@ const NLeaderBoard = (props) => {
                         </Table.Header>
                         <Table.Body>
                             {_.map(state.data, (player, index) => (
-                                <Table.Row key={index} active={player.uid === userInfo.userId ? true : false}>
+                                <Table.Row key={index} active={player.uid === userInfo.userId ? true : false} style={{ backgroundColor: colors[index % 2] }}>
                                     <Table.Cell>
                                         {player.rankNumber}
                                     </Table.Cell>
                                     <Table.Cell>
-                                        <Image src={player.rankImage} rounded size='tiny' centered  style={{ maxWidth: 'none' }} />
+                                        <Image src={player.rankImage} rounded size='mini' centered style={{ maxWidth: 'none' }} />
                                     </Table.Cell>
                                     <Table.Cell textAlign='left' style={{ paddingLeft: '4em' }}>
                                         {player.displayname}
@@ -110,7 +117,7 @@ const NLeaderBoard = (props) => {
                 <Grid.Row>
                     <Grid.Column>
                         <Header as='h2' color="olive">
-                            <Icon name='chess king' color="olive" />
+                            <Icon name='chess pawn' color="olive" />
                             <Header.Content >
                                 หอเกียรติยศ
                                 <Header.Subheader >ตารางระดับยศ</Header.Subheader>

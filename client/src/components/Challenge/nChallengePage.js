@@ -9,7 +9,8 @@ import {
     Icon,
     Item,
     Label,
-    Placeholder
+    Placeholder,
+    Input
 } from 'semantic-ui-react'
 import { fetchChallenges, joinChallenge, joinCleanUp } from '../../store/actions/challengeAction'
 import history from '../../api/history'
@@ -17,14 +18,17 @@ import { Link } from 'react-router-dom'
 import { alertAction } from '../Challenge/Form'
 import moment from 'moment'
 import { connect } from 'react-redux'
-
+import _ from 'lodash'
 const durationDate = (end) => {
+
     const current = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()
     const str = end.split('-')
     end = str[0] + '-' + parseInt(str[1]) + '-' + str[2]
-    var time = new moment.duration(Math.abs(new Date(current) - new Date(end)))
-
-    return "เหลืออีก " + time.asDays() + " วัน"
+    var d1 = current.split('-')
+    var d2 = end.split('-')
+    var a = moment([d1[0], d1[1], d1[2]]);
+    var b = moment([d2[0], d2[1], d2[2]]);
+    return Math.abs(a.diff(b)) / 86400000
 }
 
 const checkTimeOut = (end) => {
@@ -39,10 +43,21 @@ const NChallengePage = (props) => {
 
     const { challenges } = props
     const [open, setOpen] = useState(false)
-
+    const [state, setState] = useState({
+        category: null,
+        data: props.challenges,
+        direction: null
+    })
 
     useEffect(() => {
         props.fetchChallenges()
+        setState({
+            column: null,
+            data: props.challenges,
+            direction: null
+        })
+    console.log(props.challenges)
+
         if (props.isJoined) {
             setOpen(false)
             alertAction("เข้าร่วมเรียบร้อยแล้ว", props.message, 'success')
@@ -52,15 +67,9 @@ const NChallengePage = (props) => {
             props.joinCleanUp()
         }
     }, [props.isJoined])
+    console.log(props.challenges)
 
-    const handleJoin = (index) => {
-        setOpen(true)
-        props.joinChallenge(index)
-    }
-
-
-
-
+    console.log(state.data)
     const loadList = (
         <Grid.Column>
             <Item.Group >
@@ -187,6 +196,32 @@ const NChallengePage = (props) => {
     ]
 
     if (props.isFetch) {
+
+        const handleSort = (result) => {
+            var category = result.value
+            const { column, data, direction } = state
+
+            if (column !== category) {
+                console.log(data)
+            }
+            // if (column !== clickedColumn) {
+
+            //     setState({
+            //         column: clickedColumn,
+            //         data: _.sortBy(data, [clickedColumn]),
+            //         direction: 'ascending',
+            //     })
+
+            //     return
+            // }
+
+            // setState({
+            //     data: data.reverse(),
+            //     direction: direction === 'ascending' ? 'descending' : 'ascending',
+            // })
+        }
+
+
         const itemList = (
             <Grid.Column >
                 <Item.Group >
@@ -198,7 +233,7 @@ const NChallengePage = (props) => {
                                     label={{
                                         as: 'a',
                                         color: 'yellow',
-                                        content: durationDate(challenge.end_time),
+                                        content: "เหลือ " + durationDate(challenge.end_time) + " วัน",
                                         icon: 'clock outline',
                                         ribbon: true,
                                     }}
@@ -235,7 +270,7 @@ const NChallengePage = (props) => {
                                         </Label.Group>
                                     </Item.Extra>
                                     <Item.Extra>
-                                        <Button primary floated='right' onClick={() => history.push(`/challenges/${index}`)}>
+                                        <Button color='teal' floated='right' onClick={() => history.push(`/challenges/${index}`)}>
                                             ดูรายละเอียด
                                 <Icon name='right chevron' />
                                         </Button>
@@ -251,6 +286,7 @@ const NChallengePage = (props) => {
 
         return (
             <Grid stackable style={{ paddingTop: '3em' }} container>
+                {console.log(state.data)}
                 <Grid.Row columns='equal' >
                     <Grid.Column>
                         <Header as='h2' color="olive">
@@ -264,7 +300,7 @@ const NChallengePage = (props) => {
                     <Divider />
                     <Grid.Column floated="right" width={5}>
                         <Link to="/challenges/new" style={{ color: 'white' }} >
-                            <Button color="olive" size='small' icon labelPosition='left' floated="right"
+                            <Button color="purple" size='small' icon labelPosition='left' floated="right"
                                 onClick={() => history.push('/challenges/new')}
                             >
                                 <Icon name="add" />
@@ -287,10 +323,9 @@ const NChallengePage = (props) => {
                             style={{ backgroundColor: 'gold' }}
                         >
                             <Dropdown.Menu>
-                                <Dropdown.Header icon='tags' content='Tags' />
                                 <Dropdown.Menu scrolling>
                                     {tagOptions.map((option) => (
-                                        <Dropdown.Item key={option.value} {...option} />
+                                        <Dropdown.Item key={option.value} {...option} onClick={(param, data) => handleSort(data)} />
                                     ))}
                                 </Dropdown.Menu>
                             </Dropdown.Menu>
