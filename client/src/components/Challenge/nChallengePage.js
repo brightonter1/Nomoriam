@@ -67,9 +67,7 @@ const NChallengePage = (props) => {
             props.joinCleanUp()
         }
     }, [props.isJoined])
-    console.log(props.challenges)
 
-    console.log(state.data)
     const loadList = (
         <Grid.Column>
             <Item.Group >

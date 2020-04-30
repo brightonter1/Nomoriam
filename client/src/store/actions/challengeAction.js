@@ -192,7 +192,7 @@ export const fetchChallenges = () => async dispatch => {
         const playerCount = await contract.methods.getPlayerCountByChallenge(index).call()
         const actCount = await contract.methods.getActivityCount(index).call()
         const owner = await contract.methods.getOwnerByChallenge(index).call()
-        await db.collection('users').doc(owner).get().then(function(res){
+        await db.collection('users').doc(owner).get().then(function (res) {
             var data = res.data()
             challenge.owner = data.displayname
         }).catch(() => {
@@ -213,13 +213,12 @@ export const fetchChallenge = index => async dispatch => {
     db.collection('users').doc(owner).get().then((res) => {
         var data = res.data()
         challenge.owner = data.displayname
-    }).catch(() => {})
+    }).catch(() => { })
     const actCount = await contract.methods.getActivityCount(index).call()
     const playerCount = await contract.methods.getPlayerCountByChallenge(index).call()
     const joined = await contract.methods.getJoinedChallenge(index, userId).call()
     const acts = []
-    const players = []
-    const medals = []
+    var players = []
     for (var count = 0; count < actCount; count++) {
         var data = await contract.methods.getActivityByChallenge(index, count).call()
         data = {
@@ -242,16 +241,13 @@ export const fetchChallenge = index => async dispatch => {
         acts.push(data)
     }
 
-    const sizeMedal = await contract.methods.getMedalByChallenge(index).call()
-    for (var i = 0; i < sizeMedal; i++) {
-        var medal = await contract.methods.getMedalByIndex(index, i).call()
-        medal = {
-            title: medal[0],
-            image: medal[1],
-            end_time: medal[3]
-        }
-        medals.push(medal)
-    }
+    var ranks = []
+    await db.collection('rank').get().then((snapshot) => {
+        snapshot.forEach((res) => {
+            var dataRank = res.data()
+            ranks.push(dataRank)
+        })
+    })
 
     for (var i = 0; i < playerCount; i++) {
         var uid = await contract.methods.getPlayerUID(index, i).call()
@@ -265,13 +261,27 @@ export const fetchChallenge = index => async dispatch => {
                 var www = res.data()
                 player.displayname = www.displayname
                 player.photoURL = www.photoURL
-            }).catch(()=>{})
+            }).catch(() => { })
+
+        const data = await contract.methods.getPlayer(player.uid).call()
+        player.exp = data[2]
+
+        for (var k = 0; k < ranks.length; k++) {
+            if (ranks[k].rankStart <= player.exp && player.exp <= ranks[k].rankExp) {
+                player.rankName = ranks[k].rankName
+                player.rankExp = ranks[k].rankExp
+                player.rankImage = ranks[k].rankImage
+                player.rankStart = ranks[k].rankStart
+            }
+        }
         players.push(player)
     }
-    player = _.sortBy(player, function (p) {
-        return p.point
-    }).reverse()
-    challenge.medals = medals
+
+    players = _.orderBy(players, ['point'], ['desc'])
+    _.forEach(players, function (player, i) {
+        player.rankNumber = i + 1
+    })
+
     challenge.joined = joined
     challenge.activities = acts
     challenge.players = players
@@ -589,7 +599,7 @@ export const fetchJoinedChallenge = () => async dispatch => {
             await db.collection('users').doc(owner).get().then(function (res) {
                 const data = res.data()
                 challenge.owner = data.displayname
-            }).catch(()=>{
+            }).catch(() => {
 
             })
             challenge.playerCount = playerCount
@@ -642,8 +652,8 @@ export const fetchPlayers = () => async dispatch => {
         }
     }
     players = _.orderBy(players, ['exp'], ['desc'])
-    _.forEach(players, function(player, i) {
-        player.rankNumber = i+1
+    _.forEach(players, function (player, i) {
+        player.rankNumber = i + 1
     })
 
 

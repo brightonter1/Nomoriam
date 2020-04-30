@@ -336,7 +336,6 @@ const NChallengeDetail = (props) => {
                                 <Table.HeaderCell >แร้งค์</Table.HeaderCell>
                                 <Table.HeaderCell >ผู้เล่น</Table.HeaderCell>
                                 <Table.HeaderCell >คะแนน</Table.HeaderCell>
-                                {/* <Table.HeaderCell width={3}>รางวัล</Table.HeaderCell> */}
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
@@ -347,21 +346,14 @@ const NChallengeDetail = (props) => {
                                             {index + 1}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            <Image src={rank1} rounded size='tiny' centered style={{ maxWidth: 'none' }} />
+                                            <Image src={player.rankImage} rounded size='tiny' centered style={{ maxWidth: 'none' }} />
                                         </Table.Cell>
                                         <Table.Cell textAlign='left' style={{ paddingLeft: '5em' }}>
                                             {player.displayname}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {player.point}
+                                            {player.point}/{challenge.sum_point}
                                         </Table.Cell>
-                                        {/* <Table.Cell>
-                                            <Header as='h4' image>
-                                                <Image src={gold} rounded size='small' />
-                                                <Image src={award} rounded size='small' />
-                                            </Header>
-
-                                        </Table.Cell> */}
                                     </Table.Row>
                                 ))
                             }
