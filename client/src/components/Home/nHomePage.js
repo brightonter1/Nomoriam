@@ -125,12 +125,12 @@ const NHomePage = (props) => {
                 <Card fluid >
                     <Image src={post.image} centered
                         style={{ height: 380, objectFit: 'cover', objectPosition: 'center center' }}
-                        // label={
-                        //     <Label as='a' image size='small' attached='top right' >
-                        //         <img src={organize} />
-                        //         มหาวิทยาลัย
-                        //     </Label>
-                        // }
+                    // label={
+                    //     <Label as='a' image size='small' attached='top right' >
+                    //         <img src={organize} />
+                    //         มหาวิทยาลัย
+                    //     </Label>
+                    // }
                     />
                     <Card.Content>
                         <Feed>
@@ -164,7 +164,7 @@ const NHomePage = (props) => {
     }
 
     return (
-        <Grid stackable style={{ paddingTop: '3em'}} container>
+        <Grid stackable style={{ paddingTop: '3em' }} container>
             <Grid.Row>
                 <Grid.Column>
                     <Header as='h2' color="blue">
@@ -193,7 +193,7 @@ const NHomePage = (props) => {
                     </Header>
                 </Grid.Column>
             </Grid.Row>
-            <Grid.Row columns={3}>
+            <Grid.Row columns={3} style={{ minHeight: 400 }}>
                 {props.isPost ? itemList : <Loader active inline='centered' />}
             </Grid.Row>
         </Grid>

@@ -186,7 +186,8 @@ class MobileContainer extends Component {
           >ชาเลนจ์</Menu.Item>
           <Menu.Item onClick={() => (history.push('/hallofframe'), this.setState({ sidebarOpened: false }))}
           >หอเกียรติยศ</Menu.Item>
-
+          {this.props.roleAdmin && <Menu.Item content="จัดการชาเลนจ์" onClick={() => (history.push('/admin/manage'), this.setState({ sidebarOpened: false }))} />}
+          {console.log(this.props.roleAdmin)}
           {/* <Menu.Item onClick={() => (history.push('/'), this.setState({ sidebarOpened: false }))} >กระดานคะแนน</Menu.Item> */}
           <Menu.Item onClick={() => (history.push('/account/profile'), this.setState({ sidebarOpened: false }))}>โปรไฟล์</Menu.Item>
           <Menu.Item onClick={() => (history.push('/account/status'), this.setState({ sidebarOpened: false }))}>สถานะชาเลนจ์</Menu.Item>
@@ -208,7 +209,7 @@ class MobileContainer extends Component {
                 </Menu.Item>
                 <Menu.Item position='right'>
                   <Button as='a' inverted style={{ marginLeft: '0.5em' }} onClick={e => this.props.SignOut()}>
-                    Logout
+                    ออกจากระบบ
                   </Button>
                 </Menu.Item>
               </Menu>
@@ -227,7 +228,9 @@ MobileContainer.propTypes = {
   children: PropTypes.node,
 }
 
-MobileContainer = connect(null, { SignOut })(MobileContainer)
+
+MobileContainer = connect(mapStateToProps, { SignOut })(MobileContainer)
+
 
 
 const ResponsiveContainer = ({ children }) => (

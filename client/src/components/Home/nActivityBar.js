@@ -292,7 +292,6 @@ let NActivityBar = props => {
                                                                 <Progress autoSuccess value={Math.abs(Number(act.myTimes) - Number(act.times))} total={act.times} progress='ratio'
                                                                     color='red' style={{ width: '400px', backgroundColor: '#e5e5e5', margin: '0em 0em 0em' }}
                                                                 >
-                                                                    จำนวน {`${Math.abs(Number(act.myTimes) - Number(act.times))}/${act.times}`} ครั้ง
                                                     </Progress>
                                                             </Item.Description>
                                                             <Item.Description style={{ paddingTop: '1.2em' }} >
@@ -313,7 +312,7 @@ let NActivityBar = props => {
                                                                 <Label.Group >
 
                                                                     <Label icon='leaf' color='green' content={`+ ${act.point}`} />
-                                                                    <Label color='blue' content={`+ ${act.exp}`} />
+                                                                    <Label color='blue' content={`+ ${act.exp} EXP`} />
                                                                 </Label.Group>
 
                                                                 {
