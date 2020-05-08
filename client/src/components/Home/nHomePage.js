@@ -120,7 +120,7 @@ const NHomePage = (props) => {
     )
     var itemList = ''
     var posts = _.sortBy(props.posts, function (o) {
-        return new moment(o.timestamp, "DDMMYYYY HH:mm:ss")
+        return new moment(o.timestamp, 'DDMMYYYY')
     }).reverse();
     if (props.isPost) {
         itemList = posts.map((post, index) =>
