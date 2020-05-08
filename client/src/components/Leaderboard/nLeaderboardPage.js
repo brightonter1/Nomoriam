@@ -96,7 +96,7 @@ const NLeaderBoard = (props) => {
                                         {player.rankNumber}
                                     </Table.Cell>
                                     <Table.Cell>
-                                        <Image src={player.rankImage} rounded size='small' centered style={{ maxWidth: 'none' }} />
+                                        <Image src={player.rankImage} rounded size='mini' centered style={{ maxWidth: 'none' }} />
                                     </Table.Cell>
                                     <Table.Cell textAlign='left' style={{ paddingLeft: '4em' }}>
                                         {player.displayname}
