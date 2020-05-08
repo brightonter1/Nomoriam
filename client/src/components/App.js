@@ -17,36 +17,12 @@ import nChallengeShow from './Admin/nChallengeShow'
 import NHomePage from './Home/nHomePage'
 import NProfilePage from './User/nProfilePage'
 import nLeaderboardPage from './Leaderboard/nLeaderboardPage'
-import Home from './Mockup/HomeMockup'
-import HomepageLayoutMockup from './Mockup/HomepageLayoutMockup'
-import Challenge from './Mockup/ChallengeMockup'
-import ChallengeDetailMock from './Mockup/ChallengeDetailMock'
-import ProfileMockup from './Mockup/ProfileMockup'
-import StatusMockup from './Mockup/StatusMockup'
-import LeaderBoardMock from './Mockup/LeaderBoardMock'
 const App = (props) => {
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
             return props.isSignIn()
         })
     }, [])
-
-    // return (
-    //     <Router history={history}>
-    //         <HomepageLayoutMockup>
-    //             <Switch>
-    //                 <Route path="/" exact component={Home} />
-    //                 <Route path="/challenges" exact component={Challenge} />
-    //                 {/* <Route path="/challenges/:index" exact component={ChallengeDetailMock} /> */}
-    //                 <Route path="/account/profile" exact component={ProfileMockup} />
-    //                 <Route path="/account/status" exact component={StatusMockup} />
-    //                 <Route path="/hallofframe" exact component={LeaderBoardMock} />
-    //                 <Route path="/challenges/new" exact component={nFormChallenge} />
-
-    //             </Switch>
-    //         </HomepageLayoutMockup>
-    //     </Router>
-    // )
 
     if (props.isSignedIn === true) {
         return (
@@ -79,38 +55,6 @@ const App = (props) => {
     } else {
         return <MariamSpinner open={true} />
     }
-
-    // if (props.isSignedIn === true) {
-    //     return (
-    //         <Router history={history}>
-    //             <HomepageLayout>
-    //                 <Switch>
-    //                     <Route path="/" exact component={HomePage} />
-    //                     <Route path="/challenges" exact component={ChallengePage} />
-    //                     <Route path="/challenges/new" exact component={ChallengeForm} />
-    //                     <Route path="/challenges/:index" exact component={ChallengeDetail} />
-    //                     <Route path="/account/profile" exact component={ProfilePage} />
-    //                     <Route path="/account/status" exact component={StatusPage} />
-    //                     <Route path="/admin/manage/:index" exact component={ChallengeShow} />
-    //                     <Route path="/account/status/:index/show" exact component={ShowDetail} />
-
-    //                     {props.userInfo.roleAdmin && <Route path="/admin/manage" exact component={ManagePage} />}
-    //                 </Switch>
-    //             </HomepageLayout>
-    //         </Router>
-    //     )
-    // } else if (props.isSignedIn === false) {
-    //     return (
-    //         <Router history={history}>
-    //             <Switch>
-    //                 <Route path="/" exact component={LoginPage} />
-    //                 <Route path="/signup" exact component={SignUpPage} />
-    //             </Switch>
-    //         </Router>
-    //     )
-    // } else {
-    //     return <MariamSpinner open={true} />
-    // }
 }
 
 const mapStateToProps = state => {
