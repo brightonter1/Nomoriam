@@ -568,14 +568,10 @@ export const fetchActivities = () => async dispatch => {
                     posts[i].photoURL = profile.photoURL
                 })
         }
-        await ShowTime()
+        ShowTime()
 
     }
     async function ShowTime() {
-
-        posts = _.sortBy(posts, function (o) {
-            return new Date(o.timestamp)
-        }).reverse();
 
         dispatch({ type: FETCH_POST, payload: posts })
     }

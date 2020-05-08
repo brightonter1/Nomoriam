@@ -11,7 +11,7 @@ import {
     Loader
 } from 'semantic-ui-react'
 import photo from '../../asset/mariam/logo.png'
-
+import _ from 'lodash'
 import organize from '../../asset/icon/orgranize.png'
 import { connect } from 'react-redux'
 import { fetchActivities } from '../../store/actions/challengeAction'
@@ -119,8 +119,11 @@ const NHomePage = (props) => {
         </Grid.Column>
     )
     var itemList = ''
+    var posts = _.sortBy(props.posts, function (o) {
+        return new moment(o.timestamp, "DDMMYYYY HH:mm:ss")
+    }).reverse();
     if (props.isPost) {
-        itemList = props.posts.map((post, index) =>
+        itemList = posts.map((post, index) =>
             <Grid.Column key={index} style={{ paddingTop: '1em' }}>
                 <Card fluid >
                     <Image src={post.image} centered
@@ -132,7 +135,7 @@ const NHomePage = (props) => {
                     //     </Label>
                     // }
                     />
-                    <Card.Content>
+                    <Card.Content style={{ height: 155 }}>
                         <Feed>
                             <Feed.Event>
                                 <Feed.Label image={post.photoURL} />
