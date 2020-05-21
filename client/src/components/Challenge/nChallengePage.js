@@ -21,6 +21,9 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 const durationDate = (end) => {
 
+    if (end === '2020-05-31'){
+        end = '2020-05-30'
+    } 
     const current = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()
     const str = end.split('-')
     end = str[0] + '-' + parseInt(str[1]) + '-' + str[2]
@@ -28,7 +31,7 @@ const durationDate = (end) => {
     var d2 = end.split('-')
     var a = moment([d1[0], d1[1], d1[2]]);
     var b = moment([d2[0], d2[1], d2[2]]);
-    return (Math.abs(a.diff(b)) / 86400000) === 0 ? "วันสุดท้าย" : !Math.abs(a.diff(b)) >= 0 ? "เหลือ 31 วัน" : "เหลือ " + (Math.abs(a.diff(b)) / 86400000) + " วัน"
+    return (Math.abs(a.diff(b)) / 86400000) === 0 ? "วันสุดท้าย" : "เหลือ " + (Math.abs(a.diff(b)) / 86400000) + " วัน"
 }
 
 const checkTimeOut = (end) => {
