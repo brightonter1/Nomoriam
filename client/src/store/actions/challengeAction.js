@@ -586,7 +586,8 @@ export const fetchJoinedChallenge = () => async dispatch => {
     var challenges = []
     const count = await contract.methods.getChallengeCount().call()
     for (var i = 0; i < count; i++) {
-        const joined = await contract.methods.getJoinedChallenge(i, userId)
+        const joined = await contract.methods.getJoinedChallenge(i, userId).call()
+        console.log(joined)
         if (joined) {
             var challenge = await contract.methods.challenges(i).call()
             const actCount = await contract.methods.getActivityCount(i).call()
