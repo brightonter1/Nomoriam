@@ -277,7 +277,7 @@ let FormChallenge = props => {
                             </label>
                         }
                         rounded
-                        style={{ borderRadius: '35px', minHeight: 250, maxHeight: 350, objectFit: 'cover', objectPosition: 'center center' }}
+                        style={{ borderRadius: '35px', minHeight: 200, objectFit: 'cover', objectPosition: 'center center' }}
                     />
                     <Form style={{ paddingTop: 10 }}
                         style={{ width: '.1px', height: '.1px', opacity: 0, overflow: 'hidden', zIndex: -1 }}
