@@ -9,7 +9,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@truffle/hdwallet-provider": "^1.0.31",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "ethereumjs-tx": "^2.1.2",
     "firebase": "^7.8.0",
     "firebase-tools": "^7.15.1",
